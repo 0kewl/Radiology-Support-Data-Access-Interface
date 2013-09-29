@@ -21,21 +21,36 @@ class SolrController extends BaseController {
 		echo 'Solarium library version: ' . Client::VERSION . ' - ';
 
 		// create a client instance
-		$client = new Solarium\Client($config);
-
-		// create a ping query
-		$ping = $client->createPing();
-
-		// execute the ping query
-		try{
-		    $result = $client->ping($ping);
-		    echo 'Ping query successful';
-		    echo '<br/><pre>';
-		    var_dump($result->getData());
-		}catch(Exception $e){
-		    echo 'Ping query failed';
-		}
-		return View::make('search');
+		$client = new Client($config);
+		
+		// get a select query instance
+		$query = $client->createQuery($client::QUERY_SELECT);
+		
+		// this executes the query and returns the result
+		$resultset = $client->execute($query);
+		
+		// display the total number of documents found by solr
+		echo 'NumFound: '.$resultset->getNumFound();
+		
+		$resultset = $client->select($query);
+		
+		$results = $this->docArrayToJSON($resultset);
+		
+		
+		return View::make('search', compact('results'));
 	}
-
+	
+	private function docArrayToJSON($resultset)
+	{
+		$results = array();
+		foreach($resultset as $document) {
+			$item = array();
+			foreach($document as $field => $value) {
+				$item[$field] = $value;
+			}
+			$results[] = $item;
+		}
+		return json_encode($results);
+	}
 }
+
