@@ -12,3 +12,5 @@
 */
 
 Route::get('/', 'SolrController@getIndex');
+
+Route::post('results', 'SolrController@postResults');
