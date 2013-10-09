@@ -9,7 +9,9 @@ class SolrController extends BaseController {
 
 		$keywords = SearchFieldEntity::getFields();
 
-		return View::make('index', compact('keywords'));
+		$operators = array('AND', 'NOT', 'OR');
+
+		return View::make('index', compact('keywords', 'operators'));
 	}
 
 	public function postResults()

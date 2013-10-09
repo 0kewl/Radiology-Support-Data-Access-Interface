@@ -26,7 +26,7 @@
         </div>
 
         <div class="row-fluid">
-            <div class="span6 shadow" style="background-color:#fff; padding:12px; height:410px;">
+            <div class="span7 shadow" style="background-color:#fff; padding:12px; height:650px;">
                 <h3 class="text-center">Case Search</h3>
                 <br>
                 <form class="form-inline" action="results" method="post">
@@ -40,31 +40,20 @@
 
                     <br>
 
-                    <!-- Dropdown Select-->
-                    <div class="control-group">
-                      <div class="controls">
-                        {{ Form::select('field', array('default' => '-- Select Field --') + $keywords, 'default', array('class' => 'input-medium')) }}
-                         <input id="keyword" name="keywords" placeholder="Additional Keywords" class="input-large" type="text">
-                      </div>
+                    <div id="keywords-container">
+                        <div id="additional-keywords">
+                            <!-- Dropdown Select-->
+                            <div class="control-group">
+                              <div class="controls">
+                                {{ Form::select('operator', array('default' => '---') + $operators, 'default', array('class' => 'input-small')) }}
+                                {{ Form::select('field', array('default' => '-- Select Field --') + $keywords, 'default', array('class' => 'input-medium')) }}
+                                 <input id="keyword" name="keywords" placeholder="Additional Keywords" class="input-large" type="text">
+                              </div>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Dropdown Select-->
-                    <div class="control-group">
-                      <div class="controls">
-                        {{ Form::select('field', array('default' => '-- Select Field --') + $keywords, 'default', array('class' => 'input-medium')) }}
-                         <input id="keyword" name="keywords" placeholder="Additional Keywords" class="input-large" type="text">
-                      </div>
-                    </div>
-
-                    <!-- Dropdown Select-->
-                    <div class="control-group">
-                      <div class="controls">
-                        {{ Form::select('field', array('default' => '-- Select Field --') + $keywords, 'default', array('class' => 'input-medium')) }}
-                         <input id="keyword" name="keywords" placeholder="Additional Keywords" class="input-large" type="text">
-                      </div>
-                    </div>
-
-                    <button class="btn btn-small" type="button">+ Add Field</button>
+                    <button id="add-field" class="btn btn-small" type="button">+ Add Field</button>
 
                     <div style="margin:0 auto; text-align:center;">
                         <button class="btn btn-large" type="submit">Search</button>
@@ -75,7 +64,7 @@
 
             </div>
     
-            <div class="span6 shadow" style="background-color:#fff; padding:12px; height:410px;">
+            <div class="span5 shadow" style="background-color:#fff; padding:12px; height:650px;">
                 <h3 class="text-center">Case Information</h3>   
                 <br>
                 <form class="form-inline">
@@ -102,8 +91,22 @@
     <!-- jQuery / JavaScript Code -->
     <script type="text/javascript">
         $(document).ready(function() {
-
+            addKeywordFields(2);
         });
+
+        $("#add-field").click(function() {
+            addKeywordFields(1);
+        });
+
+        $(".remove").click(function() {
+            removeKeywordField($(this).parent());
+        });
+
+        function addKeywordFields(qty) {
+            for (var i=0; i<qty; i++) {
+                $("#additional-keywords").clone(true).appendTo("#keywords-container");
+            }
+        }
     </script>
 
 </body>
