@@ -104,7 +104,13 @@
         /* Clones then creates a new keyword field */
         function addKeywordFields(qty) {
             for (var i=0; i<qty; i++) {
-                $("#additional-keywords").clone(true).appendTo("#keywords-container");
+                var keywordClone = $("#additional-keywords").clone(true);
+
+                keywordClone.find("input[type^=text]").each(function() {
+                    $(this).val("");
+                });
+
+                keywordClone.appendTo("#keywords-container");
             }
         }
 
