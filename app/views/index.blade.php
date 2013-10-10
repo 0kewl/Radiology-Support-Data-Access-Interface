@@ -45,9 +45,9 @@
                             <!-- Dropdown Select-->
                             <div class="control-group">
                               <div class="controls">
-                                {{ Form::select('operator', array('default' => '---') + $operators, 'default', array('class' => 'input-small')) }}
+                                {{ Form::select('operator', $operators, 'default', array('class' => 'input-small')) }}
                                 {{ Form::select('field', array('default' => '-- Select Field --') + $keywords, 'default', array('class' => 'input-medium')) }}
-                                 <input id="keyword" name="keywords" placeholder="Additional Keywords" class="input-large" type="text">
+                                 <input name="keywords" placeholder="Additional Keywords" class="input-large additional-keyword" type="text">
                               </div>
                             </div>
                         </div>
@@ -91,21 +91,29 @@
     <!-- jQuery / JavaScript Code -->
     <script type="text/javascript">
         $(document).ready(function() {
+
             addKeywordFields(2);
         });
 
         $("#add-field").click(function() {
-            addKeywordFields(1);
+            if (!isKeywordsFull()) {
+                addKeywordFields(1);
+            }
         });
 
-        $(".remove").click(function() {
-            removeKeywordField($(this).parent());
-        });
-
+        /* Clones then creates a new keyword field */
         function addKeywordFields(qty) {
             for (var i=0; i<qty; i++) {
                 $("#additional-keywords").clone(true).appendTo("#keywords-container");
             }
+        }
+
+        /* Test to determine if maximum search keywords is reached */
+        function isKeywordsFull() {
+            if ($('.additional-keyword').length >= 10) {
+                return true;
+            }
+            return false;
         }
     </script>
 
