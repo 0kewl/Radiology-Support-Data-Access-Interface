@@ -1,3 +1,0 @@
-RewriteEngine On
-        RewriteCond %{HTTP_HOST} !^http://eclipse67.campus.jcu.edu/Radiology-Support-Data-Access-Interface/$ [NC]
-        RewriteRule ^(.*)$ http://eclipse67.campus.jcu.edu/Radiology-Support-Data-Access-Interface/public/ [L,R=301]
