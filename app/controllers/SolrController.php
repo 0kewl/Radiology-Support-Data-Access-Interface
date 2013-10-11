@@ -8,33 +8,34 @@ class SolrController extends BaseController {
 	{
 
 		$keywords = SearchFieldEntity::getFields();
-
-		$operators = array('OR', 'AND', 'NOT');
+		$operators = array(
+			'OR' => 'OR',
+			'AND' => 'AND',
+			'NOT' => 'NOT'
+		);
 
 		return View::make('index', compact('keywords', 'operators'));
 	}
 
 	public function postResults()
 	{
-		// DO NOT MODIFY - general Solar configuration
-		$config = array(
-    		'endpoint' => array(
-        		'localhost' => array(
-            		'host' => '127.0.0.1',
-            		'port' => 8983,
-            		'path' => '/solr/',
-       			)
-    		)
-		);
-		// create a Solr client instance
-		$client = new Client($config);
+		// parse the POSTed form data
+		$main_query = Input::get('main-query');
+		$keywords =  json_decode(Input::get('json'));
 
-		// parse keywords and other form data
+		$response = new SolrResponse();
+
+		$response->query = $main_query;
+		$response->keywords = $keywords;
 		
-		$data = new SolrResultSet();
+		// get a Solr client
+		$client = $this->getSolrClient();
+
+		// parse form data
+		$data = new SolrQuery();
 		$resultset = $data->getAllData($client);
 
-		// render html tables
+		// render html results
 		$html = '';
 
 		// show documents using the resultset iterator
@@ -51,12 +52,20 @@ class SolrController extends BaseController {
 		    }
 		    $html = $html . '</table>';
 		}
+
+		// keywords and operators for the drop-down elements
+		$keywords = SearchFieldEntity::getFields();
+		$operators = array(
+			'OR' => 'OR',
+			'AND' => 'AND',
+			'NOT' => 'NOT'
+		);
 		
-		return View::make('results', compact('html'));
+		return View::make('results', compact('response','html','keywords','operators'));
 	}
 
-	public function addCase() {
-
+	private function getSolrClient()
+	{
 		$config = array(
     		'endpoint' => array(
         		'localhost' => array(
@@ -67,42 +76,10 @@ class SolrController extends BaseController {
     		)
 		);
 
-		// create a client instance
-		$client = new Solarium\Client($config);
+		// create a Solr client instance
+		$client = new Client($config);
 
-		// get an update query instance
-		$update = $client->createUpdate();
-
-		// create a new document for the data
-		$case = $update->createDocument();
-
-		$case->department = "Radiology";
-		$case->category = "report";
-		$case->pid = "123456";
-		$case->sex = "Male";
-		$case->id = "999999";
-		$case->did = "999999";
-		$case->modality = "CT";
-		$case->title = "MRI of the Head";
-		$case->date = "2013-01-09T09:34:00Z";
-		$case->year = "2013";
-		$case->month = "01";
-		$case->day = "09";
-		$case->hour = "09";
-		$case->history = "Subarachnoid";
-		$case->site = "WRC";
-		$case->physician = "112233";
-		$case->body = "On the head, on the base of the neck.";
-		$case->impression = "1. MRI of head. 2. On the base of the neck.";
-		$case->anatomy = "skull";
-		$case->side = "none";
-
-		// add the documents and a commit command to the update query
-		$update->addDocuments(array($case));
-		$update->addCommit();
-
-		// this executes the query and returns the result
-		$result = $client->update($update);
+		return $client;
 	}
 	
 	private function docArrayToJSON($resultset)

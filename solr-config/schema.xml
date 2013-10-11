@@ -104,9 +104,7 @@
       but other field names will not have first class support from all components
       and back compatibility is not guaranteed.  Names with both leading and
       trailing underscores (e.g. _version_) are reserved.
-   -->
-   <field name="_version_" type="long" indexed="true" stored="true"/>
-        
+   -->        
    <field name="department" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
    <field name="category" type="string" indexed="true" stored="true" required="false" multiValued="false" />
    <field name="pid" type="string" indexed="true" stored="true" required="false" multiValued="false" />
@@ -125,10 +123,9 @@
    <field name="physician" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
    <field name="body" type="string" indexed="true" stored="true" required="false" multiValued="true" /> 
    <field name="impression" type="string" indexed="true" stored="true" required="false" multiValued="true" /> 
-   <field name="anatomy" type="string" indexed="true" stored="true" required="false" multiValued="true" /> 
-   <field name="side" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
    <field name="positive" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   
+   <field name="_version_" type="long" indexed="true" stored="true" required="false" />
+
    <!-- Common metadata fields, named specifically to match up with
      SolrCell metadata when parsing rich documents such as Word, PDF.
      Some fields are multiValued only because Tika currently may return

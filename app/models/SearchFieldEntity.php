@@ -5,26 +5,25 @@ class SearchFieldEntity {
 	public static function getFields() {
 
 		return array(
-			'Department',
-			'Category',
-			'PID',
-			'Sex',
-			'ID',
-			'DID',
-			'Modality',
-			'Title',
-			'Date',
-			'Year',
-			'Month',
-			'Day',
-			'Hour',
-			'History',
-			'Site',
-			'Physician',
-			'Body',
-			'Impression',
-			'Anatomy',
-			'Side'
+			'Department' => 'Department',
+			'Category'   => 'Category',
+			'PID' 		 => 'PID',
+			'Sex'        => 'Sex',
+			'ID'		 => 'ID',
+			'DID'		 => 'DID',
+			'Modality'	 => 'Modality',
+			'Title'      => 'Title',
+			'Date'		 => 'Date',
+			'Year'		 => 'Year',
+			'Month'		 => 'Month',
+			'Day'        => 'Day',
+			'Hour'	     => 'Hour',
+			'History'    => 'History',
+			'Site'       => 'Site',
+			'Physician'  => 'Physician',
+			'Body'  	 => 'Body',
+			'Impression' => 'Impression',
+			'Positive'   => 'Positive'
 		);
 	}
 }

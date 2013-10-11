@@ -2,7 +2,7 @@
 
 use Solarium\Client;
 
-class SolrResultSet {
+class SolrQuery {
 
 	public function getAllData($client) {
 
