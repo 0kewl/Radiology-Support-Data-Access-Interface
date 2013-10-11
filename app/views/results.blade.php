@@ -68,16 +68,18 @@
                 </form>
     			</div>
 
+                <div class="span5 shadow" style="background-color:#fff; padding:12px; height: 650px;">
+                    <h3 class="text-center">Search Results</h3>
+                    <div id="results-container" style="height: 550px; overflow-y: scroll;">
+                        {{ $results }}
+                    </div>
+                </div>
+
     			<div class="span4 shadow" style="background-color:#fff; padding:12px; height: 650px;">
     				<h3 class="text-center">Case Information</h3>
 
     				<br>
 
-    			</div>
-
-      			<div class="span5 shadow" style="background-color:#fff; padding:12px; height: 650px;">
-    				<h3 class="text-center">Search Results</h3>
-    				{{ $html }}
     			</div>
     		</div>
     	</div>

@@ -36,11 +36,11 @@ class SolrController extends BaseController {
 		$resultset = $data->getAllData($client);
 
 		// render html results
-		$html = '';
+		$results = '';
 
 		// show documents using the resultset iterator
 		foreach ($resultset as $document) {
-		    $html = $html . '<hr/><table>';
+		    $results = $results . '<table class="well" style="padding: 10px; margin: 10px;">';
 
 		    // the documents are also iterable, to get all fields
 		    foreach($document AS $field => $value)
@@ -48,9 +48,9 @@ class SolrController extends BaseController {
 		        // this converts multivalue fields to a comma-separated string
 		        if(is_array($value)) $value = implode(', ', $value);
 
-		        $html = $html . '<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
+		        $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
 		    }
-		    $html = $html . '</table>';
+		    $results = $results . '</table><br>';
 		}
 
 		// keywords and operators for the drop-down elements
@@ -61,7 +61,7 @@ class SolrController extends BaseController {
 			'NOT' => 'NOT'
 		);
 		
-		return View::make('results', compact('response','html','keywords','operators'));
+		return View::make('results', compact('response','results','keywords','operators'));
 	}
 
 	private function getSolrClient()
