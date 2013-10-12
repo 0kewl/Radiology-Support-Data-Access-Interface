@@ -33,7 +33,10 @@
             color: gray;
             font-size: 20px;
             cursor: pointer;
-}
+        }
+        .container {
+            width: 1550px;
+        }
     </style>
 </head>
 <body>
@@ -42,6 +45,7 @@
             <h2 class="text-center">Radiology Support Data Access Interface</h2>
         </div>
     </div>
+<div class="container">
     <div class="row-fluid">
     	<div class="span12">
     		<div class="row-fluid">
@@ -65,8 +69,13 @@
                                         <div class="controls">
                                             {{ Form::select('operator', $operators, '', array('id' => 'operator','class' => 'operator input-small')) }}
                                             {{ Form::select('field', array('' => '- Field -') + $keywords, 'default', array('id' => 'field','class' => 'field input-medium')) }}
-                                            <input id="keyword" name="keyword" placeholder="Keyword" class="keyword input-medium additional-keyword" type="text">
                                         </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input id="keyword" name="keyword" placeholder="Keyword" class="keyword input-large additional-keyword" type="text">
+                                        </div>
+                                        <br>
                                     </div>
                                 </div>
                             </div>
@@ -90,10 +99,10 @@
                             @else
                                 <div class="alert alert-success" style="width: 250px;"><span><b>Your search matched {{ $resultCount }} documents.</b></span></div>
                             @endif
-                            <div id="results-container" class="span5" style="float:left; height: 650px; overflow-y: scroll; overflow-x: hidden;">
+                            <div id="results-container" class="span4" style="margin-right: 20px; float:left; height: 650px; overflow-y: scroll; overflow-x: hidden;">
                                 {{ $results }}
                             </div>
-                            <div id="document-viewer" class="span6" style="float:left; height: 650px; overflow-y: scroll; overflow-x: hidden;">
+                            <div id="document-viewer" class="span7" style="float:left; height: 650px; overflow-y: scroll; overflow-x: hidden;">
                             
                             </div>
                         @endif
@@ -105,6 +114,7 @@
     		</div>
     	</div>
     </div>
+</div>
 
  <!-- jQuery / JavaScript Code -->
 <script type="text/javascript">

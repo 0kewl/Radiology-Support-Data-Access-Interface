@@ -43,7 +43,7 @@ class SolrController extends BaseController {
 		// show documents using the resultset iterator
 		foreach ($resultset as $document) {
 
-			$results = $results . '<div id="res-' . $document->id .'"class="result-snippet box" style="width: 435px; padding: 12px;"><div style="text-align:right"><i class="icon-star2"></i></div>';
+			$results = $results . '<div id="res-' . $document->id .'"class="result-snippet box" style=" width: 265px; padding: 12px;"><div style="text-align:right"><i class="icon-star2"></i></div>';
 
 		    // highlighting results can be fetched by document id (the field defined as uniquekey in this schema)
 		    $highlightedDoc = $highlighting->getResult($document->id);
