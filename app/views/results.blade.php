@@ -73,9 +73,8 @@
                                     </div>
                                     <div class="control-group">
                                         <div class="controls">
-                                            <input id="keyword" name="keyword" placeholder="Keyword" class="keyword input-large additional-keyword" type="text">
+                                            <input id="keyword" name="keyword" placeholder="Keyword" class="keyword input-xlarge additional-keyword" type="text">
                                         </div>
-                                        <br>
                                     </div>
                                 </div>
                             </div>
