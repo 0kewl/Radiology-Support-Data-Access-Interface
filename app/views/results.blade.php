@@ -4,6 +4,7 @@
     <title>Radiology Support Data Access Interface</title>
     <!-- CSS Imports -->
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" type="text/css" />
+    <link rel="stylesheet" href="{{asset('assets/css/font-awesome.css')}}" type="text/css" />
 
     <!-- JavaScript Imports -->
     <script src="{{asset('assets/js/jquery-1.10.2.min.js')}}"></script>
@@ -12,13 +13,27 @@
     <!-- CSS -->
     <style>
         body {
-            background-color:#B6B6B1;
+            background-color:#AAB3AB;
         }
         .shadow {
             -webkit-box-shadow: 0 4px 2px -2px #808080;
             -moz-box-shadow: 0 4px 2px -2px #808080;
             box-shadow: 0 4px 2px -2px #808080;
         }
+        .box {
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            background-color:#F5F5F5;
+        }
+        .viewing {
+            background: #CFF09E;
+        }
+        .icon-star2 {
+            color: gray;
+            font-size: 20px;
+            cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -42,7 +57,7 @@
                                 </div>
                             </div>
                             <br>
-                            <input id="json" name="json" type="hidden">                
+                            <input id="json" name="json" type="hidden">
                             <div id="keywords-container">
                                 <div id="additional-keywords" class="additional-keywords">
                                     <!-- Dropdown Select-->
@@ -75,8 +90,11 @@
                             @else
                                 <div class="alert alert-success" style="width: 250px;"><span><b>Your search matched {{ $resultCount }} documents.</b></span></div>
                             @endif
-                            <div id="results-container" style="height: 650px; overflow-y: scroll; overflow-x: hidden;">
+                            <div id="results-container" class="span5" style="float:left; height: 650px; overflow-y: scroll; overflow-x: hidden;">
                                 {{ $results }}
+                            </div>
+                            <div id="document-viewer" class="span6" style="float:left; height: 650px; overflow-y: scroll; overflow-x: hidden;">
+                            
                             </div>
                         @endif
                 </div>
@@ -109,15 +127,18 @@ $("#add-field").click(function() {
 });
 
 $(".show").click(function() {
-    var id = $(this).attr("id");
-    $("#" + id + ".full-doc").toggle();
+    $(".result-snippet").each(function() {
+        $(this).removeClass("viewing");
+    });
 
-    if ($("#" + id + ".full-doc").is(":visible")) {
-        $(this).html("Hide Document");
-    }
-    else {
-        $(this).html("Show Document");
-    }
+    var id = $(this).attr("id");
+    $("#res-" + id).addClass("viewing");
+     $("#document-viewer").html("");
+     ($("#" + id + ".full-doc").clone().appendTo("#document-viewer").show());
+});
+
+$(".icon-star2").click(function() {
+    $(this).css("color", "#F7C511");
 });
 
 /* form processing before POST */

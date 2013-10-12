@@ -12,7 +12,7 @@
     <!-- CSS -->
     <style>
         body {
-            background-color:#B6B6B1;
+            background-color:#AAB3AB;
         }
         .shadow {
             -webkit-box-shadow: 0 4px 2px -2px #808080;
@@ -28,7 +28,7 @@
         </div>
         <div id="content-window">
             <div class="row-fluid">
-                <div class="span7 shadow" style="background-color:#fff; padding:12px; height:650px;">
+                <div class="span8 shadow" style="background-color:#fff; padding:12px; height:675px;">
                     <h3 class="text-center">Case Search</h3>
                     <br>
                     <form id="search-form" name="search-form" class="form-inline" action="results" method="post" enctype="multipart/form-data">
@@ -48,7 +48,7 @@
                                         <div class="controls">
                                             {{ Form::select('operator', $operators, '', array('class' => 'operator input-small')) }}
                                             {{ Form::select('field', array('' => '- Field -') + $keywords, 'default', array('class' => 'field input-medium')) }}
-                                            <input name="keyword" placeholder="Keyword" class="keyword input-large additional-keyword" type="text">
+                                            <input name="keyword" placeholder="Keyword" class="keyword input-xlarge additional-keyword" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -60,8 +60,8 @@
                         <button id="search" class="btn btn-large">Search</button>
                     </div> 
                 </div>
-                <div class="span5 shadow" style="background-color:#fff; padding:12px; height:650px;">
-                    <h3 class="text-center">Case Information Lookup</h3>   
+                <div class="span4 shadow" style="background-color:#fff; padding:12px; height:675px;">
+                    <h3 class="text-center">Case Lookup</h3>   
                     <br>
                     <form class="form-inline">
                         <fieldset>
@@ -74,7 +74,7 @@
                             <input id="keywords-array" name="keywords-array" type="hidden">
                             <br>
                             <div style="margin:0 auto; text-align:center;">
-                                <button class="btn btn-large" type="button">Auto-Populate Fields &amp; Search</button>
+                                <button class="btn btn-large" type="button">Populate Fields &amp; Search</button>
                             </div>
                         </fieldset>
                     </form>             

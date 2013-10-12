@@ -43,21 +43,21 @@ class SolrController extends BaseController {
 		// show documents using the resultset iterator
 		foreach ($resultset as $document) {
 
-			$results = $results . '<div style="width: 600px; padding: 12px; border: 2px solid black;">';
+			$results = $results . '<div id="res-' . $document->id .'"class="result-snippet box" style="width: 435px; padding: 12px;"><div style="text-align:right"><i class="icon-star2"></i></div>';
 
 		    // highlighting results can be fetched by document id (the field defined as uniquekey in this schema)
 		    $highlightedDoc = $highlighting->getResult($document->id);
 
 			if ($highlightedDoc) {
-				$results = $results . '<div style="padding: 12px;"><table class="table table-bordered">';
+				$results = $results . '<div style="padding: 12px;"><table class="table table-condensed">';
 
 		    	foreach($highlightedDoc as $key => $val) {
-		    		$results = $results . "<tr><td>" . $key . "</td><td><strong> " . $val[0] . "</strong></td></tr>";
+		    		$results = $results . '<tr><td style="border-top: 0;">' . $key . '</td><td style="border-top: 0;"><strong> ' . $val[0] . '</strong></td></tr>';
 		        }
 		        $results = $results . '</table></div>';
 		    }
 
-		    $results = $results . '<button id="' . $document->id . '"class="show btn btn-info" type="button">Show Document</button><div id="'. $document->id .'" class="full-doc" style="display: none;"><table class="table table-hover" style="padding: 5px; margin: 5px;">';
+		    $results = $results . '<button id="' . $document->id . '"class="show btn btn-success" type="button">View Document</button><div id="'. $document->id .'" class="full-doc" style="display: none;"><table class="table table-striped" style="padding: 5px; margin: 5px;">';
 
 		    // the documents are also iterable, to get all fields
 		    foreach($document AS $field => $value)
