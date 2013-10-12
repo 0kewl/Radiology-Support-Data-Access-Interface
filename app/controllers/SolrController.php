@@ -27,26 +27,26 @@ class SolrController extends BaseController {
 
 		$response->query = $main_query;
 		$response->keywords = $keywords;
-		
+
 		// get a Solr client
 		$client = $this->getSolrClient();
 
 		// parse form data
 		$data = new SolrQuery();
-		$resultset = $data->getAllData($client);
+		$resultset = $data->getFilteredData($client, $response);
 
 		// render html results
 		$results = '';
 
 		// show documents using the resultset iterator
 		foreach ($resultset as $document) {
-		    $results = $results . '<table class="well" style="padding: 10px; margin: 10px;">';
+		    $results = $results . '<table class="table-striped" style="padding: 10px; margin: 10px;">';
 
 		    // the documents are also iterable, to get all fields
 		    foreach($document AS $field => $value)
 		    {
 		        // this converts multivalue fields to a comma-separated string
-		        if(is_array($value)) $value = implode(', ', $value);
+		       if(is_array($value)) $value = implode(', ', $value);
 
 		        $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
 		    }
@@ -60,7 +60,7 @@ class SolrController extends BaseController {
 			'AND' => 'AND',
 			'NOT' => 'NOT'
 		);
-		
+
 		return View::make('results', compact('response','results','keywords','operators'));
 	}
 

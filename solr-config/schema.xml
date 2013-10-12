@@ -105,25 +105,25 @@
       and back compatibility is not guaranteed.  Names with both leading and
       trailing underscores (e.g. _version_) are reserved.
    -->        
-   <field name="department" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="category" type="string" indexed="true" stored="true" required="false" multiValued="false" />
-   <field name="pid" type="string" indexed="true" stored="true" required="false" multiValued="false" />
-   <field name="sex" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="id" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="did" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="modality" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="title" type="string" indexed="true" stored="true" required="false" multiValued="true" /> 
-   <field name="date" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="year" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="month" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="day" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="hour" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="history" type="string" indexed="true" stored="true" required="false" multiValued="true" /> 
-   <field name="site" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="physician" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
-   <field name="body" type="string" indexed="true" stored="true" required="false" multiValued="true" /> 
-   <field name="impression" type="string" indexed="true" stored="true" required="false" multiValued="true" /> 
-   <field name="positive" type="string" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="department" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="category" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
+   <field name="pid" type="text_general" indexed="true" stored="true" required="false" multiValued="false" />
+   <field name="sex" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="id" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="did" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="modality" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="title" type="text_general" indexed="true" stored="true" required="false" multiValued="true" /> 
+   <field name="date" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="year" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="month" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="day" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="hour" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="history" type="text_general" indexed="true" stored="true" required="false" multiValued="true" /> 
+   <field name="site" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="physician" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
+   <field name="body" type="text_general" indexed="true" stored="true" required="false" multiValued="true" /> 
+   <field name="impression" type="text_general" indexed="true" stored="true" required="false" multiValued="true" /> 
+   <field name="positive" type="text_general" indexed="true" stored="true" required="false" multiValued="false" /> 
    <field name="_version_" type="long" indexed="true" stored="true" required="false" />
 
    <!-- Common metadata fields, named specifically to match up with
@@ -187,6 +187,8 @@
         alternately, change the type="ignored" to some other type e.g. "text" if you want 
         unknown fields indexed and/or stored by default --> 
    <!--dynamicField name="*" type="ignored" multiValued="true" /-->
+
+   <dynamicField name="*_s"  type="string"  indexed="true"  stored="true"/>
    
  </fields>
 
