@@ -38,6 +38,12 @@ class SolrQuery {
 		// this query is now a dismax query
 		$query->setQuery($parameters);
 
+		// get highlighting component and apply settings
+		$hl = $query->getHighlighting();
+		$hl->setFields(array_keys(SearchFieldEntity::getFields()));
+		$hl->setSimplePrefix('<b>');
+		$hl->setSimplePostfix('</b>');
+
 		$resultset = $client->select($query);
 
 		return $resultset;

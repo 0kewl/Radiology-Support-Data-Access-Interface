@@ -35,23 +35,42 @@ class SolrController extends BaseController {
 		$data = new SolrQuery();
 		$resultset = $data->getFilteredData($client, $response);
 
+		$highlighting = $resultset->getHighlighting();
+
 		// render html results
 		$results = '';
 
 		// show documents using the resultset iterator
 		foreach ($resultset as $document) {
-		    $results = $results . '<table class="table-striped" style="padding: 10px; margin: 10px;">';
+
+			$results = $results . '<div style="width: 600px; padding: 12px; border: 2px solid black;">';
+
+		    // highlighting results can be fetched by document id (the field defined as uniquekey in this schema)
+		    $highlightedDoc = $highlighting->getResult($document->id);
+
+			if ($highlightedDoc) {
+				$results = $results . '<div style="padding: 12px;"><table class="table table-bordered">';
+
+		    	foreach($highlightedDoc as $key => $val) {
+		    		$results = $results . "<tr><td>" . $key . "</td><td><strong> " . $val[0] . "</strong></td></tr>";
+		        }
+		        $results = $results . '</table></div>';
+		    }
+
+		    $results = $results . '<button id="' . $document->id . '"class="show btn btn-info" type="button">Show Document</button><div id="'. $document->id .'" class="full-doc" style="display: none;"><table class="table table-hover" style="padding: 5px; margin: 5px;">';
 
 		    // the documents are also iterable, to get all fields
 		    foreach($document AS $field => $value)
 		    {
-		        // this converts multivalue fields to a comma-separated string
-		       if(is_array($value)) $value = implode(', ', $value);
-
-		        $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
+		       // this converts multivalue fields to a comma-separated string
+		       if (is_array($value)) $value = implode(', ', $value);
+			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
 		    }
-		    $results = $results . '</table><br>';
+
+		    $results = $results . '</table></div></div><br>';
 		}
+
+		$resultCount = $resultset->getNumFound();
 
 		// keywords and operators for the drop-down elements
 		$keywords = SearchFieldEntity::getFields();
@@ -61,7 +80,7 @@ class SolrController extends BaseController {
 			'NOT' => 'NOT'
 		);
 
-		return View::make('results', compact('response','results','keywords','operators'));
+		return View::make('results', compact('response','results','resultCount','keywords','operators'));
 	}
 
 	private function getSolrClient()

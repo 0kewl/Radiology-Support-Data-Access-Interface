@@ -30,7 +30,7 @@
     <div class="row-fluid">
     	<div class="span12">
     		<div class="row-fluid">
-    			<div class="span3 shadow" style="background-color:#fff; padding:12px; height: 650px;">
+    			<div class="span3 shadow" style="background-color:#fff; padding:12px; height: 800px;">
     				<h3 class="text-center">Case Search</h3>
     				<br>
                     <form id="search-form" name="search-form" class="form-inline" action="results" method="post" enctype="multipart/form-data">
@@ -62,7 +62,7 @@
                         <button id="search" class="btn btn-large">Search</button>
                     </div>
     			</div>
-                <div class="span5 shadow" style="background-color:#fff; padding:12px; height: 650px;">
+                <div id="search-results" class="span5 shadow" style="background-color:#fff; padding:12px; height: 800px;">
                     <h3 class="text-center">Search Results</h3>
                         @if (!$results)
                             <br>
@@ -70,12 +70,17 @@
                                 <h5 class="text-center">Your search did not match any documents.</h5>
                             </div>
                         @else
-                            <div id="results-container" style="height: 550px; overflow-y: scroll; overflow-x: hidden;">
+                            @if ($resultCount == "1")
+                                <div class="alert alert-success" style="width: 250px;"><span><b>Your search matched {{ $resultCount }} document.</b></span></div>
+                            @else
+                                <div class="alert alert-success" style="width: 250px;"><span><b>Your search matched {{ $resultCount }} documents.</b></span></div>
+                            @endif
+                            <div id="results-container" style="height: 650px; overflow-y: scroll; overflow-x: hidden;">
                                 {{ $results }}
                             </div>
                         @endif
                 </div>
-    			<div class="span4 shadow" style="background-color:#fff; padding:12px; height: 650px;">
+    			<div id="case-information" class="span4 shadow" style="background-color:#fff; padding:12px; height: 650px;">
     				<h3 class="text-center">Case Information</h3>
     				<br>
     			</div>
@@ -87,6 +92,11 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+    @if (!isset($caseid))
+        $("#case-information").hide();
+        $("#search-results").toggleClass('span5 span8');
+    @endif
+
     @foreach ($response->keywords as $element)
     addPopulatedField("{{ $element->operator }}", "{{ $element->field }}", "{{ $element->keyword }}");
     @endforeach
@@ -95,6 +105,18 @@ $(document).ready(function() {
 $("#add-field").click(function() {
     if (!isKeywordsFull()) {
         addKeywordFields(1);
+    }
+});
+
+$(".show").click(function() {
+    var id = $(this).attr("id");
+    $("#" + id + ".full-doc").toggle();
+
+    if ($("#" + id + ".full-doc").is(":visible")) {
+        $(this).html("Hide Document");
+    }
+    else {
+        $(this).html("Show Document");
     }
 });
 
