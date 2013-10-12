@@ -49,7 +49,7 @@
     <div class="row-fluid">
     	<div class="span12">
     		<div class="row-fluid">
-    			<div class="span3 shadow" style="background-color:#fff; padding:12px; height: 800px;">
+    			<div class="span3 shadow" style="background-color:#fff; padding:12px; height: 800px; overflow-y: auto;">
     				<h3 class="text-center">Case Search</h3>
     				<br>
                     <form id="search-form" name="search-form" class="form-inline" action="results" method="post" enctype="multipart/form-data">
@@ -99,10 +99,10 @@
                             @else
                                 <div class="alert alert-success" style="width: 250px;"><span><b>Your search matched {{ $resultCount }} documents.</b></span></div>
                             @endif
-                            <div id="results-container" class="span4" style="margin-right: 20px; float:left; height: 650px; overflow-y: scroll; overflow-x: hidden;">
+                            <div id="results-container" class="span4" style="margin-right: 20px; float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
                                 {{ $results }}
                             </div>
-                            <div id="document-viewer" class="span7" style="float:left; height: 650px; overflow-y: scroll; overflow-x: hidden;">
+                            <div id="document-viewer" class="span7" style="float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
                             
                             </div>
                         @endif
