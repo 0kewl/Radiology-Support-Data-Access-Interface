@@ -1,31 +1,9 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Radiology Support Data Access Interface</title>
-    <!-- CSS Imports -->
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" type="text/css" />
-
-    <!-- JavaScript Imports -->
-    <script src="{{asset('assets/js/jquery-1.10.2.min.js')}}"></script>
-    <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-
-    <!-- CSS -->
-    <style>
-        body {
-            background-color:#AAB3AB;
-        }
-        .shadow {
-            -webkit-box-shadow: 0 4px 2px -2px #808080;
-            -moz-box-shadow: 0 4px 2px -2px #808080;
-            box-shadow: 0 4px 2px -2px #808080;
-        }
-    </style>
-</head>
+@include('components/header')
 <body>
-    <div class="container" style="padding-top:20px;">
-        <div class="row-fluid" style="padding-bottom:50px;">
-            <h2 class="text-center">Radiology Support Data Access Interface</h2>
-        </div>
+<div class="container" style="margin-top: 22px;">
+    @include('components/menu')
         <div id="content-window">
             <div class="row-fluid">
                 <div class="span8 shadow" style="background-color:#fff; padding:12px; height:675px;">

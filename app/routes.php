@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', 'SolrController@getIndex');
+Route::get('/', array('as' => 'home', 'uses' => 'SolrController@getIndex'));
 
-Route::post('results', 'SolrController@postResults');
+Route::post('results', array('as' => 'results', 'uses' => 'SolrController@postResults'));

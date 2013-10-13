@@ -1,0 +1,22 @@
+body {
+    background-color:#AAB3AB;
+}
+.shadow {
+    -webkit-box-shadow: 0 4px 2px -2px #808080;
+    -moz-box-shadow: 0 4px 2px -2px #808080;
+    box-shadow: 0 4px 2px -2px #808080;
+}
+.box {
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    background-color:#F5F5F5;
+}
+.viewing {
+    background: #CFF09E;
+}
+.icon-star2 {
+    color: gray;
+    font-size: 20px;
+    cursor: pointer;
+}

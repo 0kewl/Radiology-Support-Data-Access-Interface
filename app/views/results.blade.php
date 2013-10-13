@@ -1,61 +1,19 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Radiology Support Data Access Interface</title>
-    <!-- CSS Imports -->
-    <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" type="text/css" />
-    <link rel="stylesheet" href="{{asset('assets/css/font-awesome.css')}}" type="text/css" />
-
-    <!-- JavaScript Imports -->
-    <script src="{{asset('assets/js/jquery-1.10.2.min.js')}}"></script>
-    <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
-
+@include('components/header')
+<body>
     <!-- CSS -->
     <style>
-        body {
-            background-color:#AAB3AB;
-        }
-        .shadow {
-            -webkit-box-shadow: 0 4px 2px -2px #808080;
-            -moz-box-shadow: 0 4px 2px -2px #808080;
-            box-shadow: 0 4px 2px -2px #808080;
-        }
-        .box {
-            -webkit-border-radius: 20px;
-            -moz-border-radius: 20px;
-            border-radius: 20px;
-            background-color:#F5F5F5;
-        }
-        .viewing {
-            background: #CFF09E;
-        }
-        .icon-star2 {
-            color: gray;
-            font-size: 20px;
-            cursor: pointer;
-        }
         .container {
             width: 1550px;
         }
-        .top-right {
-            position: absolute;
-            top: 0px;
-            right: 0px;
-        }
     </style>
-</head>
-<body>
-    <div class="container" style="padding-top:20px;">
-        <div class="row-fluid" style="padding-bottom:50px;">
-            <h2 class="text-center">Radiology Support Data Access Interface</h2>
-        </div>
-    </div>
-<div class="container">
+<div class="container" style="margin-top: 22px;">
+    @include('components/menu')
     <div class="row-fluid">
     	<div class="span12">
     		<div class="row-fluid">
     			<div class="span4 shadow" style="background-color:#fff; padding:12px; height: 800px; overflow-y: auto;">
-                    <p class="top-right">X</p>
     				<h3 class="text-center">Case Search</h3>
     				<br>
                     <form id="search-form" name="search-form" class="form-inline" action="results" method="post" enctype="multipart/form-data">
