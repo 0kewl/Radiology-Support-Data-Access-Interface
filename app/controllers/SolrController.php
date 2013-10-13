@@ -8,11 +8,7 @@ class SolrController extends BaseController {
 	{
 
 		$keywords = SearchFieldEntity::getFields();
-		$operators = array(
-			'OR' => 'OR',
-			'AND' => 'AND',
-			'NOT' => 'NOT'
-		);
+		$operators = SolrOperators::getOperators();
 
 		return View::make('index', compact('keywords', 'operators'));
 	}
@@ -66,29 +62,24 @@ class SolrController extends BaseController {
 		       if (is_array($value)) $value = implode(', ', $value);
 			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
 		    }
-
 		    $results = $results . '</table></div></div><br>';
 		}
-
 		$resultCount = $resultset->getNumFound();
 
 		// keywords and operators for the drop-down elements
 		$keywords = SearchFieldEntity::getFields();
-		$operators = array(
-			'OR' => 'OR',
-			'AND' => 'AND',
-			'NOT' => 'NOT'
-		);
+		$operators = SolrOperators::getOperators();
 
 		return View::make('results', compact('response','results','resultCount','keywords','operators'));
 	}
 
 	private function getSolrClient()
 	{
+		// NOTICE: Please make sure host is set to eclipse67.campus.jcu.edu
 		$config = array(
     		'endpoint' => array(
         		'localhost' => array(
-            		'host' => 'http://eclipse67.campus.jcu.edu',
+            		'host' => 'eclipse67.campus.jcu.edu',
             		'port' => 8983,
             		'path' => '/solr/',
        			)
@@ -101,6 +92,7 @@ class SolrController extends BaseController {
 		return $client;
 	}
 	
+	// helper method to convert a result set to a JSON object
 	private function docArrayToJSON($resultset)
 	{
 		$results = array();
