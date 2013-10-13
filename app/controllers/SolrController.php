@@ -88,7 +88,7 @@ class SolrController extends BaseController {
 		$config = array(
     		'endpoint' => array(
         		'localhost' => array(
-            		'host' => '127.0.0.1',
+            		'host' => 'http://eclipse67.campus.jcu.edu',
             		'port' => 8983,
             		'path' => '/solr/',
        			)

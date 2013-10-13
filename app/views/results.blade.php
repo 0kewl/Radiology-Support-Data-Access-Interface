@@ -37,6 +37,11 @@
         .container {
             width: 1550px;
         }
+        .top-right {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
     </style>
 </head>
 <body>
@@ -49,7 +54,8 @@
     <div class="row-fluid">
     	<div class="span12">
     		<div class="row-fluid">
-    			<div class="span3 shadow" style="background-color:#fff; padding:12px; height: 800px; overflow-y: auto;">
+    			<div class="span4 shadow" style="background-color:#fff; padding:12px; height: 800px; overflow-y: auto;">
+                    <p class="top-right">X</p>
     				<h3 class="text-center">Case Search</h3>
     				<br>
                     <form id="search-form" name="search-form" class="form-inline" action="results" method="post" enctype="multipart/form-data">
