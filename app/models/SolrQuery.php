@@ -48,4 +48,17 @@ class SolrQuery {
 
 		return $resultset;
 	}
+	
+	public function getCaseData($client, $id)
+	{
+		// get a select query instance
+		$query = $client->createSelect();
+		
+		// this query is now a dismax query
+		$query->setQuery("id:".$id);
+		
+		$resultset = $client->select($query);
+		
+		return $resultset;
+	}
 }

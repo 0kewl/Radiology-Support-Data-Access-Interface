@@ -72,6 +72,38 @@ class SolrController extends BaseController {
 
 		return View::make('results', compact('response','results','resultCount','keywords','operators'));
 	}
+	
+	public function postCaseLookup()
+	{
+		$case_id = Input::get('case-id');
+	
+		// get a Solr client
+		$client = $this->getSolrClient();
+		
+		// parse form data
+		$casedata = new SolrQuery();
+		$resultset = $casedata->getCaseData($client, $case_id);
+		
+		// render html results
+		$results = '';
+
+		// show documents using the resultset iterator
+		foreach ($resultset as $document) {
+		
+		    $results = $results . '<div id="'. $document->id .'" class="full-doc"><table class="table table-striped" style="padding: 5px; margin: 5px;">';
+
+		    // the documents are also iterable, to get all fields
+		    foreach($document AS $field => $value)
+		    {
+		       // this converts multivalue fields to a comma-separated string
+		       if (is_array($value)) $value = implode(', ', $value);
+			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
+		    }
+		    $results = $results . '</table></div></div><br>';
+		}
+				
+		return View::make('case', compact('results'));
+	}
 
 	private function getSolrClient()
 	{
