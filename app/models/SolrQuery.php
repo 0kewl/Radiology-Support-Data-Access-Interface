@@ -23,14 +23,12 @@ class SolrQuery {
     		$parameters = $parameters . " " . $element->operator . " " . $element->field . ":" . $element->keyword;
 		}
 
-		// create a filterquery
-		//$query->createFilterQuery('dynamic-query')->setQuery('AND year:2010 AND sex:female');
-
 		// get the dismax component and set a boost query
 		$dismax = $query->getDisMax();
 		$dismax->setQueryFields(array_keys(SearchFieldEntity::getFields()));
 
-		//$dismax->setBoostQuery('');
+		// boost query, we might enable this feature in the future
+		// $dismax->setBoostQuery('');
 
 		// override the default setting of 'dismax' to enable 'edismax'
 		$dismax->setQueryParser('edismax');

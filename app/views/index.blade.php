@@ -9,34 +9,7 @@
                 <div class="span8 shadow" style="background-color:#fff; padding:12px; height:675px;">
                     <h3 class="text-center">Case Search</h3>
                     <br>
-                    <form id="search-form" name="search-form" class="form-inline" action="results" method="post" enctype="multipart/form-data">
-                        <fieldset>
-                            <!-- Text input-->
-                            <div class="control-group">
-                                <div class="controls">
-                                    <input id="main-query" name="main-query" placeholder="Search Query" class="input-block-level" type="text">
-                                </div>
-                            </div>
-                            <br>
-                            <input id="json" name="json" type="hidden">                
-                            <div id="keywords-container">
-                                <div id="additional-keywords" class="additional-keywords">
-                                    <!-- Dropdown Select-->
-                                    <div class="control-group">
-                                        <div class="controls">
-                                            {{ Form::select('operator', $operators, '', array('class' => 'operator input-small')) }}
-                                            {{ Form::select('field', array('' => '- Field -') + $keywords, 'default', array('class' => 'field input-medium')) }}
-                                            <input name="keyword" placeholder="Keyword" class="keyword input-xlarge additional-keyword" type="text">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button id="add-field" class="btn btn-small" type="button">+ Add Field</button>
-                        </fieldset>
-                    </form> 
-                    <div style="margin:0 auto; text-align:center;">
-                        <button id="search" class="btn btn-large">Search</button>
-                    </div> 
+                    @include('components/search-form')
                 </div>
                 <div class="span4 shadow" style="background-color:#fff; padding:12px; height:675px;">
                     <h3 class="text-center">Case Lookup</h3>   
