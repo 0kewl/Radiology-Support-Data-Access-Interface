@@ -9,7 +9,9 @@
                 <div class="span8 shadow" style="background-color:#fff; padding:12px; height:675px;">
                     <h3 class="text-center">Case Search</h3>
                     <br>
-                    @include('components/search-form')
+                    <div id="search-container" style="height:575px; overflow-y: auto;">
+                        @include('components/search-form')
+                    </div>
                 </div>
                 <div class="span4 shadow" style="background-color:#fff; padding:12px; height:675px;">
                     <h3 class="text-center">Case Lookup</h3>   

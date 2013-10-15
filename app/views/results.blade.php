@@ -16,7 +16,9 @@
     			<div class="span4 shadow" style="background-color:#fff; padding:12px; height: 800px; overflow-y: auto;">
     				<h3 class="text-center">Case Search</h3>
     				<br>
+                    <div id="search-container" style="height:700px; overflow-y: auto;">
                     @include('components/search-form')
+                </div>
     			</div>
                 
                 <div id="search-results" class="span5 shadow" style="background-color:#fff; padding:12px; height: 800px;">

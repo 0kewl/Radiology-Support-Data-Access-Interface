@@ -90,7 +90,7 @@ class SolrController extends BaseController {
 		// show documents using the resultset iterator
 		foreach ($resultset as $document) {
 		
-		    $results = $results . '<div id="'. $document->id .'" class="full-doc"><table class="table table-striped" style="padding: 5px; margin: 5px;">';
+		    $results = $results . '<div id="'. $document->id .'" class="full-doc"><table class="table table-striped">';
 
 		    // the documents are also iterable, to get all fields
 		    foreach($document AS $field => $value)
@@ -99,7 +99,7 @@ class SolrController extends BaseController {
 		       if (is_array($value)) $value = implode(', ', $value);
 			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
 		    }
-		    $results = $results . '</table></div></div><br>';
+		    $results = $results . '</table></div><br>';
 		}
 				
 		return View::make('case', compact('results'));
@@ -111,7 +111,7 @@ class SolrController extends BaseController {
 		$config = array(
     		'endpoint' => array(
         		'localhost' => array(
-            		'host' => 'eclipse67.campus.jcu.edu',
+            		'host' => '127.0.0.1',
             		'port' => 8983,
             		'path' => '/solr/',
        			)
