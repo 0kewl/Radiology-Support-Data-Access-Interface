@@ -4,6 +4,7 @@ use Solarium\Client;
 
 class SolrController extends BaseController {
 
+	// Make the search page
 	public function getIndex()
 	{
 
@@ -13,6 +14,7 @@ class SolrController extends BaseController {
 		return View::make('index', compact('keywords', 'operators'));
 	}
 
+	// Process the user query and display results page
 	public function postResults()
 	{
 		// parse the POSTed form data
@@ -73,6 +75,7 @@ class SolrController extends BaseController {
 		return View::make('results', compact('response','results','resultCount','keywords','operators'));
 	}
 	
+	// Attempt to find a case by its ID and display the case page
 	public function postCaseLookup()
 	{
 		$case_id = Input::get('case-id');
@@ -105,6 +108,7 @@ class SolrController extends BaseController {
 		return View::make('case', compact('results'));
 	}
 
+	// Returns a configured Solr client
 	private function getSolrClient()
 	{
 		// NOTICE: Please make sure host is set to eclipse67.campus.jcu.edu
@@ -124,7 +128,7 @@ class SolrController extends BaseController {
 		return $client;
 	}
 	
-	// helper method to convert a result set to a JSON object
+	// Helper method to convert a result set to a JSON object
 	private function docArrayToJSON($resultset)
 	{
 		$results = array();

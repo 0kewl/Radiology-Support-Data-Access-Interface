@@ -2,6 +2,7 @@
 
 class SearchFieldEntity {
 
+	// Blueprint of a typical radiology report
 	public static function getFields() {
 		
 		return array(

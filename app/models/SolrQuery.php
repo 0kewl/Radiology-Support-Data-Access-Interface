@@ -4,6 +4,7 @@ use Solarium\Client;
 
 class SolrQuery {
 
+	// Returns all documents in Solr
 	public function getAllData($client) {
 
 		// get a select query instance
@@ -13,6 +14,7 @@ class SolrQuery {
 		return $resultset;
 	}
 
+	// Returns a filtered result set of documents from Solr
 	public function getFilteredData($client, $userQuery) {
 
 		// get a select query instance
@@ -43,10 +45,10 @@ class SolrQuery {
 		$hl->setSimplePostfix('</b>');
 
 		$resultset = $client->select($query);
-
 		return $resultset;
 	}
 	
+	// Given a case ID, return the matching document
 	public function getCaseData($client, $id)
 	{
 		// get a select query instance
@@ -56,7 +58,6 @@ class SolrQuery {
 		$query->setQuery("id:".$id);
 		
 		$resultset = $client->select($query);
-		
 		return $resultset;
 	}
 }

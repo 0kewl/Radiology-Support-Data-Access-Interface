@@ -1,3 +1,4 @@
+<!-- Search form template -->
 <form id="search-form" name="search-form" class="form-inline" action="results" method="post" enctype="multipart/form-data">
     <fieldset>
         <!-- Text input-->
