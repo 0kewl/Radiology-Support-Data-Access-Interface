@@ -3,7 +3,7 @@
 class SearchFieldEntity {
 
 	public static function getFields() {
-
+		
 		return array(
 			'department' => 'Department',
 			'category'   => 'Category',
