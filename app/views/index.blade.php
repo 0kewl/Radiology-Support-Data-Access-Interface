@@ -14,7 +14,7 @@
                 <div class="span4 shadow" style="background-color:#fff; padding:12px; height:675px;">
                     <h3 class="text-center">Case Lookup</h3>   
                     <br>
-                    <form class="form-inline">
+                    <form class="form-inline" id="search-case" name="search-case" action="case-lookup" method="post">
                         <fieldset>
                             <!-- Text input-->
                             <div class="control-group">
@@ -25,7 +25,7 @@
                             <input id="keywords-array" name="keywords-array" type="hidden">
                             <br>
                             <div style="margin:0 auto; text-align:center;">
-                                <button class="btn btn-large" type="button">Populate Fields &amp; Search</button>
+                                <button id="case-search" class="btn btn-large" type="button">Populate Fields &amp; Search</button>
                             </div>
                         </fieldset>
                     </form>             
@@ -68,6 +68,11 @@ $("#search").click(function() {
     $("#search-form").submit();
  });
 
+/*auto populates field once have an case ID*/ 
+$("#case-search").click(function() {
+	$("#search-case").submit();
+});
+ 
 /* Clones then creates a new keyword field */
 function addKeywordFields(qty) {
     for (var i=0; i<qty; i++) {

@@ -14,3 +14,5 @@
 Route::get('/', array('as' => 'home', 'uses' => 'SolrController@getIndex'));
 
 Route::post('results', array('as' => 'results', 'uses' => 'SolrController@postResults'));
+
+Route::post('case-lookup', array('as' => 'case-results', 'uses' => 'SolrController@postCaseLookup'));
