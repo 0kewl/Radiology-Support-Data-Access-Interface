@@ -25,8 +25,6 @@
 						{{ $results }}
 					@endif	
     			</div>
-
- 
     		</div>
     	</div>
     </div>
@@ -35,8 +33,8 @@
  <!-- jQuery / JavaScript Code -->
 <script type="text/javascript">
 $(document).ready(function() {
-	
-}
+    // js code
+});
 </script>
 
 </body>

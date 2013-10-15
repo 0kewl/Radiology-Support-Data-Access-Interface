@@ -18,6 +18,7 @@
     				<br>
                     @include('components/search-form')
     			</div>
+                
                 <div id="search-results" class="span5 shadow" style="background-color:#fff; padding:12px; height: 800px;">
                     <h3 class="text-center">Search Results</h3>
                         @if (!$results)
@@ -38,10 +39,6 @@
                             </div>
                         @endif
                 </div>
-    			<div id="case-information" class="span4 shadow" style="background-color:#fff; padding:12px; height: 650px;">
-    				<h3 class="text-center">Case Information</h3>
-    				<br>
-    			</div>
     		</div>
     	</div>
     </div>
@@ -52,7 +49,6 @@
 $(document).ready(function() {
 
     @if (!isset($caseid))
-        $("#case-information").hide();
         $("#search-results").toggleClass('span5 span8');
     @endif
 
@@ -76,6 +72,7 @@ $(".show").click(function() {
     $("#res-" + id).addClass("viewing");
      $("#document-viewer").html("");
      ($("#" + id + ".full-doc").clone().appendTo("#document-viewer").show());
+     $("#document-viewer").scrollTop(0);
 });
 
 $(".icon-star2").click(function() {

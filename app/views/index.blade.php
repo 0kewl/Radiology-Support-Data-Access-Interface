@@ -65,12 +65,24 @@ $("#search").click(function() {
     var jsonData = JSON.stringify(data);
     $("#json").val(jsonData);
 
-    $("#search-form").submit();
+    if ($("#main-query").val() == "") {
+        alert("Please enter a search query.");
+        return false;
+    }
+    else {
+        $("#search-form").submit();
+    }
  });
 
 /*auto populates field once have an case ID*/ 
 $("#case-search").click(function() {
-	$("#search-case").submit();
+    if ($("#case-id").val() == "") {
+        alert("Please enter a Case ID.");
+        return false;
+    }
+    else {
+	   $("#search-case").submit();
+    }
 });
  
 /* Clones then creates a new keyword field */
