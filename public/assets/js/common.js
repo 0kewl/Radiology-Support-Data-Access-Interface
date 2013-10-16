@@ -45,6 +45,11 @@ $("#add-field").click(function() {
     }
 });
 
+// remove the corresponding field
+$("#remove-field").click(function() {	
+    $( this ).parent().css('class', 'additional-keywords').remove();
+});
+
 // clones and creates a new keyword field
 function addKeywordFields(qty) {
     for (var i=0; i<qty; i++) {
