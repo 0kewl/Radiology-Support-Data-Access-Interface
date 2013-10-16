@@ -66,8 +66,28 @@ class SolrQuery {
 		$query = $client->createSelect();
 		
 		// Just search on the ID field
-		$query->setQuery("id:".$id);
+		$query->setQuery("id:" . $id);
 		
+		$resultset = $client->select($query);
+		return $resultset;
+	}
+
+	public function getSimilarCases($client, $id, $keywords)
+	{
+		// Get a morelikethis query instance
+		$query = $client->createMoreLikeThis();
+
+		// Set the seed document
+		$query->setQuery('id:' . $id);
+
+		// Set the fields to use for similarity
+		$query->setMltFields($keywords);
+		$query->setMinimumDocumentFrequency(1);
+		$query->setMinimumTermFrequency(1);
+
+		//$query->createFilterQuery('query')->setQuery('inStock:true');
+		//$query->setInterestingTerms('details');
+		$query->setMatchInclude(true);
 		$resultset = $client->select($query);
 		return $resultset;
 	}

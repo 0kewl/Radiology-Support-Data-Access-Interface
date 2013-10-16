@@ -19,26 +19,18 @@
                     <h3 class="text-center">Case Information</h3>
                     <br>
                     <div id="case-information-container" style="height:700px; overflow-y: auto;">
-                        @if (!$document)
+                        @if (!$doc)
                             <div class="alert alert-info">
                                 <h5 class="text-center">Your search did not match any documents.</h5>
                             </div>
                         @else       
-                            {{ $document }}
+                            {{ $doc }}
                         @endif  
                     </div>
                 </div>
                 <!-- END case document -->
                 
-                <!-- Similar cases document viewer -->
-                <div id="similar-cases" class="span8 shadow" style="background-color:#fff; padding:12px; height: 800px;">
-                    <h3 class="text-center">Similar Cases</h3>
-                    <div id="results-container" class="span4" style="float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
-                    </div>
-                    <div id="document-viewer" class="span7" style="float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
-                    </div>
-                </div>
-                <!-- END similar cases -->
+                @include('components/results-viewer')
             </div>
         </div>
     </div>
@@ -51,6 +43,22 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+});
+
+// display the selected case (document)
+$(".show").click(function() {
+    $(".result-snippet").each(function() {
+        // clear any cases being viewed
+        $(this).removeClass("viewing");
+    });
+
+    var id = $(this).attr("id");
+    $("#res-" + id).addClass("viewing");
+    $("#document-viewer").html("");
+
+    // show the selected case
+    $("#" + id + ".full-doc").clone().appendTo("#document-viewer").show();
+    $("#document-viewer").scrollTop(0);
 });
 </script>
 

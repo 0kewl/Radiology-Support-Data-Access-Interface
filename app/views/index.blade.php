@@ -27,12 +27,16 @@
                             <div class="control-group">
                                 <div class="controls">
                                     <input id="case-id" name="case-id" placeholder="Enter Case ID" class="input-block-level" type="text">
+                                    <br>
+                                    <br>
+                                    <h5>Find similar cases based on:</h5>
+                                    {{ Form::select('similar-keywords[]', $keywords, '', array('id' => 'similar-keywords','class' => 'selectpicker', 'multiple' => 'multiple')) }}
                                 </div>
                             </div>
                             <input id="keywords-array" name="keywords-array" type="hidden">
                             <br>
                             <div style="margin:0 auto; text-align:center;">
-                                <button id="case-search" class="btn btn-large" type="button">Populate Fields &amp; Search</button>
+                                <button id="case-search" class="btn btn-large" type="button" style="margin-top: 75px;">Search &amp; Compare Cases</button>
                             </div>
                         </fieldset>
                     </form>             
@@ -48,6 +52,7 @@
 <!-- jQuery/JavaScript Code -->
 <script type="text/javascript">
 $(document).ready(function() {
+    $('.selectpicker').selectpicker();
     // show two additional keyword inputs on page load
     addKeywordFields(2);
 });

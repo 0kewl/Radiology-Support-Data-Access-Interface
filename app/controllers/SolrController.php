@@ -49,18 +49,43 @@ class SolrController extends BaseController {
 	// Attempt to find a case by its ID and display the case page
 	public function postCaseLookup()
 	{
-		$case_id = Input::get('case-id');
-	
+		$caseID = Input::get('case-id');
+		$similarKeywords = Input::get('similar-keywords');
+
 		// Get a Solr client
 		$client = $this->getSolrClient();
 		
 		// Parse form data from HTTP POST action
 		$caseData = new SolrQuery();
-		$result = $caseData->getCaseData($client, $case_id);
+		$result = $caseData->getCaseData($client, $caseID);
+		$doc = $this->renderSingleDocument($result);
+		$tables = '';
 
-		$document = $this->renderSingleDocument($result);
+		foreach ($result as $document) {
+			$id = $document->id;
+			$similarCases = $this->findSimilarCases($id, $similarKeywords);
 
-		return View::make('case', compact('document'));
+			$tables .= $this->renderDocumentTables($similarCases, NULL);
+		}
+
+		$fields = SearchFieldEntity::getFields();
+
+		// How many results did we find?
+		$resultCount = $result->getNumFound();
+
+		return View::make('case', compact('doc', 'tables', 'resultCount'));
+	}
+
+	private function findSimilarCases($caseID, $keywords)
+	{
+		// Get a Solr client
+		$client = $this->getSolrClient();
+		
+		// Parse form data from HTTP POST action
+		$data = new SolrQuery();
+		$results = $data->getSimilarCases($client, $caseID, $keywords);
+
+		return $results;
 	}
 
 	// Renders a single Solr document to an HTML table
@@ -94,16 +119,18 @@ class SolrController extends BaseController {
 			$results .= '<div id="res-' . $document->id .'"class="result-snippet box" style=" width: 265px; padding: 12px;"><div style="text-align:right"><i class="icon-star2"></i></div>';
 
 		    // Highlighting results can be fetched by document id (the field defined as the unique key in this schema)
-		    $highlightedDoc = $highlighting->getResult($document->id);
+		    if (isset($highlighting)) {
+		    	$highlightedDoc = $highlighting->getResult($document->id);
+		    
+				if ($highlightedDoc) {
+					$results .= '<div style="padding: 12px;"><table class="table table-condensed">';
 
-			if ($highlightedDoc) {
-				$results .= '<div style="padding: 12px;"><table class="table table-condensed">';
-
-		    	foreach($highlightedDoc as $key => $val) {
-		    		$results .= '<tr><td style="border-top: 0;">' . $key . '</td><td style="border-top: 0;"><strong> ' . $val[0] . '</strong></td></tr>';
-		        }
-		        $results .= '</table></div>';
-		    }
+			    	foreach($highlightedDoc as $key => $val) {
+			    		$results .= '<tr><td style="border-top: 0;">' . $key . '</td><td style="border-top: 0;"><strong> ' . $val[0] . '</strong></td></tr>';
+			        }
+			        $results .= '</table></div>';
+			    }
+			}
 
 		    $results .= '<button id="' . $document->id . '"class="show btn btn-success" type="button">View Document</button><div id="'. $document->id .'" class="full-doc" style="display: none;"><table class="table table-striped" style="padding: 5px; margin: 5px;">';
 
