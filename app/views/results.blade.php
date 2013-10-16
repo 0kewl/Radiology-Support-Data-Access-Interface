@@ -27,7 +27,7 @@
                 <!-- Search results viewer -->
                 <div id="search-results" class="span5 shadow" style="background-color:#fff; padding:12px; height: 800px;">
                     <h3 class="text-center">Search Results</h3>
-                        @if (!$results)
+                        @if (!$tables)
                             <br>
                             <div class="alert alert-info">
                                 <h5 class="text-center">Your search did not match any documents.</h5>
@@ -39,7 +39,7 @@
                                 <div class="alert alert-success" style="width: 250px;"><span><b>Your search matched {{ $resultCount }} documents.</b></span></div>
                             @endif
                             <div id="results-container" class="span4" style="margin-right: 20px; float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
-                                {{ $results }}
+                                {{ $tables }}
                             </div>
 								<div id="document-viewer" class="span7" style="float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
                             </div>
@@ -51,7 +51,10 @@
     </div>
 </div>
 
- <!-- jQuery / JavaScript Code -->
+<!-- Load the common jQuery/JavaScript code -->
+<script type="text/javascript" src="{{asset('assets/js/common.js')}}"></script>
+
+ <!-- jQuery/JavaScript Code -->
 <script type="text/javascript">
 $(document).ready(function() {
 
@@ -65,86 +68,28 @@ $(document).ready(function() {
     @endforeach
 });
 
-$("#add-field").click(function() {
-    if (!isKeywordsFull()) {
-        addKeywordFields(1);
-    }
-});
-
+// display the selected case (document)
 $(".show").click(function() {
     $(".result-snippet").each(function() {
+        // clear any cases being viewed
         $(this).removeClass("viewing");
     });
 
     var id = $(this).attr("id");
     $("#res-" + id).addClass("viewing");
-     $("#document-viewer").html("");
-     ($("#" + id + ".full-doc").clone().appendTo("#document-viewer").show());
-     $("#document-viewer").scrollTop(0);
+    $("#document-viewer").html("");
+
+    // show the selected case
+    $("#" + id + ".full-doc").clone().appendTo("#document-viewer").show();
+    $("#document-viewer").scrollTop(0);
 });
 
+// save a case for later
 $(".icon-star2").click(function() {
     $(this).css("color", "#F7C511");
+    // TODO: Implement bookmark feature
 });
 
-// form processing before POST action
-$("#search").click(function() {
-    var data = [];
-    // get our operators, fields, and keywords
-    $("#keywords-container").find(".additional-keywords").each(function() {
-        // check if a keyword exists so we do not submit empty values
-        if (!$(this).find(".keyword").val() == "") {
-            element = {};
-            element ["operator"] = $(this).find(".operator").val();
-            element ["field"] = $(this).find(".field").val();
-            element ["keyword"] = $(this).find(".keyword").val();
-            data.push(element);
-        }
-    });
-    var jsonData = JSON.stringify(data);
-    $("#json").val(jsonData);
-    $("#search-form").submit();
-    });
-
-// clones and creates a new keyword field
-function addKeywordFields(qty) {
-    for (var i=0; i<qty; i++) {
-        var keywordClone = $("#additional-keywords").clone(true);
-        keywordClone.find("input[type^=text]").each(function() {
-            $(this).val("");
-        });
-        keywordClone.appendTo("#keywords-container");
-    }
-}
-
-function addPopulatedField(operator, field, keyword) {
-    if (!$("#keyword").val()) {
-        $("#operator").val(operator);
-        $("#field").val(field);
-        $("#keyword").val(keyword);
-    }
-    else {
-        var keywordClone = $("#additional-keywords").clone(true);
-        keywordClone.find("input[type^=text]").each(function() {
-            $(this).val(keyword);
-        });
-        keywordClone.find("select[class^=operator]").each(function() {
-            $(this).val(operator);
-        });
-        keywordClone.find("select[class^=field]").each(function() {
-            $(this).val(field);
-        });
-        keywordClone.appendTo("#keywords-container");
-    }
-}
-
-// test to determine if maximum search keywords is reached
-function isKeywordsFull() {
-    if ($('.additional-keyword').length >= 10) {
-        return true;
-    }
-    return false;
-}
 </script>
 
 </body>

@@ -19,12 +19,12 @@
                     <h3 class="text-center">Case Information</h3>
                     <br>
                     <div id="case-information-container" style="height:700px; overflow-y: auto;">
-                        @if (!$results)
+                        @if (!$document)
                             <div class="alert alert-info">
                                 <h5 class="text-center">Your search did not match any documents.</h5>
                             </div>
                         @else       
-                            {{ $results }}
+                            {{ $document }}
                         @endif  
                     </div>
                 </div>
@@ -44,10 +44,13 @@
     </div>
 </div>
 
- <!-- jQuery / JavaScript Code -->
+<!-- Load the common jQuery/JavaScript code -->
+<script type="text/javascript" src="{{asset('assets/js/common.js')}}"></script>
+
+ <!-- jQuery/JavaScript Code -->
 <script type="text/javascript">
 $(document).ready(function() {
-    // page is ready
+
 });
 </script>
 

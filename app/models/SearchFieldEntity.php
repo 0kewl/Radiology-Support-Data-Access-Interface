@@ -6,7 +6,7 @@ class SearchFieldEntity {
 	public static function getFields() {
 		
 		return array(
-			'department'		=> 'Department',
+			'department'	=> 'Department',
 			'category'		=> 'Category',
 			'pid'			=> 'PID',
 			'sex'			=> 'Sex',
@@ -23,7 +23,7 @@ class SearchFieldEntity {
 			'site'			=> 'Site',
 			'physician'		=> 'Physician',
 			'body'			=> 'Body',
-			'impression'		=> 'Impression',
+			'impression'	=> 'Impression',
 			'positive'		=> 'Positive'
 		);
 	}

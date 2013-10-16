@@ -30,7 +30,7 @@ class SolrQuery {
 
 		// Get the dismax component
 		// From Solr Documentation: "Disjunction refers to the fact that your search is executed
-		// across multiple fields, e.g. title, body and keywords, with different relevance weights.
+		// across multiple fields, e.g. title, body and keywords, with different relevance weights."
 		// Read more at http://wiki.apache.org/solr/DisMax
 		$dismax = $query->getDisMax();
 		$dismax->setQueryFields(array_keys(SearchFieldEntity::getFields()));
@@ -40,9 +40,9 @@ class SolrQuery {
 		// $dismax->setBoostQuery('');
 
 		// Override the default setting of 'dismax' to enable 'edismax'
-		// From Solr Documentation:  Edismax searches for the query words across multiple fields with
+		// From Solr Documentation: "Edismax searches for the query words across multiple fields with
 		// different boosts, based on the significance of each field. Additional options let you influence
-		// the score based on rules specific to each use case (independent of user input).
+		// the score based on rules specific to each use case (independent of user input)."
 		$dismax->setQueryParser('edismax');
 
 		$query->setQuery($parameters);

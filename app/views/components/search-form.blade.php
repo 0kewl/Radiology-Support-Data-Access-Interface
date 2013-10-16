@@ -20,10 +20,6 @@
                     <div class="controls">
                         {{ Form::select('operator', $operators, '', array('id' => 'operator','class' => 'operator input-small')) }}
                         {{ Form::select('field', array('' => '- Field -') + $keywords, 'default', array('id' => 'field','class' => 'field input-medium')) }}
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="controls">
                         <input id="keyword" name="keyword" placeholder="Keyword" class="keyword input-xlarge additional-keyword" type="text">
                     </div>
                 </div>

@@ -17,13 +17,13 @@ class SolrController extends BaseController {
 	// Process the user search query and display results page
 	public function postResults()
 	{
-		// parse the POSTed form data
-		$main_query = Input::get('main-query');
+		// Get the form input values
+		$mainQuery = Input::get('main-query');
 		$keywords =  json_decode(Input::get('json'));
 
 		$response = new SolrResponse();
 
-		$response->query = $main_query;
+		$response->query = $mainQuery;
 		$response->keywords = $keywords;
 
 		// Get a Solr client
@@ -32,10 +32,60 @@ class SolrController extends BaseController {
 		// Parse the form data from the HTTP POST action
 		$data = new SolrQuery();
 		$resultset = $data->getFilteredData($client, $response);
-
 		$highlighting = $resultset->getHighlighting();
 
-		// Render the results to an HTML table
+		$tables = $this->renderDocumentTables($resultset, $highlighting);
+
+		// How many results did we find?
+		$resultCount = $resultset->getNumFound();
+
+		// Keywords and operators for the drop-down elements
+		$keywords = SearchFieldEntity::getFields();
+		$operators = SolrOperators::getOperators();
+
+		return View::make('results', compact('response','tables','resultCount','keywords','operators'));
+	}
+	
+	// Attempt to find a case by its ID and display the case page
+	public function postCaseLookup()
+	{
+		$case_id = Input::get('case-id');
+	
+		// Get a Solr client
+		$client = $this->getSolrClient();
+		
+		// Parse form data from HTTP POST action
+		$caseData = new SolrQuery();
+		$result = $caseData->getCaseData($client, $case_id);
+
+		$document = $this->renderSingleDocument($result);
+
+		return View::make('case', compact('document'));
+	}
+
+	// Renders a single Solr document to an HTML table
+	private function renderSingleDocument($resultset)
+	{
+		$results = '';
+
+		// show documents using the resultset iterator
+		foreach ($resultset as $document) {
+		
+		    $results .= '<div id="'. $document->id .'" class="full-doc"><table class="table table-striped">';
+
+		    foreach($document AS $field => $value)
+		    {
+		       if (is_array($value)) $value = implode(', ', $value);
+			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
+		    }
+		    $results = $results . '</table></div><br>';
+		}
+		return $results;
+	}
+
+	// Renders a Solr dataset to an HTML table
+	private function renderDocumentTables($resultset, $highlighting)
+	{
 		$results = '';
 
 		// Show documents using the resultset iterator
@@ -61,58 +111,22 @@ class SolrController extends BaseController {
 		    {
 		       // Converts multi-valued fields to a comma separated string
 		       if (is_array($value)) $value = implode(', ', $value);
+
 			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
 		    }
+		    
 		    $results = $results . '</table></div></div><br>';
 		}
-		$resultCount = $resultset->getNumFound();
-
-		// Keywords and operators for the drop-down elements
-		$keywords = SearchFieldEntity::getFields();
-		$operators = SolrOperators::getOperators();
-
-		return View::make('results', compact('response','results','resultCount','keywords','operators'));
-	}
-	
-	// Attempt to find a case by its ID and display the case page
-	public function postCaseLookup()
-	{
-		$case_id = Input::get('case-id');
-	
-		// Get a Solr client
-		$client = $this->getSolrClient();
-		
-		// Parse form data from HTTP POST action
-		$casedata = new SolrQuery();
-		$resultset = $casedata->getCaseData($client, $case_id);
-		
-		// Render the results to an HTML table
-		$results = '';
-
-		// show documents using the resultset iterator
-		foreach ($resultset as $document) {
-		
-		    $results .= '<div id="'. $document->id .'" class="full-doc"><table class="table table-striped">';
-
-		    foreach($document AS $field => $value)
-		    {
-		       if (is_array($value)) $value = implode(', ', $value);
-			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
-		    }
-		    $results = $results . '</table></div><br>';
-		}
-				
-		return View::make('case', compact('results'));
+		return $results;
 	}
 
 	// Returns a configured Solr client
 	private function getSolrClient()
 	{
-		// NOTICE: Please make sure host is set to eclipse67.campus.jcu.edu
 		$config = array(
     		'endpoint' => array(
         		'localhost' => array(
-            		'host' => 'eclipse67.campus.jcu.edu',
+            		'host' => 'eclipse67.campus.jcu.edu', // Make sure host is set to eclipse67.campus.jcu.edu
             		'port' => 8983,
             		'path' => '/solr/',
        			)
@@ -120,10 +134,11 @@ class SolrController extends BaseController {
 		);
 
 		// Create a Solr client instance
-		$client = new Client($config);
-		return $client;
+			$client = new Client($config);
+
+			return $client;
 	}
-	
+
 	// Helper method to convert a result set to a JSON object
 	private function docArrayToJSON($resultset)
 	{
