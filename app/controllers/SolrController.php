@@ -4,17 +4,17 @@ use Solarium\Client;
 
 class SolrController extends BaseController {
 
-	// Make the search page
+	// Handle search page GET request
 	public function getIndex()
 	{
-
 		$keywords = SearchFieldEntity::getFields();
 		$operators = SolrOperators::getOperators();
 
 		return View::make('index', compact('keywords', 'operators'));
 	}
 
-	// Process the user query and display results page
+	// Handle search page POST request
+	// Process the user search query and display results page
 	public function postResults()
 	{
 		// parse the POSTed form data
@@ -26,41 +26,40 @@ class SolrController extends BaseController {
 		$response->query = $main_query;
 		$response->keywords = $keywords;
 
-		// get a Solr client
+		// Get a Solr client
 		$client = $this->getSolrClient();
 
-		// parse form data
+		// Parse the form data from the HTTP POST action
 		$data = new SolrQuery();
 		$resultset = $data->getFilteredData($client, $response);
 
 		$highlighting = $resultset->getHighlighting();
 
-		// render html results
+		// Render the results to an HTML table
 		$results = '';
 
-		// show documents using the resultset iterator
+		// Show documents using the resultset iterator
 		foreach ($resultset as $document) {
 
-			$results = $results . '<div id="res-' . $document->id .'"class="result-snippet box" style=" width: 265px; padding: 12px;"><div style="text-align:right"><i class="icon-star2"></i></div>';
+			$results .= '<div id="res-' . $document->id .'"class="result-snippet box" style=" width: 265px; padding: 12px;"><div style="text-align:right"><i class="icon-star2"></i></div>';
 
-		    // highlighting results can be fetched by document id (the field defined as uniquekey in this schema)
+		    // Highlighting results can be fetched by document id (the field defined as the unique key in this schema)
 		    $highlightedDoc = $highlighting->getResult($document->id);
 
 			if ($highlightedDoc) {
-				$results = $results . '<div style="padding: 12px;"><table class="table table-condensed">';
+				$results .= '<div style="padding: 12px;"><table class="table table-condensed">';
 
 		    	foreach($highlightedDoc as $key => $val) {
-		    		$results = $results . '<tr><td style="border-top: 0;">' . $key . '</td><td style="border-top: 0;"><strong> ' . $val[0] . '</strong></td></tr>';
+		    		$results .= '<tr><td style="border-top: 0;">' . $key . '</td><td style="border-top: 0;"><strong> ' . $val[0] . '</strong></td></tr>';
 		        }
-		        $results = $results . '</table></div>';
+		        $results .= '</table></div>';
 		    }
 
-		    $results = $results . '<button id="' . $document->id . '"class="show btn btn-success" type="button">View Document</button><div id="'. $document->id .'" class="full-doc" style="display: none;"><table class="table table-striped" style="padding: 5px; margin: 5px;">';
+		    $results .= '<button id="' . $document->id . '"class="show btn btn-success" type="button">View Document</button><div id="'. $document->id .'" class="full-doc" style="display: none;"><table class="table table-striped" style="padding: 5px; margin: 5px;">';
 
-		    // the documents are also iterable, to get all fields
 		    foreach($document AS $field => $value)
 		    {
-		       // this converts multivalue fields to a comma-separated string
+		       // Converts multi-valued fields to a comma separated string
 		       if (is_array($value)) $value = implode(', ', $value);
 			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
 		    }
@@ -68,7 +67,7 @@ class SolrController extends BaseController {
 		}
 		$resultCount = $resultset->getNumFound();
 
-		// keywords and operators for the drop-down elements
+		// Keywords and operators for the drop-down elements
 		$keywords = SearchFieldEntity::getFields();
 		$operators = SolrOperators::getOperators();
 
@@ -80,25 +79,23 @@ class SolrController extends BaseController {
 	{
 		$case_id = Input::get('case-id');
 	
-		// get a Solr client
+		// Get a Solr client
 		$client = $this->getSolrClient();
 		
-		// parse form data
+		// Parse form data from HTTP POST action
 		$casedata = new SolrQuery();
 		$resultset = $casedata->getCaseData($client, $case_id);
 		
-		// render html results
+		// Render the results to an HTML table
 		$results = '';
 
 		// show documents using the resultset iterator
 		foreach ($resultset as $document) {
 		
-		    $results = $results . '<div id="'. $document->id .'" class="full-doc"><table class="table table-striped">';
+		    $results .= '<div id="'. $document->id .'" class="full-doc"><table class="table table-striped">';
 
-		    // the documents are also iterable, to get all fields
 		    foreach($document AS $field => $value)
 		    {
-		       // this converts multivalue fields to a comma-separated string
 		       if (is_array($value)) $value = implode(', ', $value);
 			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
 		    }
@@ -115,16 +112,15 @@ class SolrController extends BaseController {
 		$config = array(
     		'endpoint' => array(
         		'localhost' => array(
-            		'host' => 'eclipse67.campus.jcu.edu',
+            		'host' => '127.0.0.1',
             		'port' => 8983,
             		'path' => '/solr/',
        			)
     		)
 		);
 
-		// create a Solr client instance
+		// Create a Solr client instance
 		$client = new Client($config);
-
 		return $client;
 	}
 	

@@ -8,19 +8,23 @@
             width: 1550px;
         }
     </style>
+<!-- Page wrapper -->
 <div class="container" style="margin-top: 22px;">
     @include('components/menu')
     <div class="row-fluid">
     	<div class="span12">
     		<div class="row-fluid">
+                <!-- Case search form -->
     			<div class="span4 shadow" style="background-color:#fff; padding:12px; height: 800px; overflow-y: auto;">
     				<h3 class="text-center">Case Search</h3>
     				<br>
                     <div id="search-container" style="height:700px; overflow-y: auto;">
-                    @include('components/search-form')
-                </div>
+                        @include('components/search-form')
+                    </div>
     			</div>
+                <!--END case search form -->
                 
+                <!-- Search results viewer -->
                 <div id="search-results" class="span5 shadow" style="background-color:#fff; padding:12px; height: 800px;">
                     <h3 class="text-center">Search Results</h3>
                         @if (!$results)
@@ -41,6 +45,7 @@
                             </div>
                         @endif
                 </div>
+                <!-- END search results viewer -->
     		</div>
     	</div>
     </div>
@@ -54,8 +59,9 @@ $(document).ready(function() {
         $("#search-results").toggleClass('span5 span8');
     @endif
 
+    // re-populate the from with the POST data
     @foreach ($response->keywords as $element)
-    addPopulatedField("{{ $element->operator }}", "{{ $element->field }}", "{{ $element->keyword }}");
+        addPopulatedField("{{ $element->operator }}", "{{ $element->field }}", "{{ $element->keyword }}");
     @endforeach
 });
 
@@ -81,12 +87,12 @@ $(".icon-star2").click(function() {
     $(this).css("color", "#F7C511");
 });
 
-/* form processing before POST */
+// form processing before POST action
 $("#search").click(function() {
     var data = [];
     // get our operators, fields, and keywords
     $("#keywords-container").find(".additional-keywords").each(function() {
-        // check if a keyword exists
+        // check if a keyword exists so we do not submit empty values
         if (!$(this).find(".keyword").val() == "") {
             element = {};
             element ["operator"] = $(this).find(".operator").val();
@@ -100,7 +106,7 @@ $("#search").click(function() {
     $("#search-form").submit();
     });
 
-/* Clones then creates a new keyword field */
+// clones and creates a new keyword field
 function addKeywordFields(qty) {
     for (var i=0; i<qty; i++) {
         var keywordClone = $("#additional-keywords").clone(true);
@@ -132,7 +138,7 @@ function addPopulatedField(operator, field, keyword) {
     }
 }
 
-/* Test to determine if maximum search keywords is reached */
+// test to determine if maximum search keywords is reached
 function isKeywordsFull() {
     if ($('.additional-keyword').length >= 10) {
         return true;

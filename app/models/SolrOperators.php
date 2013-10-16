@@ -2,7 +2,7 @@
 
 class SolrOperators {
 
-	// Operators used in search Solr search queries
+	// Operators used in Solr search queries
 	public static function getOperators() {
 
 		return array(

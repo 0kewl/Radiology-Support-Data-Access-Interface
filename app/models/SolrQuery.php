@@ -4,43 +4,54 @@ use Solarium\Client;
 
 class SolrQuery {
 
-	// Returns all documents in Solr
+	// Get all documents from Solr
 	public function getAllData($client) {
 
-		// get a select query instance
+		// Select query instance
 		$query = $client->createSelect();
 
+		// No query parameters supplied, so we get everything back
 		$resultset = $client->select($query);
 		return $resultset;
 	}
 
-	// Returns a filtered result set of documents from Solr
+	// Get a filtered result set of documents from Solr
 	public function getFilteredData($client, $userQuery) {
 
-		// get a select query instance
+		// Select query instance
 		$query = $client->createSelect();
 
 		$parameters = $userQuery->query;
+
+		// Build the query string
 		foreach ($userQuery->keywords as $element) {
-    		$parameters = $parameters . " " . $element->operator . " " . $element->field . ":" . $element->keyword;
+    		$parameters .= " " . $element->operator . " " . $element->field . ":" . $element->keyword;
 		}
 
-		// get the dismax component and set a boost query
+		// Get the dismax component
+		// From Solr Documentation: "Disjunction refers to the fact that your search is executed
+		// across multiple fields, e.g. title, body and keywords, with different relevance weights.
+		// Read more at http://wiki.apache.org/solr/DisMax
 		$dismax = $query->getDisMax();
 		$dismax->setQueryFields(array_keys(SearchFieldEntity::getFields()));
 
-		// boost query, we might enable this feature in the future
+		// Set a boost query
+		// We might enable this feature in the future...disabled for now
 		// $dismax->setBoostQuery('');
 
-		// override the default setting of 'dismax' to enable 'edismax'
+		// Override the default setting of 'dismax' to enable 'edismax'
+		// From Solr Documentation:  Edismax searches for the query words across multiple fields with
+		// different boosts, based on the significance of each field. Additional options let you influence
+		// the score based on rules specific to each use case (independent of user input).
 		$dismax->setQueryParser('edismax');
 
-		// this query is now a dismax query
 		$query->setQuery($parameters);
 
-		// get highlighting component and apply settings
+		// Get highlighting component and apply settings
 		$hl = $query->getHighlighting();
 		$hl->setFields(array_keys(SearchFieldEntity::getFields()));
+
+		// We want to bold matching results
 		$hl->setSimplePrefix('<b>');
 		$hl->setSimplePostfix('</b>');
 
@@ -51,10 +62,10 @@ class SolrQuery {
 	// Given a case ID, return the matching document
 	public function getCaseData($client, $id)
 	{
-		// get a select query instance
+		// Select query instance
 		$query = $client->createSelect();
 		
-		// this query is now a dismax query
+		// Just search on the ID field
 		$query->setQuery("id:".$id);
 		
 		$resultset = $client->select($query);

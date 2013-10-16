@@ -35,3 +35,4 @@
 <div style="margin:0 auto; text-align:center;">
     <button id="search" class="btn btn-large">Search</button>
 </div>
+<!-- END Search Form -->
