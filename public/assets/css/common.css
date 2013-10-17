@@ -17,7 +17,12 @@ body {
     background: #CFF09E;
 }
 .icon-star2 {
-    color: gray;
+    color: #808080;
     font-size: 20px;
+    cursor: pointer;
+}
+.icon-star3 {
+    color: #F7C511;
+    font-size:20px;
     cursor: pointer;
 }

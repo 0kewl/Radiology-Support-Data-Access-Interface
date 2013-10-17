@@ -67,10 +67,14 @@ $(".show").click(function() {
 
 // save a case for later
 $(".icon-star2").click(function() {
-    $(this).css("color", "#F7C511");
+    $(this).toggleClass("icon-star3");	
     // TODO: Implement bookmark feature
 });
 
+$(".icon-star3").click(function() {
+    $(this).toggleClass("icon-star2");
+    // TODO: Implement bookmark feature
+});
 </script>
 
 </body>
