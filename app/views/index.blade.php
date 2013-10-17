@@ -71,6 +71,12 @@ $("#case-search").click(function() {
 	   $("#search-case").submit();
     }
 });
+
+//display all cases in database
+$("#all-search").click(function() {
+	$("#main-query").val("*");
+	$("#search").click();
+});
 </script>
 
 </body>

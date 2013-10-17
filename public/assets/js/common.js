@@ -42,12 +42,15 @@ $("#search").click(function() {
 $("#add-field").click(function() {
     if (!isKeywordsFull()) {
         addKeywordFields(1);
+		
     }
+	
 });
 
 // remove the corresponding field
 $("#remove-field").click(function() {
     $(this).parent().css('class', 'additional-keywords').remove();
+	isKeywordsFull();
 });
 
 // clones and creates a new keyword field
@@ -89,8 +92,11 @@ function addPopulatedField(operator, field, keyword) {
 
 // determine if maximum search keywords is reached
 function isKeywordsFull() {
-    if ($('.additional-keyword').length >= 10) {
-        return true;
+    if ($('.additional-keyword').length < 10) {
+        $("#add-field").show();
+		return false;
     }
-    return false;
+	//disable button
+	$("#add-field").hide();
+	return true;
 }

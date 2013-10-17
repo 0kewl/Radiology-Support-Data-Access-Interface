@@ -5,6 +5,7 @@
 	    <ul class="nav">
 	        <li><a href="{{ route('home') }}">Search Page</a></li>
 	        <li><a href="#">Saved Cases</a></li>
+			<li><a id="all-search" href="#">All Cases</a></li>
 	    </ul>
 	</div>
 </div>
