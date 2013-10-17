@@ -21,7 +21,7 @@
                         {{ Form::select('operator', $operators, '', array('id' => 'operator','class' => 'operator input-small')) }}
                         {{ Form::select('field', array('' => '- Field -') + $keywords, 'default', array('id' => 'field','class' => 'field input-medium')) }}
                         <input id="keyword" name="keyword" placeholder="Keyword" class="keyword input-large additional-keyword" type="text">
-						<button id="remove-field" class="btn btn-mini" type="button">-Remove Field</button>
+						<button id="remove-field" class="btn btn-mini" type="button" style="display:none;">- Remove Field</button>
                     </div>
                 </div>
             </div>

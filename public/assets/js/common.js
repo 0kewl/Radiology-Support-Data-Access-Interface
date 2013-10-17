@@ -46,8 +46,8 @@ $("#add-field").click(function() {
 });
 
 // remove the corresponding field
-$("#remove-field").click(function() {	
-    $( this ).parent().css('class', 'additional-keywords').remove();
+$("#remove-field").click(function() {
+    $(this).parent().css('class', 'additional-keywords').remove();
 });
 
 // clones and creates a new keyword field
@@ -56,6 +56,10 @@ function addKeywordFields(qty) {
         var keywordClone = $("#additional-keywords").clone(true);
         keywordClone.find("input[type^=text]").each(function() {
             $(this).val("");
+        });
+        keywordClone.find("button[id^=remove-field]").each(function() {
+            // remove the default display:none property
+            $(this).css("display", "");
         });
         keywordClone.appendTo("#keywords-container");
     }
