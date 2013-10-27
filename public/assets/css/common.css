@@ -1,21 +1,26 @@
 /* Common CSS styles across web pages */
 body {
-    background-color:#AAB3AB;
+    background-color:#585858;
 }
 .shadow {
     -webkit-box-shadow: 0 4px 2px -2px #808080;
     -moz-box-shadow: 0 4px 2px -2px #808080;
-    box-shadow: 0 4px 2px -2px #808080;
+    box-shadow: 0 4px 2px -2px #000000;
 }
+/*The boxes*/
 .box {
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
-    background-color:#F5F5F5;
+    background-color:#FFF;
+	border-style:solid;
+	border-width:medium;
 }
+/*The box background when viewed*/
 .viewing {
     background: #CFF09E;
 }
+/*star icons*/
 .icon-star2 {
     color: #808080;
     font-size: 20px;

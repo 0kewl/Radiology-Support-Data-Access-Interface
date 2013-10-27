@@ -8,7 +8,7 @@
         <div id="content-window">
             <div class="row-fluid">
                 <!-- Cases search form -->
-                <div class="span8 shadow" style="background-color:#fff; padding:12px; height:675px;">
+                <div class="span8 shadow" style="background-color:#A0A0A0 ; padding:12px; height:675px;">
                     <h3 class="text-center">Case Search</h3>
                     <br>
                     <div id="search-container" style="height:575px; overflow-y: auto;">
@@ -18,7 +18,7 @@
                 <!-- END search form -->
 
                 <!-- Case lookup form -->
-                <div class="span4 shadow" style="background-color:#fff; padding:12px; height:675px;">
+                <div class="span4 shadow" style="background-color:#A0A0A0 ; padding:12px; height:675px;">
                     <h3 class="text-center">Case Lookup</h3>   
                     <br>
                     <form class="form-inline" id="search-case" name="search-case" action="case-lookup" method="post">

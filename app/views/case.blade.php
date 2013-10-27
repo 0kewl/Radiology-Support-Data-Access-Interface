@@ -15,7 +15,7 @@
         <div class="span12">
             <div class="row-fluid">
                 <!-- Case document -->
-                <div id="case-information" class="span4 shadow" style="background-color:#fff; padding:12px; height: 800px; overflow-y: auto;">
+                <div id="case-information" class="span4 shadow" style="background-color:#A0A0A0; padding:12px; height: 800px; overflow-y: auto;">
                     <h3 class="text-center">Case Information</h3>
                     <br>
                     <div id="case-information-container" style="height:700px; overflow-y: auto;">

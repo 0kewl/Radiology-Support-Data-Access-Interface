@@ -15,7 +15,7 @@
     	<div class="span12">
     		<div class="row-fluid">
                 <!-- Case search form -->
-    			<div class="span4 shadow" style="background-color:#fff; padding:12px; height: 800px; overflow-y: auto;">
+    			<div class="span4 shadow" style="background-color:#A0A0A0; padding:12px; height: 800px; overflow-y: auto;">
     				<h3 class="text-center">Case Search</h3>
     				<br>
                     <div id="search-container" style="height:700px; overflow-y: auto;">
