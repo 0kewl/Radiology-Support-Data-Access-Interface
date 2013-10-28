@@ -116,7 +116,7 @@ class SolrController extends BaseController {
 		// Show documents using the resultset iterator
 		foreach ($resultset as $document) {
 
-			$results .= '<div id="res-' . $document->id .'"class="result-snippet box" style=" width: 265px; padding: 12px;"><div style="text-align:right"><i class="icon-star2"></i></div>';
+			$results .= '<div id="res-' . $document->id .'"class="result-snippet box" style="background-color:gray; width: 265px; padding: 12px;"><div style="text-align:right"><span style="color:#fff; float:left; font-size:11px; font-weight:bold;">' . $document->title[0] .'</span><i class="icon-star2"></i></div>';
 
 		    // Highlighting results can be fetched by document id (the field defined as the unique key in this schema)
 		    if (isset($highlighting)) {
@@ -126,13 +126,13 @@ class SolrController extends BaseController {
 					$results .= '<div style="padding: 12px;"><table class="table table-condensed">';
 
 			    	foreach($highlightedDoc as $key => $val) {
-			    		$results .= '<tr><td style="border-top: 0;">' . $key . '</td><td style="border-top: 0;"><strong> ' . $val[0] . '</strong></td></tr>';
+			    		$results .= '<tr><td style="border-top: 0;"><span style="color: #fff;">' . $key . '</span></td><td style="border-top: 0;"><strong><span style="color: #fff;">' . $val[0] . '</span></strong></td></tr>';
 			        }
 			        $results .= '</table></div>';
 			    }
 			}
 
-		    $results .= '<button id="' . $document->id . '"class="show btn btn-success" type="button">View Document</button><div id="'. $document->id .'" class="full-doc" style="display: none;"><table class="table table-striped" style="padding: 5px; margin: 5px;">';
+		    $results .= '<button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button><div id="'. $document->id .'" class="full-doc" style="display: none;"><table class="table table-striped" style="padding: 5px; margin: 5px;">';
 
 		    foreach($document AS $field => $value)
 		    {

@@ -21,15 +21,15 @@
                         {{ Form::select('operator', $operators, '', array('id' => 'operator','class' => 'operator input-small')) }}
                         {{ Form::select('field', array('' => '- Field -') + $keywords, 'default', array('id' => 'field','class' => 'field input-medium')) }}
                         <input id="keyword" name="keyword" placeholder="Keyword" class="keyword input-large additional-keyword" type="text">
-						<button id="remove-field" class="btn btn-mini" type="button" style="display:none;">- Remove Field</button>
+						<button id="remove-field" class="btn btn-mini btn-inverse" type="button" style="display:none;">- Remove Field</button>
                     </div>
                 </div>
             </div>
         </div>
-        <button id="add-field" class="btn btn-small" type="button">+ Add Field</button>
+        <button id="add-field" class="btn btn-small btn-inverse" type="button">+ Add Field</button>
     </fieldset>
 </form>
 <div style="margin:0 auto; text-align:center;">
-    <button id="search" class="btn btn-large">Search</button>
+    <button id="search" class="btn btn-large btn-inverse">Search</button>
 </div>
 <!-- END Search Form -->

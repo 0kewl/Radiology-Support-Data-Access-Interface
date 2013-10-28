@@ -15,7 +15,7 @@
             <div id="results-container" class="span4" style="margin-right: 20px; float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
                 {{ $tables }}
             </div>
-				<div id="document-viewer" class="span7" style="float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
+				<div id="document-viewer" class="span7" style="background-color:gray; float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
             </div>
         @endif
 </div>

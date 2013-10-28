@@ -36,7 +36,7 @@
                             <input id="keywords-array" name="keywords-array" type="hidden">
                             <br>
                             <div style="margin:0 auto; text-align:center;">
-                                <button id="case-search" class="btn btn-large" type="button" style="margin-top: 75px;">Search &amp; Compare Cases</button>
+                                <button id="case-search" class="btn btn-large btn-inverse" type="button" style="margin-top: 75px;">Search &amp; Compare Cases</button>
                             </div>
                         </fieldset>
                     </form>             
