@@ -14,13 +14,14 @@
         <br>
         <input id="json" name="json" type="hidden">
         <div id="keywords-container">
+			<h4 style="color: #FFFFFF;">Insert Search Keyword(s)</h4>
             <div id="additional-keywords" class="additional-keywords">
                 <!-- Dropdown Select-->
                 <div class="control-group">
                     <div class="controls">
                         {{ Form::select('operator', $operators, '', array('id' => 'operator','class' => 'operator input-small')) }}
                         {{ Form::select('field', array('' => '- Field -') + $keywords, 'default', array('id' => 'field','class' => 'field input-medium')) }}
-                        <input id="keyword" name="keyword" placeholder="Keyword" class="keyword input-large additional-keyword" type="text">
+                        <input id="keyword" name="keyword" placeholder="Keyword" class="keyword input-large additional-keyword" type="text" color="white">
 						<button id="remove-field" class="btn btn-mini btn-inverse" type="button" style="display:none;">- Remove Field</button>
                     </div>
                 </div>

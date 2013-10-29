@@ -18,6 +18,7 @@
     			<div class="span4 shadow" style="background-color:#A0A0A0; padding:12px; height: 800px; overflow-y: auto;">
     				<h3 class="text-center">Case Search</h3>
     				<br>
+					<h4 style="color: #FFFFFF;">Search Query</h4>
                     <div id="search-container" style="height:700px; overflow-y: auto;">
                         @include('components/search-form')
                     </div>

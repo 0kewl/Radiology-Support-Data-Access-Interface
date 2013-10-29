@@ -11,6 +11,7 @@
                 <div class="span8 shadow" style="background-color:#A0A0A0 ; padding:12px; height:675px;">
                     <h3 class="text-center">Case Search</h3>
                     <br>
+					<h4 style="color: #FFFFFF;">Search Query</h4>
                     <div id="search-container" style="height:575px; overflow-y: auto;">
                         @include('components/search-form')
                     </div>
@@ -21,6 +22,7 @@
                 <div class="span4 shadow" style="background-color:#A0A0A0 ; padding:12px; height:675px;">
                     <h3 class="text-center">Case Lookup</h3>   
                     <br>
+					<h4 style="color: #FFFFFF;">Enter Case ID</h4>
                     <form class="form-inline" id="search-case" name="search-case" action="case-lookup" method="post">
                         <fieldset>
                             <!-- Text input-->
