@@ -5,9 +5,9 @@
         <div class="control-group">
             <div class="controls">
                 @if (isset($response))
-                    <input id="main-query" name="main-query" placeholder="Search Query" class="input-block-level" type="text" value="{{ $response->query }}">
+                    <input id="main-query" name="main-query" class="input-block-level" type="text" value="{{ $response->query }}">
                 @else
-                    <input id="main-query" name="main-query" placeholder="Search Query" class="input-block-level" type="text">
+                    <input id="main-query" name="main-query" class="input-block-level" type="text">
                 @endif
             </div>
         </div>
@@ -21,7 +21,7 @@
                     <div class="controls">
                         {{ Form::select('operator', $operators, '', array('id' => 'operator','class' => 'operator input-small')) }}
                         {{ Form::select('field', array('' => '- Field -') + $keywords, 'default', array('id' => 'field','class' => 'field input-medium')) }}
-                        <input id="keyword" name="keyword" placeholder="Keyword" class="keyword input-large additional-keyword" type="text" color="white">
+                        <input id="keyword" name="keyword" class="keyword input-large additional-keyword" type="text" color="white">
 						<button id="remove-field" class="btn btn-mini btn-inverse" type="button" style="display:none;">- Remove Field</button>
                     </div>
                 </div>

@@ -28,7 +28,7 @@
                             <!-- Text input-->
                             <div class="control-group">
                                 <div class="controls">
-                                    <input id="case-id" name="case-id" placeholder="Enter Case ID" class="input-block-level" type="text">
+                                    <input id="case-id" name="case-id" class="input-block-level" type="text">
                                     <br>
                                     <br>
                                     <h5>Find similar cases based on:</h5>
