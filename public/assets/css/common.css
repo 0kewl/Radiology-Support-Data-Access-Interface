@@ -20,14 +20,3 @@ body {
 .viewing {
     background: gray;
 }
-/*star icons*/
-.icon-star2 {
-    color: #808080;
-    font-size: 20px;
-    cursor: pointer;
-}
-.icon-star3 {
-    color: #F7C511;
-    font-size:20px;
-    cursor: pointer;
-}

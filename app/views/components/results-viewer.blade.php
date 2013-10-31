@@ -8,9 +8,9 @@
             </div>
         @else
             @if ($resultCount == "1")
-                <div class="alert alert-success" style="width: 250px;"><span><b>Your search matched {{ $resultCount }} document.</b></span></div>
+                <div class="alert alert-info" style="font-size: 15px; width: 255px;"><span><b>Your search matched {{ $resultCount }} case.</b></span></div>
             @else
-                <div class="alert alert-success" style="width: 250px;"><span><b>Your search matched {{ $resultCount }} documents.</b></span></div>
+                <div class="alert alert-info" style="font-size: 15px; width: 255px;"><span><b>Your search matched {{ $resultCount }} cases.</b></span></div>
             @endif
             <div id="results-container" class="span4" style="margin-right: 20px; float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
                 {{ $tables }}

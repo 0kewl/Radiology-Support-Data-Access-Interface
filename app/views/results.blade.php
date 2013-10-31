@@ -15,11 +15,11 @@
     	<div class="span12">
     		<div class="row-fluid">
                 <!-- Case search form -->
-    			<div class="span4 shadow" style="background-color:#A0A0A0; padding:12px; height: 800px; overflow-y: auto;">
+    			<div class="span4 shadow" style="background-color:#A0A0A0; padding:12px; height: 800px; overflow-y: hidden;">
     				<h3 class="text-center">Case Search</h3>
     				<br>
 					<h4 style="color: #FFFFFF;">Search Query</h4>
-                    <div id="search-container" style="height:700px; overflow-y: auto;">
+                    <div id="search-container" style="height:650px; overflow-y: auto;">
                         @include('components/search-form')
                     </div>
     			</div>
@@ -66,15 +66,10 @@ $(".show").click(function() {
     $("#document-viewer").scrollTop(0);
 });
 
-// save a case for later
-$(".icon-star2").click(function() {
-    $(this).toggleClass("icon-star3");	
-    // TODO: Implement bookmark feature
-});
-
-$(".icon-star3").click(function() {
-    $(this).toggleClass("icon-star2");
-    // TODO: Implement bookmark feature
+// display all cases in database
+$("#all-search").click(function() {
+    $("#main-query").val("*");
+    $("#search").click();
 });
 </script>
 

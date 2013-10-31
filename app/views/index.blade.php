@@ -74,7 +74,7 @@ $("#case-search").click(function() {
     }
 });
 
-//display all cases in database
+// display all cases in database
 $("#all-search").click(function() {
 	$("#main-query").val("*");
 	$("#search").click();

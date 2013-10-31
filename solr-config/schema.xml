@@ -123,7 +123,8 @@
    <field name="physician" type="text_general" indexed="true" stored="true" required="false" multiValued="false" termVectors="true" /> 
    <field name="body" type="text_general" indexed="true" stored="true" required="false" multiValued="true" termVectors="true" /> 
    <field name="impression" type="text_general" indexed="true" stored="true" required="false" multiValued="true" termVectors="true" /> 
-   <field name="positive" type="text_general" indexed="true" stored="true" required="false" multiValued="false" termVectors="true" /> 
+   <field name="positive" type="text_general" indexed="true" stored="true" required="false" multiValued="false" termVectors="true" />
+   <field name="tag" type="text_general" indexed="true" stored="true" required="false" multiValued="true" termVectors="true" />
    <field name="_version_" type="long" indexed="true" stored="true" required="false" />
 
    <!-- Common metadata fields, named specifically to match up with
