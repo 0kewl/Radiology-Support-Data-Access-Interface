@@ -117,8 +117,8 @@ class SolrController extends BaseController {
 		foreach ($resultset as $document) {
 
 			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width: 265px; padding: 10px;"><div style="text-align:right"><span style="color:#fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
-
-		    // Highlighting results can be fetched by document id (the field defined as the unique key in this schema)
+			
+			// Highlighting results can be fetched by document id (the field defined as the unique key in this schema)
 		    if (isset($highlighting)) {
 		    	$highlightedDoc = $highlighting->getResult($document->id);
 		    
@@ -131,9 +131,8 @@ class SolrController extends BaseController {
 			        $results .= '</table></div>';
 			    }
 			}
-
-		    $results .= '<button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button><div id="'. $document->id .'" class="full-doc" style="color: #fff; display: none;"><table class="table" style="padding: 4px; margin: 4px;">';
-
+			$results .= '<button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button> <button id="' . $document->id . '"class="show btn btn-inverse" type="button" style="float:right; position:relative;">Hash Tag</button><div id="'. $document->id .'" class="full-doc" style="color: #fff; display: none;"><table class="table" style="padding: 4px; margin: 4px;">';
+			
 		    foreach($document AS $field => $value)
 		    {
 		       // Converts multi-valued fields to a comma separated string

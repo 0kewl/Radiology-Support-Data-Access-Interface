@@ -16,7 +16,8 @@
     		<div class="row-fluid">
                 <!-- Case search form -->
     			<div class="span4 shadow" style="background-color:#A0A0A0; padding:12px; height: 800px; overflow-y: hidden;">
-    				<h3 class="text-center">Case Search</h3>
+    				<button id="search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
+					<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
     				<br>
 					<h4 style="color: #FFFFFF;">Search Query</h4>
                     <div id="search-container" style="height:650px; overflow-y: auto;">
