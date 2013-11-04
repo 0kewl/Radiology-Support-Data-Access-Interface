@@ -131,7 +131,9 @@ class SolrController extends BaseController {
 			        $results .= '</table></div>';
 			    }
 			}
-			$results .= '<button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button> <button id="' . $document->id . '"class="show btn btn-inverse" type="button" style="float:right; margin-top:-30px;">Hash Tag</button><div id="'. $document->id .'" class="full-doc" style="color: #fff; display: none;"><table class="table" style="padding: 4px; margin: 4px;">';
+			$results .= '<button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button>';
+			$results .= '<button id="add-tag-' . $document->id . '"class="show btn btn-inverse btn-small" type="button" style="float:right; margin-top:-30px;"><i class="icon-tag icon-white"></i> Tag</button>';
+			$results .= '<div id="'. $document->id .'" class="full-doc" style="color: #fff; display: none;"><table class="table" style="padding: 4px; margin: 4px;">';
 			
 		    foreach($document AS $field => $value)
 		    {

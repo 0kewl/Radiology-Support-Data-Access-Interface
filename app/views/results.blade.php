@@ -16,7 +16,7 @@
     		<div class="row-fluid">
                 <!-- Case search form -->
     			<div class="span4 shadow" style="background-color:#A0A0A0; padding:12px; height: 800px; overflow-y: hidden;">
-    				<button id="search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
+    				<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
 					<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
     				<br>
 					<h4 style="color: #FFFFFF;">Search Query</h4>
@@ -72,6 +72,7 @@ $("#all-search").click(function() {
     $("#main-query").val("*");
     $("#search").click();
 });
+
 </script>
 
 </body>
