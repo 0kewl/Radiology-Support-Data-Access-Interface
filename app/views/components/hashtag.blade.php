@@ -34,9 +34,14 @@ function getHashtags(caseID, callback) {
     spinner.stop();
 
     var element = '<span>Tags: </span>';
-    $.each(msg['hashtags'], function(index, value) {
-      element = element + '<a href="' + value + '" style="margin-right:5px; color:#fff;">#' + value + '</a>';
-    });
+    if (msg['hashtags'] != null) {
+      $.each(msg['hashtags'], function(index, value) {
+        element = element + '<a href="' + value + '" style="margin-right:5px; color:#fff;">#' + value + '</a>';
+      });
+    }
+    else {
+      element = '';
+    }
       callback(element);
   });
 }
