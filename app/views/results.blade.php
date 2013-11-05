@@ -26,7 +26,7 @@
 						</div>
 					</div>
 					<div id="image-option">
-						
+						<p>test</p>
 					</div>
     			</div>
                 <!--END case search form -->
@@ -89,8 +89,8 @@ $(".show").click(function() {
     });
 	
 	// show the images attributed to the case (document)
-	//$("#image-option").show();
-	//$("#search-option").hide();
+	$("#image-option").show();
+	$("#search-option").hide();
 });
 
 // prevents bad things from happening :)
@@ -117,12 +117,13 @@ function reloadDocument(caseID) {
         $("#document-viewer").scrollTop(0);
         $("#hashtag-container").html(hashtags);
     });
-	
-	// toggle between images and search fields
-	//$("#image-option").click(function(){
-	//	$(this).hide();
-	//});
 }
+
+// toggle between images and search fields
+$("#image-option").click(function(){
+	$("#image-option").hide();
+	$("#search-option").show();
+});
 </script>
 
 @include('components/hashtag')
