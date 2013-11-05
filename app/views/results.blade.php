@@ -86,6 +86,31 @@ $(".show").click(function() {
 });
 // prevents bad things from happening :)
 $('.add-hashtag').on('click', function(e) {e.preventDefault(); e.stopPropagation(); return true;});
+
+
+
+// display the selected case (document)
+function reloadDocument(caseID) {
+    $(".result-snippet").each(function() {
+        // clear any cases being viewed
+        $(this).removeClass("viewing").css("background-color", 'gray');
+    });
+
+    var id = caseID;
+    $("#res-" + id).addClass("viewing").css("background-color", '#444444');
+
+    $("#document-viewer").html("");
+    $("#hashtag-container").html("");
+
+    getHashtags(id, function(hashtags) {
+        // show the selected case
+        $("#" + id + ".full-doc").clone().appendTo("#document-viewer").fadeIn("fast"), function() {
+            $('#document-viewer').show();
+        }
+        $("#document-viewer").scrollTop(0);
+        $("#hashtag-container").html(hashtags);
+    });
+}
 </script>
 
 @include('components/hashtag')

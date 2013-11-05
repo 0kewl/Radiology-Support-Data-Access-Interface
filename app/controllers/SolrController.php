@@ -80,13 +80,15 @@ class SolrController extends BaseController {
 	public function postAddHashtags()
 	{
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
-		$hashtags = Input::get('hashtags');
+		$hashtags = strtolower(Input::get('hashtags'));
 
 		// Get a Solr client
 		$client = $this->getSolrClient();
 
 		$query = new SolrQuery();
 		$query->addHashtag($client, $caseID, $hashtags);
+		// Let's be friendly and return the case id we modified
+		return $caseID;
 	}
 
 	public function getHashtags()
