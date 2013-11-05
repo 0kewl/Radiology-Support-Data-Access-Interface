@@ -26,7 +26,7 @@
 						</div>
 					</div>
 					<div id="image-option">
-						<p>test</p>
+						<img id="image-holder" src="{{ asset('assets/img/medical_images/')}}/" alt="case image">
 					</div>
     			</div>
                 <!--END case search form -->
@@ -42,6 +42,8 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	$("#image-option").hide();
+	
     $(".add-hashtag").popover({
         placement: 'top',
         html: 'true',
@@ -79,6 +81,8 @@ $(".show").click(function() {
     $("#document-viewer").html("");
     $("#hashtag-container").html("");
 
+	var caseID = $(this).attr('id');
+		
     getHashtags($(this).attr('id'), function(hashtags) {
         // show the selected case
         $("#" + id + ".full-doc").clone().appendTo("#document-viewer").fadeIn("fast"), function() {
@@ -89,7 +93,11 @@ $(".show").click(function() {
     });
 	
 	// show the images attributed to the case (document)
-	$("#image-option").show();
+	$("#image-option").each(function() {
+		$(this).attr('id');
+		$("#image-holder").attr("src", "caseID");
+		$(this).show();
+	});
 	$("#search-option").hide();
 });
 
