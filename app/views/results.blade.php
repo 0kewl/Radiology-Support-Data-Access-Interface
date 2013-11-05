@@ -15,7 +15,7 @@
     	<div class="span12">
     		<div class="row-fluid">
                 <!-- Case search form -->
-    			<div class="span4 shadow" style="background-color:#A0A0A0; padding:12px; height: 800px; overflow-y: hidden;">
+    			<div class="span4 shadow" style="background-color:#707070; padding:12px; height: 800px; overflow-y: hidden;">
     				<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
 					<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
     				<br>
@@ -25,19 +25,30 @@
                     </div>
     			</div>
                 <!--END case search form -->
-
+                
                 @include('components/results-viewer')
+
     		</div>
     	</div>
     </div>
 </div>
 
-<!-- Load the common jQuery/JavaScript code -->
-<script type="text/javascript" src="{{asset('assets/js/common.js')}}"></script>
+@include('components/footer')
 
- <!-- jQuery/JavaScript Code -->
 <script type="text/javascript">
 $(document).ready(function() {
+
+    $(".add-hashtag").popover({
+        placement: 'top',
+        html: 'true',
+        title : 'Case Hashtags'
+    });
+
+    var hashtagPopover = '<strong>Add Hashtags</strong><br><small>Comma separate multiple tags</small><br><br>' +
+                         '<input type="text" id="hashtag-input"><br><button id="add-hash"class="btn btn-inverse btn-small" onClick="addHashtag($(this).parents(&quot;.result-snippet&quot;).attr(&quot;id&quot;),$(&quot;#hashtag-input&quot;).val());">Add</button>' +
+                         '<button type="button" id="close" class="btn btn-small btn-inverse" onclick="$(&quot;.add-hashtag&quot;).popover(&quot;hide&quot;);">Cancel</button>';
+
+    $('.add-hashtag').attr('data-content', hashtagPopover);
 
     @if (!isset($caseid))
         $("#search-results").toggleClass('span8', 'span5');
@@ -55,25 +66,29 @@ $(document).ready(function() {
 $(".show").click(function() {
     $(".result-snippet").each(function() {
         // clear any cases being viewed
-        $(this).removeClass("viewing");
+        $(this).removeClass("viewing").css("background-color", 'gray');
     });
 
     var id = $(this).attr("id");
-    $("#res-" + id).addClass("viewing");
+    $("#res-" + id).addClass("viewing").css("background-color", '#444444');
+
     $("#document-viewer").html("");
+    $("#hashtag-container").html("");
 
-    // show the selected case
-    $("#" + id + ".full-doc").clone().appendTo("#document-viewer").show();
-    $("#document-viewer").scrollTop(0);
+    getHashtags($(this).attr('id'), function(hashtags) {
+        // show the selected case
+        $("#" + id + ".full-doc").clone().appendTo("#document-viewer").fadeIn("fast"), function() {
+            $('#document-viewer').show();
+        }
+        $("#document-viewer").scrollTop(0);
+        $("#hashtag-container").html(hashtags);
+    });
 });
-
-// display all cases in database
-$("#all-search").click(function() {
-    $("#main-query").val("*");
-    $("#search").click();
-});
-
+// prevents bad things from happening :)
+$('.add-hashtag').on('click', function(e) {e.preventDefault(); e.stopPropagation(); return true;});
 </script>
+
+@include('components/hashtag')
 
 </body>
 </html>

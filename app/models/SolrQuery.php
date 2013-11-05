@@ -35,6 +35,8 @@ class SolrQuery {
 		$dismax = $query->getDisMax();
 		$dismax->setQueryFields(array_keys(SearchFieldEntity::getFields()));
 
+		$query->setRows(100);
+
 		// Set a boost query
 		// We might enable this feature in the future...disabled for now
 		// $dismax->setBoostQuery('');
@@ -52,8 +54,8 @@ class SolrQuery {
 		$hl->setFields(array_keys(SearchFieldEntity::getFields()));
 
 		// We want to bold matching results
-		$hl->setSimplePrefix('<b>');
-		$hl->setSimplePostfix('</b>');
+		$hl->setSimplePrefix('<u>');
+		$hl->setSimplePostfix('</u>');
 
 		$resultset = $client->select($query);
 		return $resultset;
@@ -88,6 +90,58 @@ class SolrQuery {
 		//$query->createFilterQuery('query')->setQuery('inStock:true');
 		//$query->setInterestingTerms('details');
 		$query->setMatchInclude(true);
+		$resultset = $client->select($query);
+		return $resultset;
+	}
+
+	public function addHashtag($client, $id, $newHashtags)
+	{
+		// We need to get the current case's tags
+		$result = $this->getCaseData($client, $id);
+		$currentTags = new stdClass();
+		// Get the tag property
+		foreach ($result as $document) {
+			$currentTags = $document->tag;
+		}
+
+		// The list of all hashtags, both new and existing
+		$updatedHashtags = array();
+
+		// Tags already existing in Solr
+		if (!empty($currentTags)) {
+			foreach ($currentTags as $t) {
+				array_push($updatedHashtags, $t);
+			}
+		}
+		// Turn the list of new hashtags into an array
+		$updatedHashtags = array_merge(explode(',', $newHashtags), $updatedHashtags);
+
+		$update = $client->createUpdate();
+		$doc= $update->createDocument();
+
+		$doc->setKey('id', $id);              
+
+	    $doc->setField('tag', $updatedHashtags);
+	    $doc->setFieldModifier('tag', 'set');     
+
+		// Add document and commit
+		$update->addDocument($doc);
+		$update->addCommit();
+
+		// Runs the query and returns the result
+		$result = $client->update($update);
+	}
+
+	// Given a case ID, return a list of hashtags
+	public function getHashtag($client, $id)
+	{
+		// Select query instance
+		$query = $client->createSelect();
+		
+		// Just search on the ID field
+		$query->setQuery("id:" . $id);
+		$query->setFields(array('id','tag'));
+		
 		$resultset = $client->select($query);
 		return $resultset;
 	}

@@ -1,5 +1,5 @@
 /*
- *   Common jQuery functions which support form rules and processing.
+ *   Common jQuery functions
  */
 
 // search form processing before HTTP POST action
@@ -43,14 +43,19 @@ $("#add-field").click(function() {
     if (!isKeywordsFull()) {
         addKeywordFields(1);
 		
-    }
-	
+    }	
 });
 
 // remove the corresponding field
 $("#remove-field").click(function() {
     $(this).parent().css('class', 'additional-keywords').remove();
-	isKeywordsFull();
+    isKeywordsFull();
+});
+
+// display all cases in database
+$("#all-search").click(function() {
+    $("#main-query").val("*");
+    $("#search").click();
 });
 
 // clones and creates a new keyword field

@@ -61,19 +61,53 @@ class SolrController extends BaseController {
 		$doc = $this->renderSingleDocument($result);
 		$tables = '';
 
+		$resultCount = 0;
 		foreach ($result as $document) {
 			$id = $document->id;
 			$similarCases = $this->findSimilarCases($id, $similarKeywords);
 
 			$tables .= $this->renderDocumentTables($similarCases, NULL);
+
+			// How many results did we find?
+			$resultCount = $similarCases->getNumFound();
 		}
 
 		$fields = SearchFieldEntity::getFields();
 
-		// How many results did we find?
-		$resultCount = $result->getNumFound();
-
 		return View::make('case', compact('doc', 'tables', 'resultCount'));
+	}
+
+	public function postAddHashtags()
+	{
+		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
+		$hashtags = Input::get('hashtags');
+
+		// Get a Solr client
+		$client = $this->getSolrClient();
+
+		$query = new SolrQuery();
+		$query->addHashtag($client, $caseID, $hashtags);
+	}
+
+	public function getHashtags()
+	{
+		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
+
+		// Get a Solr client
+		$client = $this->getSolrClient();
+
+		$query = new SolrQuery();
+		$resultset = $query->getHashtag($client, $caseID);
+
+		foreach ($resultset as $document) {
+			$hashtags = $document->tag;
+		}
+
+		$data = array(
+			'caseID'   => $caseID,
+			'hashtags' => $hashtags
+		);
+		return $data;
 	}
 
 	private function findSimilarCases($caseID, $keywords)
@@ -100,8 +134,8 @@ class SolrController extends BaseController {
 
 		    foreach($document AS $field => $value)
 		    {
-		       if (is_array($value)) $value = implode(', ', $value);
-			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
+		    	if (is_array($value)) $value = implode(', ', $value);
+			   	$results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
 		    }
 		    $results = $results . '</table></div><br>';
 		}
@@ -131,20 +165,24 @@ class SolrController extends BaseController {
 			        $results .= '</table></div>';
 			    }
 			}
-			$results .= '<button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button>';
-			$results .= '<button id="add-tag-' . $document->id . '"class="show btn btn-inverse btn-small" type="button" style="float:right; margin-top:-30px;"><i class="icon-tag icon-white"></i> Tag</button>';
 			$results .= '<div id="'. $document->id .'" class="full-doc" style="color: #fff; display: none;"><table class="table" style="padding: 4px; margin: 4px;">';
-			
+
 		    foreach($document AS $field => $value)
 		    {
-		       // Converts multi-valued fields to a comma separated string
-		       if (is_array($value)) $value = implode(', ', $value);
-
-			   $results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
+		    	// Converts multi-valued fields to a comma separated string
+		        if (is_array($value)) $value = implode(', ', $value);
+		        
+		        if ($field != 'tag') {
+					$results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
+				}
 		    }
 		    
-		    $results = $results . '</table></div></div><br>';
+		    $results .= '</table></div>';
+		    $results .= '<div><br><button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button>';
+			$results .= '<a href="#" id="add-tag-' . $document->id . '"class=" add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-30px;" data-toggle="popover"><i class="icon-tag icon-white"></i> Tags</a></div>';
+		    $results .= '</div><br>';
 		}
+
 		return $results;
 	}
 

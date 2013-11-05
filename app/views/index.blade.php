@@ -8,7 +8,7 @@
         <div id="content-window">
             <div class="row-fluid">
                 <!-- Cases search form -->
-                <div class="span8 shadow" style="background-color:#A0A0A0 ; padding:12px; height:675px;">
+                <div class="span8 shadow" style="background-color:#707070; padding:12px; height:675px;">
                     <h3 class="text-center">Case Search</h3>
                     <br>
 					<h4 style="color: #FFFFFF;">Search Query</h4>
@@ -19,7 +19,7 @@
                 <!-- END search form -->
 
                 <!-- Case lookup form -->
-                <div class="span4 shadow" style="background-color:#A0A0A0 ; padding:12px; height:675px;">
+                <div class="span4 shadow" style="background-color:#707070; padding:12px; height:675px;">
                     <h3 class="text-center">Case Lookup</h3>   
                     <br>
 					<h4 style="color: #FFFFFF;">Enter Case ID</h4>
@@ -48,37 +48,26 @@
         </div>
     </div>
 
-<!-- Load the common jQuery/JavaScript code -->
-<script type="text/javascript" src="{{asset('assets/js/common.js')}}"></script>
+@include('components/footer')
 
-<!-- jQuery/JavaScript Code -->
 <script type="text/javascript">
 $(document).ready(function() {
-    $('.selectpicker').selectpicker();
-    // show two additional keyword inputs on page load
-    addKeywordFields(2);
+    $(".selectpicker").selectpicker();
+    addKeywordFields(2); // show two additional keyword inputs on page load
 });
 
-// case search processing before HTTP POST action
 $("#case-search").click(function() {
 
     if ($("#case-id").val() == "") {
         // oops...the case id input is empty
         alert("Please enter a Case ID.");
-        // don't submit the form
         return false;
     }
     else {
-       // send the HTTP POST request
 	   $("#search-case").submit();
     }
 });
 
-// display all cases in database
-$("#all-search").click(function() {
-	$("#main-query").val("*");
-	$("#search").click();
-});
 </script>
 
 </body>

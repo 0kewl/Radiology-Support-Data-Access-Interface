@@ -19,3 +19,9 @@ Route::post('results', array('as' => 'results', 'uses' => 'SolrController@postRe
 
 // The case information plus related cases page
 Route::post('case-lookup', array('as' => 'case-results', 'uses' => 'SolrController@postCaseLookup'));
+
+// Get hashtags
+Route::get('get-hashtags', array('as' => 'get-hashtags', 'uses' => 'SolrController@getHashtags'));
+
+// Add hashtags
+Route::post('add-hashtags', array('as' => 'add-hashtags', 'uses' => 'SolrController@postAddHashtags'));

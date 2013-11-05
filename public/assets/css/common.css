@@ -1,6 +1,6 @@
 /* Common CSS styles across web pages */
 body {
-    background-color:gray;
+    background-color: #595959;
 }
 .shadow {
     -webkit-box-shadow: 0 4px 2px -2px #808080;
@@ -12,11 +12,12 @@ body {
     -webkit-border-radius: 20px;
     -moz-border-radius: 20px;
     border-radius: 20px;
-    background-color:#FFF;
+    background-color: gray;
 	border-style:solid;
 	border-width:medium;
 }
+
 /*The box background when viewed*/
 .viewing {
-    background: gray;
+    background-color: '#404749';
 }

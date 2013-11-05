@@ -24,7 +24,8 @@ class SearchFieldEntity {
 			'physician'		=> 'Physician',
 			'body'			=> 'Body',
 			'impression'	=> 'Impression',
-			'positive'		=> 'Positive'
+			'positive'		=> 'Positive',
+			'tag'			=> 'Tag'
 		);
 	}
 }

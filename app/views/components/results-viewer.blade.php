@@ -1,5 +1,5 @@
 <!-- Search results viewer -->
-<div id="search-results" class="span8 shadow" style="background-color:#A0A0A0; padding:12px; height: 800px;">
+<div id="search-results" class="span8 shadow" style="background-color:#707070; padding:12px; height: 800px;">
     <h3 class="text-center">Search Results</h3>
         @if (!$tables)
             <br>
@@ -15,7 +15,9 @@
             <div id="results-container" class="span4" style="margin-right: 20px; float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
                 {{ $tables }}
             </div>
-			<div id="document-viewer" class="span7" style="background-color:gray; float:left; height: 650px; overflow-y: auto; overflow-x: hidden;"></div>
+            <div id="document-loader" style="margin: 0 auto;"></div>
+            <div id="hashtag-container" style="height: 40px; overflow:auto;"></div>
+			<div id="document-viewer" class="span7" style="background-color:#707070; float:left; height: 610px; overflow-y: auto; overflow-x: hidden;"></div>
         @endif
 </div>
 <!-- END search results viewer -->
