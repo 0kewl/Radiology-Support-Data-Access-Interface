@@ -16,13 +16,18 @@
     		<div class="row-fluid">
                 <!-- Case search form -->
     			<div class="span4 shadow" style="background-color:#707070; padding:12px; height: 800px; overflow-y: hidden;">
-    				<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
-					<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
-    				<br>
-					<h4 style="color: #FFFFFF;">Search Query</h4>
-                    <div id="search-container" style="height:650px; overflow-y: auto;">
-                        @include('components/search-form')
-                    </div>
+					<div id="search-option">
+						<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
+						<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
+						<br>
+						<h4 style="color: #FFFFFF;">Search Query</h4>
+						<div id="search-container" style="height:650px; overflow-y: auto;">
+							@include('components/search-form')
+						</div>
+					</div>
+					<div id="image-option">
+						
+					</div>
     			</div>
                 <!--END case search form -->
                 
@@ -37,7 +42,6 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
     $(".add-hashtag").popover({
         placement: 'top',
         html: 'true',
@@ -83,11 +87,14 @@ $(".show").click(function() {
         $("#document-viewer").scrollTop(0);
         $("#hashtag-container").html(hashtags);
     });
+	
+	// show the images attributed to the case (document)
+	//$("#image-option").show();
+	//$("#search-option").hide();
 });
+
 // prevents bad things from happening :)
 $('.add-hashtag').on('click', function(e) {e.preventDefault(); e.stopPropagation(); return true;});
-
-
 
 // display the selected case (document)
 function reloadDocument(caseID) {
@@ -110,6 +117,11 @@ function reloadDocument(caseID) {
         $("#document-viewer").scrollTop(0);
         $("#hashtag-container").html(hashtags);
     });
+	
+	// toggle between images and search fields
+	//$("#image-option").click(function(){
+	//	$(this).hide();
+	//});
 }
 </script>
 
