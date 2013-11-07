@@ -25,7 +25,7 @@
                 <div id="case-information" class="span4 shadow" style="background-color:#707070; color:#fff; padding:12px; height: 800px; overflow-y: auto;">
                     <h3 class="text-center">Case Information</h3>
                     <br>
-                    <div id="case-information-container" style="height:700px; overflow-y: auto;">
+                    <div id="case-information-container" style="font-size: 18px; height:700px; overflow-y: auto;">
                         @if (!$doc)
                             <div class="alert alert-info">
                                 <h5 class="text-center">Your search did not match any documents.</h5>

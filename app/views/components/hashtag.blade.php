@@ -33,10 +33,10 @@ function getHashtags(caseID, callback) {
   .done(function(msg) {
     spinner.stop();
 
-    var element = '<span>Tags: </span>';
+    var element = '<span style="font-size: 18px;">Tags: </span>';
     if (msg['hashtags'] != null) {
       $.each(msg['hashtags'], function(index, value) {
-        element = element + '<a href="' + value + '" style="margin-right:5px; color:#fff;">#' + value + '</a>';
+        element = element + '<a href="' + value + '" style="font-size: 18px; margin-right:5px; color:#fff;">#' + value + '</a>';
       });
     }
     else {

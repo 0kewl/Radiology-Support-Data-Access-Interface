@@ -4,20 +4,20 @@
         @if (!$tables)
             <br>
             <div class="alert alert-info">
-                <h5 class="text-center">Your search did not match any documents.</h5>
+                <h5 class="text-center" style="font-size: 18px;">Your search did not match any documents.</h5>
             </div>
         @else
             @if ($resultCount == "1")
-                <div class="alert alert-info" style="font-size: 15px; width: 255px;"><span><b>Your search matched {{ $resultCount }} case.</b></span></div>
+                <div class="alert alert-info" style="font-size: 17px; width: 255px;"><span><b>Your search matched {{ $resultCount }} case.</b></span></div>
             @else
-                <div class="alert alert-info" style="font-size: 15px; width: 255px;"><span><b>Your search matched {{ $resultCount }} cases.</b></span></div>
+                <div class="alert alert-info" style="font-size: 17px; width: 255px;"><span><b>Your search matched {{ $resultCount }} cases.</b></span></div>
             @endif
             <div id="results-container" class="span4" style="margin-right: 20px; float:left; height: 650px; overflow-y: auto; overflow-x: hidden;">
                 {{ $tables }}
             </div>
             <div id="document-loader" style="margin: 0 auto;"></div>
             <div id="hashtag-container" style="height: 40px; overflow:auto;"></div>
-			<div id="document-viewer" class="span7" style="background-color:#707070; float:left; height: 610px; overflow-y: auto; overflow-x: hidden;"></div>
+			<div id="document-viewer" class="span7" style="font-size: 18px; background-color:#707070; float:left; height: 610px; overflow-y: auto; overflow-x: hidden;"></div>
         @endif
 </div>
 <!-- END search results viewer -->

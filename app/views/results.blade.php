@@ -81,9 +81,7 @@ $(".show").click(function() {
     $("#document-viewer").html("");
     $("#hashtag-container").html("");
 
-	var caseID = $(this).attr('id');
-		
-    getHashtags($(this).attr('id'), function(hashtags) {
+	getHashtags($(this).attr('id'), function(hashtags) {
         // show the selected case
         $("#" + id + ".full-doc").clone().appendTo("#document-viewer").fadeIn("fast"), function() {
             $('#document-viewer').show();
@@ -93,10 +91,10 @@ $(".show").click(function() {
     });
 	
 	// show the images attributed to the case (document)
+	var caseID = $(this).attr('id');
 	$("#image-option").each(function() {
-		$(this).attr('id');
-		$("#image-holder").attr("src", "caseID");
-		$(this).show();
+		$("#image-holder").attr("src", caseID); //method uses the image url and the button's case ID
+		$("#image-option").show();				//shows the image associated with the ID
 	});
 	$("#search-option").hide();
 });
