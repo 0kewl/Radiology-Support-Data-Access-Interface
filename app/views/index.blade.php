@@ -46,7 +46,7 @@
                 <!-- END case lookup form -->
             </div>
         </div>
-    </div>
+</div>
 
 @include('components/footer')
 

@@ -7,6 +7,7 @@
 	        <li><a href="#">Saved Searches</a></li>
 			<li><a id="all-search" href="#">All Cases</a></li>
 	    </ul>
+		<input id="keyword" name="keyword" placeholder="Search Hash tags" class="keyword input-large additional-keyword" type="text" color="white" style="float:right;">
 	</div>
 </div>
 <!-- END Menu -->
