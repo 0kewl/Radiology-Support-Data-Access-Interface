@@ -2,7 +2,7 @@
 <html>
 @include('components/header')
 <body>
-    <!-- CSS -->
+    <!-- Additional CSS -->
     <style>
         .container {
             width: 1550px;
@@ -19,14 +19,13 @@
 					<div id="search-option">
 						<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
 						<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
-						<br>
 						<h4 style="color: #FFFFFF;">Search Query</h4>
 						<div id="search-container" style="height:650px; overflow-y: auto;">
-							@include('components/search-form')
+						  @include('components/search-form')
 						</div>
 					</div>
 					<div id="image-option">
-						<img id="image-holder" src="{{ asset('assets/img/medical_images/')}}/" alt="case image">
+						<!-- <img id="image-holder" src="{{ asset('assets/img/medical_images/')}}/" alt="case image"> -->
 					</div>
     			</div>
                 <!--END case search form -->
@@ -42,7 +41,15 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$("#image-option").hide();
+
+    var currentQuery = getParameterByName("q");
+    var query = decodeURIComponent(currentQuery);
+
+    // re-build the search form with updated values
+    $("#main-query").val(query);
+
+    $("#start").val(getParameterByName("start"));
+    $("#hashtag-start").val(getParameterByName("start"));
 	
     $(".add-hashtag").popover({
         placement: 'top',
@@ -59,80 +66,74 @@ $(document).ready(function() {
     @if (!isset($caseid))
         $("#search-results").toggleClass('span8', 'span5');
     @endif
-
-    // re-populate the from with the POST data
-    @foreach ($response->keywords as $element)
-        addPopulatedField("{{ $element->operator }}", "{{ $element->field }}", "{{ $element->keyword }}");
-    @endforeach
-
     $("#search-results").toggleClass("span8" , "span5");
-});
 
-// display the selected case (document)
-$(".show").click(function() {
-    $(".result-snippet").each(function() {
-        // clear any cases being viewed
-        $(this).removeClass("viewing").css("background-color", 'gray');
-    });
-
-    var id = $(this).attr("id");
-    $("#res-" + id).addClass("viewing").css("background-color", '#444444');
-
-    $("#document-viewer").html("");
-    $("#hashtag-container").html("");
-
-	getHashtags($(this).attr('id'), function(hashtags) {
-        // show the selected case
-        $("#" + id + ".full-doc").clone().appendTo("#document-viewer").fadeIn("fast"), function() {
-            $('#document-viewer').show();
+    $("#main-query").autocomplete({
+        source: "{{ route('spellcheck') }}",
+        minLength: 3,
+        select: function(event, ui) {
+            var terms = split(this.value);
+            // remove the current input
+            terms.pop();
+            // add the selected item
+            terms.push(ui.item.value);
+            // add placeholder to get the comma-and-space at the end
+            terms.push( "" );
+            this.value = terms.join( " " );
+            return false;
         }
-        $("#document-viewer").scrollTop(0);
-        $("#hashtag-container").html(hashtags);
     });
-	
-	// show the images attributed to the case (document)
-	var caseID = $(this).attr('id');
-	$("#image-option").each(function() {
-		$("#image-holder").attr("src", caseID); //method uses the image url and the button's case ID
-		$("#image-option").show();				//shows the image associated with the ID
-	});
-	$("#search-option").hide();
 });
 
 // prevents bad things from happening :)
 $('.add-hashtag').on('click', function(e) {e.preventDefault(); e.stopPropagation(); return true;});
 
-// display the selected case (document)
-function reloadDocument(caseID) {
-    $(".result-snippet").each(function() {
-        // clear any cases being viewed
-        $(this).removeClass("viewing").css("background-color", 'gray');
-    });
-
-    var id = caseID;
-    $("#res-" + id).addClass("viewing").css("background-color", '#444444');
-
-    $("#document-viewer").html("");
-    $("#hashtag-container").html("");
-
-    getHashtags(id, function(hashtags) {
-        // show the selected case
-        $("#" + id + ".full-doc").clone().appendTo("#document-viewer").fadeIn("fast"), function() {
-            $('#document-viewer').show();
-        }
-        $("#document-viewer").scrollTop(0);
-        $("#hashtag-container").html(hashtags);
-    });
-}
-
 // toggle between images and search fields
-$("#image-option").click(function(){
+$("#image-option").click(function() {
 	$("#image-option").hide();
 	$("#search-option").show();
 });
+
+$(".directional").click(function(event) {
+
+    @if (isset($hashtag))
+        event.preventDefault();
+
+        var hashtag = getParameterByName("hashtag");
+        $("#hashtag").val(encodeURIComponent(hashtag));
+
+        var currentPos = parseInt($("#hashtag-start").val());
+        if ($(this).attr("id") == "next-set") {
+            $("#hashtag-start").val(currentPos + 10);
+        }
+        else {
+            $("#hashtag-start").val(currentPos - 10);
+        }
+        $("#search-hashtags").submit();
+    @else
+        event.preventDefault();
+        var q = getParameterByName("q");
+        $("#q").val(q);
+
+        var currentPos = parseInt($("#start").val());
+        if ($(this).attr("id") == "next-set") {
+            $("#start").val(currentPos + 10);
+        }
+        else {
+            $("#start").val(currentPos - 10);
+        }
+
+        $("#search-form").submit();
+    @endif
+ });
+
+// add a new keyword search field
+$("#add-field").click(function() {
+    if (!isKeywordsFull()) {
+        addKeywordFields(1);
+    }   
+});
 </script>
-
 @include('components/hashtag')
-
 </body>
 </html>

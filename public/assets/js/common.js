@@ -2,49 +2,61 @@
  *   Common jQuery functions
  */
 
-// search form processing before HTTP POST action
-$("#search").click(function() {
-    var data = [];
+$(".hashtag").click(function(event) {
+  //event.preventDefault();
+  //alert($(this).attr("id"));
+  alert("moooo");
+});
 
-    // get our operators, fields, and keywords
-    $("#keywords-container").find(".additional-keywords").each(function() {
-
-        // check if a keyword exists
-        if (!$(this).find(".keyword").val() == "") {
-            element = {};
-
-            element ["operator"] = $(this).find(".operator").val();
-            element ["field"] = $(this).find(".field").val();
-            element ["keyword"] = $(this).find(".keyword").val();
-
-            // push the element onto the data stack
-            data.push(element);
-        }
+// display the selected case document
+$(".show").click(function() {
+    $(".result-snippet").each(function() {
+        // clear any cases being viewed
+        $(this).removeClass("viewing").css("background-color", 'gray');
     });
 
-    // generate a JSON object for Solr processing
-    var jsonData = JSON.stringify(data);
-    $("#json").val(jsonData);
+    var id = $(this).attr("id");
+    $("#res-" + id).addClass("viewing").css("background-color", '#444444');
 
-    if ($("#main-query").val() == "") {
+    $("#document-viewer").html("");
+    $("#hashtag-container").html("");
+
+    getHashtags($(this).attr('id'), function(hashtags) {
+        // show the selected case
+        $("#" + id + ".full-doc").clone().appendTo("#document-viewer").fadeIn("fast"), function() {
+            $('#document-viewer').show();
+        }
+        $("#document-viewer").scrollTop(0);
+        $("#hashtag-container").html(hashtags);
+    });
+});
+
+// perform a search query
+$("#search").click(function(event) {
+    event.preventDefault();
+
+    var q = $("#main-query").val();
+
+    if (q == "") {
         // oops...the query input is empty
         alert("Please enter a search query.");
         // don't submit the form
         return false;
     }
     else {
-        // send the HTTP POST request
+
+        $("#keywords-container").find(".additional-keywords").each(function(index, value) {
+            if (!$(this).find(".keyword").val() == "") {
+                q += " " + $(this).find(".operator").val() + " " + $(this).find(".field").val() + ":" + $(this).find(".keyword").val();
+            }
+        });
+
+        $("#q").val(encodeURIComponent(q));
+        $("#start").val("0");
+
         $("#search-form").submit();
     }
  });
-
-// add a new keyword search field
-$("#add-field").click(function() {
-    if (!isKeywordsFull()) {
-        addKeywordFields(1);
-		
-    }	
-});
 
 // remove the corresponding field
 $("#remove-field").click(function() {
@@ -57,6 +69,52 @@ $("#all-search").click(function() {
     $("#main-query").val("*");
     $("#search").click();
 });
+
+// search on a hashtag
+$("#hashtag-search-btn").click(function(event) {
+    event.preventDefault();
+
+    $("#hashtag-start").val("0");
+
+    if ($("#hashtag-keyword").val() == "") {
+        // the case id input is empty
+        alert("Please enter a hashtag to search.");
+        return false;
+    }
+    else {
+        var hashtag = $("#hashtag-keyword").val();
+        $("#hashtag").val(hashtag);
+
+        $("#search-hashtags").submit();
+    }
+});
+
+/*
+ *   Helper functions
+ */
+
+// display the selected case document in document viewer
+function reloadDocument(caseID) {
+    $(".result-snippet").each(function() {
+        // clear any cases being viewed
+        $(this).removeClass("viewing").css("background-color", 'gray');
+    });
+
+    var id = caseID;
+    $("#res-" + id).addClass("viewing").css("background-color", '#444444');
+
+    $("#document-viewer").html("");
+    $("#hashtag-container").html("");
+
+    getHashtags(id, function(hashtags) {
+        // show the selected case
+        $("#" + id + ".full-doc").clone().appendTo("#document-viewer").fadeIn("fast"), function() {
+            $('#document-viewer').show();
+        }
+        $("#document-viewer").scrollTop(0);
+        $("#hashtag-container").html(hashtags);
+    });
+}
 
 // clones and creates a new keyword field
 function addKeywordFields(qty) {
@@ -104,4 +162,19 @@ function isKeywordsFull() {
 	//disable button
 	$("#add-field").hide();
 	return true;
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function split(val) {
+    return val.split( / \s*/ );
+}
+
+function extractLast(term) {
+    return split(term).pop();
 }

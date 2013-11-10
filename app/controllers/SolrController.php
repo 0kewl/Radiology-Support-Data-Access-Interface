@@ -4,7 +4,6 @@ use Solarium\Client;
 
 class SolrController extends BaseController {
 
-	// Handle search page GET request
 	public function getIndex()
 	{
 		$keywords = SearchFieldEntity::getFields();
@@ -13,44 +12,38 @@ class SolrController extends BaseController {
 		return View::make('index', compact('keywords', 'operators'));
 	}
 
-	// Handle search page POST request
-	// Process the user search query and display results page
-	public function postResults()
+	// Handle a search
+	public function getResults()
 	{
-		// Get the form input values
-		$mainQuery = Input::get('main-query');
-		$keywords =  json_decode(Input::get('json'));
+		$query = Input::get('q');
+		$query = urldecode($query);
 
-		$response = new SolrResponse();
-
-		$response->query = $mainQuery;
-		$response->keywords = $keywords;
-
+		$startPos = Input::get('start');
+		
 		// Get a Solr client
 		$client = $this->getSolrClient();
 
-		// Parse the form data from the HTTP POST action
 		$data = new SolrQuery();
-		$resultset = $data->getFilteredData($client, $response);
+		$resultset = $data->getFilteredData($client, $query, $startPos);
 		$highlighting = $resultset->getHighlighting();
 
 		$tables = $this->renderDocumentTables($resultset, $highlighting);
 
-		// How many results did we find?
+		// How many results did we retrieve
 		$resultCount = $resultset->getNumFound();
 
-		// Keywords and operators for the drop-down elements
+		// Keywords and operators for the select elements
 		$keywords = SearchFieldEntity::getFields();
 		$operators = SolrOperators::getOperators();
 
-		return View::make('results', compact('response','tables','resultCount','keywords','operators'));
+		return View::make('results', compact('tables','resultCount','startPos','keywords','operators'));
 	}
 	
-	// Attempt to find a case by its ID and display the case page
-	public function postCaseLookup()
+	// Find a case by its ID
+	public function getCase()
 	{
-		$caseID = Input::get('case-id');
-		$similarKeywords = Input::get('similar-keywords');
+		$caseID = Input::get('id');
+		$similarKeywords = Input::get('keywords');
 
 		// Get a Solr client
 		$client = $this->getSolrClient();
@@ -74,9 +67,37 @@ class SolrController extends BaseController {
 
 		$fields = SearchFieldEntity::getFields();
 
-		return View::make('case', compact('doc', 'tables', 'resultCount'));
+		return View::make('case', compact('doc', 'tables', 'resultCount', 'startPos'));
 	}
 
+	// Return cases based on a given hashtag
+	public function getCasesByHashtag()
+	{
+		$hashtag = Input::get('hashtag');
+		$hashtag = urldecode($hashtag);
+
+		$startPos = Input::get('start');
+		
+		// Get a Solr client
+		$client = $this->getSolrClient();
+
+		$data = new SolrQuery();
+		$resultset = $data->getHashtagCases($client, $hashtag, $startPos);
+		$highlighting = $resultset->getHighlighting();
+
+		$tables = $this->renderDocumentTables($resultset, $highlighting);
+
+		// How many results did we retrieve
+		$resultCount = $resultset->getNumFound();
+
+		// Keywords and operators for the select elements
+		$keywords = SearchFieldEntity::getFields();
+		$operators = SolrOperators::getOperators();
+
+		return View::make('results', compact('hashtag', 'tables','resultCount','startPos','keywords','operators'));
+	}
+
+	// Add hashtags to a case
 	public function postAddHashtags()
 	{
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
@@ -91,6 +112,8 @@ class SolrController extends BaseController {
 		return $caseID;
 	}
 
+
+	// Get hashtags from a case
 	public function getHashtags()
 	{
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
@@ -112,12 +135,24 @@ class SolrController extends BaseController {
 		return $data;
 	}
 
+	public function getSpellCheck()
+	{
+		$query = Input::get('term');
+		$query = urldecode($query);
+		
+		// Get a Solr client
+		$client = $this->getSolrClient();
+
+		$data = new SolrQuery();
+		$resultset = $data->spellCheck($client, $query);
+		return $resultset;
+	}
+
 	private function findSimilarCases($caseID, $keywords)
 	{
 		// Get a Solr client
 		$client = $this->getSolrClient();
-		
-		// Parse form data from HTTP POST action
+	
 		$data = new SolrQuery();
 		$results = $data->getSimilarCases($client, $caseID, $keywords);
 
@@ -152,7 +187,7 @@ class SolrController extends BaseController {
 		// Show documents using the resultset iterator
 		foreach ($resultset as $document) {
 
-			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width: 265px; padding: 10px;"><div style="text-align:right"><span style="color:#fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
+			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width: 246px; padding: 10px; margin-right: 20px;"><div style="text-align:right"><span style="color:#fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
 			
 			// Highlighting results can be fetched by document id (the field defined as the unique key in this schema)
 		    if (isset($highlighting)) {
@@ -184,7 +219,6 @@ class SolrController extends BaseController {
 			$results .= '<a href="#" id="add-tag-' . $document->id . '"class=" add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-30px;" data-toggle="popover"><i class="icon-tag icon-white"></i> Tags</a></div>';
 		    $results .= '</div><br>';
 		}
-
 		return $results;
 	}
 

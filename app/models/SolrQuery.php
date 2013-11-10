@@ -16,17 +16,10 @@ class SolrQuery {
 	}
 
 	// Get a filtered result set of documents from Solr
-	public function getFilteredData($client, $userQuery) {
+	public function getFilteredData($client, $q, $startPos) {
 
 		// Select query instance
 		$query = $client->createSelect();
-
-		$parameters = $userQuery->query;
-
-		// Build the query string
-		foreach ($userQuery->keywords as $element) {
-    		$parameters .= " " . $element->operator . " " . $element->field . ":" . $element->keyword;
-		}
 
 		// Get the dismax component
 		// From Solr Documentation: "Disjunction refers to the fact that your search is executed
@@ -35,7 +28,7 @@ class SolrQuery {
 		$dismax = $query->getDisMax();
 		$dismax->setQueryFields(array_keys(SearchFieldEntity::getFields()));
 
-		$query->setRows(100);
+		$query->setRows(10);
 
 		// Set a boost query
 		// We might enable this feature in the future...disabled for now
@@ -47,7 +40,7 @@ class SolrQuery {
 		// the score based on rules specific to each use case (independent of user input)."
 		$dismax->setQueryParser('edismax');
 
-		$query->setQuery($parameters);
+		$query->setQuery($q);
 
 		// Get highlighting component and apply settings
 		$hl = $query->getHighlighting();
@@ -56,6 +49,13 @@ class SolrQuery {
 		// We want to bold matching results
 		$hl->setSimplePrefix('<u>');
 		$hl->setSimplePostfix('</u>');
+
+		// Handle paginating
+		$start = 0;
+		if (!empty($startPos)) {
+			$start = $startPos;
+			$query->setStart($start);
+		}
 
 		$resultset = $client->select($query);
 		return $resultset;
@@ -74,6 +74,38 @@ class SolrQuery {
 		return $resultset;
 	}
 
+	public function getHashtagCases($client, $q, $startPos)
+	{
+		// Select query instance
+		$query = $client->createSelect();
+
+		$dismax = $query->getDisMax();
+		$dismax->setQueryFields("tag");
+
+		$query->setRows(10);
+
+		$dismax->setQueryParser('edismax');
+		$query->setQuery($q);
+
+		// Get highlighting component and apply settings
+		$hl = $query->getHighlighting();
+		$hl->setFields(array_keys(SearchFieldEntity::getFields()));
+
+		// We want to bold matching results
+		$hl->setSimplePrefix('<u>');
+		$hl->setSimplePostfix('</u>');
+
+		// Handle paginating
+		$start = 0;
+		if (!empty($startPos)) {
+			$start = $startPos;
+			$query->setStart($start);
+		}
+
+		$resultset = $client->select($query);
+		return $resultset;
+	}
+
 	public function getSimilarCases($client, $id, $keywords)
 	{
 		// Get a morelikethis query instance
@@ -87,9 +119,12 @@ class SolrQuery {
 		$query->setMinimumDocumentFrequency(1);
 		$query->setMinimumTermFrequency(1);
 
+		$query->setRows(50);
+
 		//$query->createFilterQuery('query')->setQuery('inStock:true');
 		//$query->setInterestingTerms('details');
 		$query->setMatchInclude(true);
+
 		$resultset = $client->select($query);
 		return $resultset;
 	}
@@ -144,5 +179,56 @@ class SolrQuery {
 		
 		$resultset = $client->select($query);
 		return $resultset;
+	}
+
+	public function spellCheck($client, $q)
+	{
+		// get a select query instance
+		$query = $client->createSelect();
+		$query->setRows(0);
+
+		// add spellcheck settings
+		$spellcheck = $query->getSpellcheck();
+		$spellcheck->setQuery($q);
+		$spellcheck->setCount(10);
+		$spellcheck->setBuild(true);
+		$spellcheck->setCollate(true);
+		$spellcheck->setExtendedResults(true);
+		$spellcheck->setCollateExtendedResults(true);
+
+		// this executes the query and returns the result
+		$resultset = $client->select($query);
+		$spellcheckResult = $resultset->getSpellcheck();
+
+		if ($spellcheckResult->getCorrectlySpelled()) {
+		    //echo 'yes';
+		}
+		else {
+		    //echo 'no';
+		}
+
+		foreach($spellcheckResult as $suggestion) {
+		    foreach ($suggestion->getWords() as $word) {
+		    	// Could use this later on
+		    }
+		}
+
+		$collations = $spellcheckResult->getCollations();
+
+		foreach($collations as $collation) {
+		  // Could use this later on
+		}
+		$corrections = array();
+
+		if (!empty($collations)) {
+			foreach($collation->getCorrections() as $input => $correction) {
+				$element = array(
+					"key" => $correction,
+					"value" => $correction,
+				);
+				array_push($corrections, $element);
+			}
+		}
+		return $corrections;
 	}
 }

@@ -36,7 +36,7 @@ function getHashtags(caseID, callback) {
     var element = '<span style="font-size: 18px;">Tags: </span>';
     if (msg['hashtags'] != null) {
       $.each(msg['hashtags'], function(index, value) {
-        element = element + '<a href="' + value + '" style="font-size: 18px; margin-right:5px; color:#fff;">#' + value + '</a>';
+        element = element + '<a href="{{ route('hashtag-results') }}?hashtag=' + value + '&start=0" class="hashtag" style="cursor: pointer; cursor: hand; font-size: 15px; margin-right:10px; color:#fff;">#' + value + '</a>';
       });
     }
     else {

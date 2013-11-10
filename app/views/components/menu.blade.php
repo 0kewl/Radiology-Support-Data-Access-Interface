@@ -7,9 +7,13 @@
 	        <li><a href="#">Saved Searches</a></li>
 			<li><a id="all-search" href="#">All Cases</a></li>
 	    </ul>
-		<div class="hash-search" style="margin-top:5px; float:right;">
-			<input id="keyword" name="keyword" class="keyword input-large additional-keyword" type="text" color="white" style="height:15px; margin-top:5px;">
-			<button id="hash-search" class="btn btn-small btn-inverse" type="button" style="margin-top:-5px;">Search Hash-Tags</button>
+		<div class="hashtag-search" style="margin-top:5px; float:right;">
+		<form id="search-hashtags" name="search-hashtags" action="{{ route('hashtag-results') }}" method="get">
+		    <input id="hashtag" name="hashtag" type="hidden" value="">
+		    <input id="hashtag-start" name="start" type="hidden" value="">
+		</form>
+			<input id="hashtag-keyword" name="hashtag-keyword" class="keyword input-large additional-keyword" type="text" color="white" style="height:20px; margin-top:5px;">
+			<button id="hashtag-search-btn" class="btn btn-small btn-inverse" type="button" style="margin-top:-5px;">Search Hashtags</button>
 		</div>
 	</div>
 </div>

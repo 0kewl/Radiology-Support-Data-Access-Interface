@@ -15,13 +15,19 @@
 Route::get('/', array('as' => 'home', 'uses' => 'SolrController@getIndex'));
 
 // The search results page
-Route::post('results', array('as' => 'results', 'uses' => 'SolrController@postResults'));
+Route::get('results', array('as' => 'results', 'uses' => 'SolrController@getResults'));
 
-// The case information plus related cases page
-Route::post('case-lookup', array('as' => 'case-results', 'uses' => 'SolrController@postCaseLookup'));
+// The case information and related cases page
+Route::get('case', array('as' => 'case-results', 'uses' => 'SolrController@getCase'));
+
+// Get cases by hashtag
+Route::get('hashtag-cases', array('as' => 'hashtag-results', 'uses' => 'SolrController@getCasesByHashtag'));
 
 // Get hashtags
 Route::get('get-hashtags', array('as' => 'get-hashtags', 'uses' => 'SolrController@getHashtags'));
+
+// Get spell check
+Route::get('spellcheck', array('as' => 'spellcheck', 'uses' => 'SolrController@getSpellCheck'));
 
 // Add hashtags
 Route::post('add-hashtags', array('as' => 'add-hashtags', 'uses' => 'SolrController@postAddHashtags'));

@@ -125,6 +125,7 @@
    <field name="impression" type="text_general" indexed="true" stored="true" required="false" multiValued="true" termVectors="true" /> 
    <field name="positive" type="text_general" indexed="true" stored="true" required="false" multiValued="false" termVectors="true" />
    <field name="tag" type="text_general" indexed="true" stored="true" required="false" multiValued="true" termVectors="true" />
+   <field name="spellingSuggestions" type="text_general" indexed="true" stored="false" multiValued="true" />
    <field name="_version_" type="long" indexed="true" stored="true" required="false" />
 
    <!-- Common metadata fields, named specifically to match up with
@@ -228,6 +229,11 @@
 
    <!-- copy name to alphaNameSort, a field designed for sorting by name -->
    <!-- <copyField source="name" dest="alphaNameSort"/> -->
+   <copyField source="body" dest="spellingSuggestions"/>
+   <copyField source="impression" dest="spellingSuggestions"/>
+   <copyField source="title" dest="spellingSuggestions"/>
+   <copyField source="positive" dest="spellingSuggestions"/>
+   <copyField source="history" dest="spellingSuggestions"/>
  
   <types>
     <!-- field type definitions. The "name" attribute is

@@ -800,6 +800,39 @@
        of SearchComponents (see below) and supports distributed
        queries across multiple shards
     -->
+  <searchComponent class="solr.SpellCheckComponent" name="suggest">
+    <lst name="spellchecker">
+      <str name="name">suggest</str>
+	  <str name="field">spellingSuggestions</str>
+      <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+      <str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookup</str>
+      <!-- Alternatives to lookupImpl: 
+           org.apache.solr.spelling.suggest.fst.FSTLookup   [finite state automaton]
+           org.apache.solr.spelling.suggest.fst.WFSTLookupFactory [weighted finite state automaton]
+           org.apache.solr.spelling.suggest.jaspell.JaspellLookup [default, jaspell-based]
+           org.apache.solr.spelling.suggest.tst.TSTLookup   [ternary trees]
+      -->
+      <str name="field">spellingSuggestions</str>  <!-- the indexed field to derive suggestions from -->
+      <float name="threshold">0.005</float>
+      <str name="buildOnCommit">true</str>
+<!--
+      <str name="sourceLocation">american-english</str>
+-->
+    </lst>
+  </searchComponent>
+  <requestHandler class="org.apache.solr.handler.component.SearchHandler" name="/suggest">
+    <lst name="defaults">
+      <str name="spellcheck">true</str>
+      <str name="spellcheck.dictionary">suggest</str>
+      <str name="spellcheck.onlyMorePopular">false</str>
+      <str name="spellcheck.count">10</str>
+      <str name="spellcheck.collate">true</str>
+    </lst>
+    <arr name="components">
+      <str>suggest</str>
+    </arr>
+  </requestHandler>	
+
   <requestHandler name="/select" class="solr.SearchHandler">
     <!-- default values for query parameters can be specified, these
          will be overridden by parameters in the request
@@ -855,12 +888,10 @@
          list can either be overridden completely, or components can be
          prepended or appended to the default list.  (see below)
       -->
-    <!--
-       <arr name="components">
-         <str>nameOfCustomComponent1</str>
-         <str>nameOfCustomComponent2</str>
+
+       <arr name="last-components">
+         <str>spellcheck</str>
        </arr>
-      -->
     </requestHandler>
 
   <!-- A request handler that returns indented JSON by default -->
@@ -930,8 +961,8 @@
 
        <!-- Spell checking defaults -->
        <str name="spellcheck">on</str>
-       <str name="spellcheck.extendedResults">false</str>       
-       <str name="spellcheck.count">5</str>
+       <str name="spellcheck.extendedResults">true</str>       
+       <str name="spellcheck.count">2</str>
        <str name="spellcheck.alternativeTermCount">2</str>
        <str name="spellcheck.maxResultsForSuggest">5</str>       
        <str name="spellcheck.collate">true</str>
@@ -1223,20 +1254,20 @@
     <!-- a spellchecker built from a field of the main index -->
     <lst name="spellchecker">
       <str name="name">default</str>
-      <str name="field">id</str>
+      <str name="field">body</str>
       <str name="classname">solr.DirectSolrSpellChecker</str>
       <!-- the spellcheck distance measure used, the default is the internal levenshtein -->
       <str name="distanceMeasure">internal</str>
       <!-- minimum accuracy needed to be considered a valid spellcheck suggestion -->
-      <float name="accuracy">0.5</float>
+      <float name="accuracy">0.3</float>
       <!-- the maximum #edits we consider when enumerating terms: can be 1 or 2 -->
       <int name="maxEdits">2</int>
       <!-- the minimum shared prefix when enumerating terms -->
       <int name="minPrefix">1</int>
       <!-- maximum number of inspections per result. -->
-      <int name="maxInspections">5</int>
+      <int name="maxInspections">2</int>
       <!-- minimum length of a query term to be considered for correction -->
-      <int name="minQueryLength">4</int>
+      <int name="minQueryLength">3</int>
       <!-- maximum threshold of documents a query term can appear to be considered for correction -->
       <float name="maxQueryFrequency">0.01</float>
       <!-- uncomment this to require suggestions to occur in 1% of the documents
@@ -1248,7 +1279,7 @@
     <lst name="spellchecker">
       <str name="name">wordbreak</str>
       <str name="classname">solr.WordBreakSolrSpellChecker</str>      
-      <str name="field">name</str>
+      <str name="field">body</str>
       <str name="combineWords">true</str>
       <str name="breakWords">true</str>
       <int name="maxChanges">10</int>

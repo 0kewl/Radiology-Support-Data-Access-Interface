@@ -22,7 +22,7 @@
         <div class="span12">
             <div class="row-fluid">
                 <!-- Case document -->
-                <div id="case-information" class="span4 shadow" style="background-color:#707070; color:#fff; padding:12px; height: 800px; overflow-y: auto;">
+                <div id="case-information" class="span4 shadow" style="background-color:#707070; color:#fff; padding:12px; height: 800px; overflow-y: hidden;">
                     <h3 class="text-center">Case Information</h3>
                     <br>
                     <div id="case-information-container" style="font-size: 18px; height:700px; overflow-y: auto;">
@@ -42,6 +42,7 @@
         </div>
     </div>
 </div>
+@include('components/case-lookup-form')
 
 @include('components/footer')
 
@@ -51,33 +52,20 @@ $(document).ready(function() {
     $(".add-hashtag").popover({
         placement: 'top',
         html: 'true',
-        title : 'Add hashtag'
+        title : 'Case Hashtags'
     });
 
-    var hashtagPopover = '<small>Comma separate multiple tags</small><br><br>' +
-                     '<input type="text" id="hashtag-input"><br><button id="add-hash"class="btn btn-inverse btn-small" onClick="addHashtag($(this).parents(&quot;.result-snippet&quot;).attr(&quot;id&quot;),$(&quot;#hashtag-input&quot;).val());">Add</button>' +
-                     '<button type="button" id="close" class="btn btn-small btn-inverse" onclick="$(&quot;.add-hashtag&quot;).popover(&quot;hide&quot;);">Cancel</button>';
+    var hashtagPopover = '<strong>Add Hashtags</strong><br><small>Comma separate multiple tags</small><br><br>' +
+                         '<input type="text" id="hashtag-input"><br><button id="add-hash"class="btn btn-inverse btn-small" onClick="addHashtag($(this).parents(&quot;.result-snippet&quot;).attr(&quot;id&quot;),$(&quot;#hashtag-input&quot;).val());">Add</button>' +
+                         '<button type="button" id="close" class="btn btn-small btn-inverse" onclick="$(&quot;.add-hashtag&quot;).popover(&quot;hide&quot;);">Cancel</button>';
 
     $('.add-hashtag').attr('data-content', hashtagPopover);
 
 });
 
-// display the selected case document
-$(".show").click(function() {
-    $(".result-snippet").each(function() {
-        // clear any cases being viewed
-        $(this).removeClass("viewing").css("background-color", 'gray');
-    });
+// prevents bad things from happening :)
+$('.add-hashtag').on('click', function(e) {e.preventDefault(); e.stopPropagation(); return true;});
 
-    var id = $(this).attr("id");
-    $("#res-" + id).addClass("viewing").css("background-color", '#444444');
-    
-    $("#document-viewer").html("");
-
-    // show the selected case
-    $("#" + id + ".full-doc").clone().appendTo("#document-viewer").show();
-    $("#document-viewer").scrollTop(0);
-});
 </script>
 
 @include('components/hashtag')
