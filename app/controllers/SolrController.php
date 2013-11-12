@@ -147,6 +147,12 @@ class SolrController extends BaseController {
 		$resultset = $data->spellCheck($client, $query);
 		return $resultset;
 	}
+	
+	public function getSavedSearches()
+	{
+		//return 'saved search page';
+		return View::make('saved', compact('hashtag', 'tables','resultCount','startPos','keywords','operators'));
+	}
 
 	private function findSimilarCases($caseID, $keywords)
 	{

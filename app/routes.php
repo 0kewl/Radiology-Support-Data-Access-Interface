@@ -31,3 +31,6 @@ Route::get('spellcheck', array('as' => 'spellcheck', 'uses' => 'SolrController@g
 
 // Add hashtags
 Route::post('add-hashtags', array('as' => 'add-hashtags', 'uses' => 'SolrController@postAddHashtags'));
+
+// The saved searches page
+Route::get('saved', array('as' => 'saved-search', 'uses' => 'SolrController@getSavedSearches'));
