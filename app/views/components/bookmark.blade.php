@@ -48,7 +48,7 @@ function getBookmark(callback) {
 
 function addBookmark(queryString, bookmark) {
   if (bookmark == '') {
-    alert("You must enter at least one hashtag.");
+    alert("You must enter a boonkmark name.");
     return false;
   }
   else {
@@ -62,7 +62,7 @@ function addBookmark(queryString, bookmark) {
     })
     .done(function(msg) {
         reloadDocument(msg);
-        $(".add-bookmark").popover("hide");
+        $("#bookmark-search").popover("hide");
     });
   }
 }
