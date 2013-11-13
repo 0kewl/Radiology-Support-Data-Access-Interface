@@ -2,12 +2,6 @@
  *   Common jQuery functions
  */
 
-$(".hashtag").click(function(event) {
-  //event.preventDefault();
-  //alert($(this).attr("id"));
-  alert("moooo");
-});
-
 // display the selected case document
 $(".show").click(function() {
     $(".result-snippet").each(function() {
