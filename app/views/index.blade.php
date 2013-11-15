@@ -2,24 +2,30 @@
 <html>
 @include('components/header')
 <body>
+<!-- CSS -->
+    <style>
+		.container{
+			min-height:622;
+		}
+    </style>
 <!-- Page wrapper -->
-<div class="container" style="margin-top: 22px;">
+<div class="container">
 @include('components/menu')
     <div id="content-window">
         <div class="row-fluid">
             <!-- Cases search form -->
-            <div class="span8 shadow" style="background-color:#707070; padding:12px; height:675px;">
+            <div class="span8 shadow" style="height:622px;">
                 <h3 class="text-center">Case Search</h3>
                 <br>
 				<h4 style="color: #fff;">Search Query</h4>
-                <div id="search-container" style="height:575px; overflow-y: auto;">
+                <div id="search-container" style="overflow-y: auto;">
                     @include('components/search-form')
                 </div>
             </div>
             <!-- END search form -->
 
             <!-- Case lookup form -->
-            <div class="span4 shadow" style="background-color:#707070; padding:12px; height:675px;">
+            <div class="span4 shadow" style="height:622px;">
                 <h3 class="text-center">Case Lookup</h3>   
                 <br>
 				<h4 style="color: #fff;">Enter Case ID</h4>

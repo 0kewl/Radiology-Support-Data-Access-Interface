@@ -2,11 +2,12 @@
 <html>
 @include('components/header')
 <body>
-    <!-- CSS -->
+<!-- CSS -->
     <style>
-        .container {
-            width: 1550px;
-        }
+		.container {
+			width: auto;
+			height: auto;
+		}
         .result-snippet {
             height: 60px;
         }
@@ -16,13 +17,13 @@
         }
     </style>
 <!-- Page wrapper -->
-<div class="container" style="margin-top: 22px;">
+<div class="container">
     @include('components/menu')
     <div class="row-fluid">
         <div class="span12">
             <div class="row-fluid">
                 <!-- Case document -->
-                <div id="case-information" class="span4 shadow" style="background-color:#707070; color:#fff; padding:12px; height: 800px; overflow-y: hidden;">
+                <div id="case-information" class="span4 shadow" style="color:#fff; height: 800px; overflow-y: hidden;">
                     <h3 class="text-center">Case Information</h3>
                     <br>
                     <div id="case-information-container" style="font-size: 18px; height:700px; overflow-y: auto;">

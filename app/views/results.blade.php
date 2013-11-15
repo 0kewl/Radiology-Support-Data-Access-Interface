@@ -2,20 +2,21 @@
 <html>
 @include('components/header')
 <body>
-    <!-- Additional CSS -->
+<!-- CSS -->
     <style>
-        .container {
-            width: 1550px;
-        }
+		.container {
+			width: auto;
+			height: auto;
+		}
     </style>
 <!-- Page wrapper -->
-<div class="container" style="margin-top: 22px;">
+<div class="container">
     @include('components/menu')
     <div class="row-fluid">
     	<div class="span12">
     		<div class="row-fluid">
                 <!-- Case search form -->
-    			<div class="span4 shadow" style="background-color:#707070; padding:12px; height: 800px; overflow-y: hidden;">
+    			<div class="span4 shadow" style="height: 800px; overflow-y: hidden;">
 					<div id="search-option">
 						<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
 						<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
@@ -28,10 +29,8 @@
 						<!-- <img id="image-holder" src="{{ asset('assets/img/medical_images/')}}/" alt="case image"> -->
 					</div>
     			</div>
-                <!--END case search form -->
-                
+                <!--END case search form -->                
                 @include('components/results-viewer')
-
     		</div>
     	</div>
     </div>

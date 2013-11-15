@@ -6,6 +6,8 @@ body {
     -webkit-box-shadow: 0 4px 2px -2px #808080;
     -moz-box-shadow: 0 4px 2px -2px #808080;
     box-shadow: 0 4px 2px -2px #000000;
+	background-color:#707070;
+	padding:12px;
 }
 /*The boxes*/
 .box {
@@ -20,4 +22,10 @@ body {
 /*The box background when viewed*/
 .viewing {
     background-color: '#404749';
+}
+
+.container{
+	min-width: 1444px;
+	min-height: 722px;
+	padding: 22px;
 }

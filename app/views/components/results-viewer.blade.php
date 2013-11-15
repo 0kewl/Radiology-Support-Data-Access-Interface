@@ -1,27 +1,37 @@
+<!-- CSS -->
+    <style>
+        .text-18{
+			font-size: 18px;
+		}
+		.alert{
+			font-size: 17px;
+			width: 255px
+		}
+    </style>
 <!-- Search results viewer -->
-<div id="search-results" class="span8 shadow" style="background-color:#707070; padding:12px; height: 800px;">
+<div id="search-results" class="span8 shadow" style="height: 800px;">
     <h3 class="text-center">Search Results</h3>
         @if (!$tables)
             <br>
             <div class="well">
                 @if (isset($hashtag))
-                    <h5 class="text-center" style="font-size: 18px;">No documents tagged with #{{{ $hashtag }}} found. </h5>
+                    <h5 class="text-center text-18">No documents tagged with #{{{ $hashtag }}} found. </h5>
                 @else
-                    <h5 class="text-center" style="font-size: 18px;">Your search did not match any documents.</h5>
+                    <h5 class="text-center text-18">Your search did not match any documents.</h5>
                 @endif
             </div>
         @else
             @if (isset($hashtag))
                 @if ($resultCount == "1")
-                    <div class="alert alert-info" style="font-size: 17px; width: 255px;"><span><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} case.</span></div>
+                    <div class="alert alert-info"><span><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} case.</span></div>
                 @else
-                    <div class="alert alert-info" style="font-size: 17px; width: 255px;"><span><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} cases.</span></div>
+                    <div class="alert alert-info"><span><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} cases.</span></div>
                 @endif
             @else
                 @if ($resultCount == "1")
-                    <div class="alert alert-info" style="font-size: 17px; width: 255px;"><span><b>Your search matched {{ $resultCount }} case.</b></span></div>
+                    <div class="alert alert-info"><span><b>Your search matched {{ $resultCount }} case.</b></span></div>
                 @else
-                    <div class="alert alert-info" style="font-size: 17px; width: 255px;"><span><b>Your search matched {{ $resultCount }} cases.</b></span></div>
+                    <div class="alert alert-info"><span><b>Your search matched {{ $resultCount }} cases.</b></span></div>
                 @endif
             @endif
 
@@ -45,7 +55,7 @@
                 @endif
             </div>
             <div id="document-loader" style="margin: 0 auto;"></div>
-            <div id="hashtag-container" style="height: 40px; overflow:auto;"></div>
+            <div id="hashtag-container" style="padding-left: 17px; height: 40px; overflow:auto;"></div>
 			<div id="document-viewer" class="span7" style="font-size: 18px; background-color:#707070; float:left; height: 590px; overflow-y: auto; overflow-x: hidden;"></div>
         @endif
 </div>
