@@ -1,5 +1,19 @@
 <script type="text/javascript">
 
+// Read a page's GET URL variables and return them as an associative array.
+function getUrlVars()
+{
+    var url = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        url.push(hash[0]);
+        url[hash[0]] = hash[1];
+    }
+    return url;
+}
+
 function getBookmark(callback) {
 
     var opts = {
@@ -27,8 +41,7 @@ function getBookmark(callback) {
       type: "GET",
       url: "{{ route('get-bookmark') }}",
       data: {
-          //caseID: caseID
-		  url: url
+          URL : getUrlVars()
       }
   })
   .done(function(msg) {
@@ -57,8 +70,7 @@ function addBookmark(queryString, bookmark) {
         type: "POST",
         url: "{{ route('add-bookmark') }}",
         data: {
-            //caseID: caseID,
-			url: url
+            URL : getUrlVars()
             bookmark: bookmark
         }
     })

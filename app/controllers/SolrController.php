@@ -148,8 +148,42 @@ class SolrController extends BaseController {
 		return $resultset;
 	}
 	
+	// Add a bookmark
+	public function postAddBookmark()
+	{
+		//$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
+		//$bookmark = strtolower(Input::get('bookmark'));
+
+		// Get a Solr client
+		//$client = $this->getSolrClient();
+
+		//$query = new SolrQuery();
+		//$query->addBookmark($client, $caseID, $bookmark);
+		// Let's be friendly and return the case id we modified
+		//return $caseID;
+	}
+	
+	//Get a bookmark
 	public function getSavedSearches()
 	{
+		//$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
+
+		// Get a Solr client
+		//$client = $this->getSolrClient();
+
+		//$query = new SolrQuery();
+		//$resultset = $query->getBookmark($client, $caseID);
+
+		//foreach ($resultset as $document) {
+		//	$bookmark = $document->tag;
+		//}
+
+		//$data = array(
+		//	'caseID'   => $caseID,
+		//	'bookmark' => $bookmark
+		//);
+		//return $data;
+	
 		//return 'saved search page';
 		return View::make('saved', compact('hashtag', 'tables','resultCount','startPos','keywords','operators'));
 	}
