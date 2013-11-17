@@ -14,7 +14,7 @@
     @include('components/menu')
     <div class="row-fluid">
     	<div class="span12 shadow" style="height: 800px; overflow-y: hidden;">
-			
+			<p>test</p>         
     	</div>
     </div>
 </div>
@@ -28,4 +28,4 @@ $(document).ready(function() {
 </script>
 @include('components/hashtag')
 </body>
-</html>
+</html>                                       

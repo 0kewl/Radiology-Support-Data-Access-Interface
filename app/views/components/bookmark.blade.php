@@ -27,7 +27,8 @@ function getBookmark(callback) {
       type: "GET",
       url: "{{ route('get-bookmark') }}",
       data: {
-          caseID: caseID
+          //caseID: caseID
+		  url: url
       }
   })
   .done(function(msg) {
@@ -36,7 +37,7 @@ function getBookmark(callback) {
     var element = '<span style="font-size: 18px;">Tags: </span>';
     if (msg['bookmark'] != null) {
       $.each(msg['bookmark'], function(index, value) {
-        element = element + '<a href="{{ route('bookmark-results') }}?bookmark=' + value + '&start=0" class="bookmark" style="cursor: pointer; cursor: hand; font-size: 15px; margin-right:10px; color:#fff;">#' + value + '</a>';
+        element = element + '<a href="{{ route('get-bookmark') }}?bookmark=' + value + '&start=0" class="bookmark" style="cursor: pointer; cursor: hand; font-size: 15px; margin-right:10px; color:#fff;">#' + value + '</a>';
       });
     }
     else {
@@ -48,7 +49,7 @@ function getBookmark(callback) {
 
 function addBookmark(queryString, bookmark) {
   if (bookmark == '') {
-    alert("You must enter a boonkmark name.");
+    alert("You must enter a bookmark name.");
     return false;
   }
   else {
@@ -56,7 +57,8 @@ function addBookmark(queryString, bookmark) {
         type: "POST",
         url: "{{ route('add-bookmark') }}",
         data: {
-            caseID: caseID,
+            //caseID: caseID,
+			url: url
             bookmark: bookmark
         }
     })

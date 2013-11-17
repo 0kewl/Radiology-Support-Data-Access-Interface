@@ -71,12 +71,12 @@ $(document).ready(function() {
     });
 	
     var bookmarkPopover = '<strong>Add Bookmark</strong><br><br>' +
-                          '<input type="text" id="bookmark-input"><br><button id="add-hash"class="btn btn-inverse btn-small" onClick="addBookmark($(this).parents(&quot;.result-snippet&quot;).attr(&quot;id&quot;),$(&quot;#bookmark-input&quot;).val());">Add</button>' +
+                          '<input type="text" id="bookmark-input"><br><button id="add-bookmark"class="btn btn-inverse btn-small" onClick="addBookmark($(this).parents(&quot;.result-snippet&quot;).attr(&quot;id&quot;),$(&quot;#bookmark-input&quot;).val());">Add</button>' +
                           '<button type="button" id="close" class="btn btn-small btn-inverse" onclick="$(&quot;#bookmark-search&quot;).popover(&quot;hide&quot;);">Cancel</button>';
 
     $('#bookmark-search').attr('data-content', bookmarkPopover);
 	
-	// speel check
+	// spell check
     @if (!isset($caseid))
         $("#search-results").toggleClass('span8', 'span5');
     @endif
