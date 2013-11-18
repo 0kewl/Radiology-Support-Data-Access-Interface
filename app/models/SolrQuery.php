@@ -231,4 +231,38 @@ class SolrQuery {
 		}
 		return $corrections;
 	}
+	
+	public function addBookmark($url, $newBookmark)
+	{
+		// We need to get the current case's tags
+		$result = $this->getUrl($url);
+		$currentBookmark = new stdClass();
+
+		// The list of all hashtags, both new and existing
+		$updatedHashtags = array();
+
+		// Tags already existing in Solr
+		if (!empty($currentBookmark)) {
+			foreach ($currentBookmark as $b) {
+				array_push($updatedBookmark, $b);
+			}
+		}
+		// Turn the list of new hashtags into an array
+		//$updatedHashtags = array_merge(explode(',', $newHashtags), $updatedHashtags);
+
+		$update = $client->createUpdate();
+		$doc= $update->createDocument();
+
+		$doc->setKey('URL', $url);              
+
+	    $doc->setField('savedSearches', $updatedBookmark);
+	    $doc->setFieldModifier('savedSearches', 'set');     
+
+		// Add document and commit
+		$update->addDocument($doc);
+		$update->addCommit();
+
+		// Runs the query and returns the result
+		$result = $client->update($update);
+	}
 }

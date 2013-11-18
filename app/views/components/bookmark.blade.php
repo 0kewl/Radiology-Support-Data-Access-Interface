@@ -1,21 +1,14 @@
 <script type="text/javascript">
 
 // Read a page's GET URL variables and return them as an associative array.
-function getUrlVars()
+function getUrl()
 {
-    var url = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    for(var i = 0; i < hashes.length; i++)
-    {
-        hash = hashes[i].split('=');
-        url.push(hash[0]);
-        url[hash[0]] = hash[1];
-    }
-    return url;
+    return window.location.href;
 }
 
-function getBookmark(callback) {
-
+function getBookmark(url) {
+	
+	var url = getUrl();
     var opts = {
         lines:9, // The number of lines to draw
         length: 18, // The length of each line
@@ -41,7 +34,7 @@ function getBookmark(callback) {
       type: "GET",
       url: "{{ route('get-bookmark') }}",
       data: {
-          URL : getUrlVars()
+          URL : url
       }
   })
   .done(function(msg) {
@@ -70,7 +63,7 @@ function addBookmark(queryString, bookmark) {
         type: "POST",
         url: "{{ route('add-bookmark') }}",
         data: {
-            URL : getUrlVars()
+            URL : url
             bookmark: bookmark
         }
     })

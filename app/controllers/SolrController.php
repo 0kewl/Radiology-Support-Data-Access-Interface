@@ -151,41 +151,38 @@ class SolrController extends BaseController {
 	// Add a bookmark
 	public function postAddBookmark()
 	{
-		//$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
-		//$bookmark = strtolower(Input::get('bookmark'));
+		$bookmark = strtolower(Input::get('bookmark'));
 
 		// Get a Solr client
-		//$client = $this->getSolrClient();
+		$client = $this->getSolrClient();
 
-		//$query = new SolrQuery();
-		//$query->addBookmark($client, $caseID, $bookmark);
+		$query = new SolrQuery();
+		$query->addBookmark($url, $bookmark);
 		// Let's be friendly and return the case id we modified
-		//return $caseID;
+		return $url;
 	}
 	
 	//Get a bookmark
 	public function getSavedSearches()
 	{
-		//$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
-
 		// Get a Solr client
-		//$client = $this->getSolrClient();
+		$client = $this->getSolrClient();
 
-		//$query = new SolrQuery();
-		//$resultset = $query->getBookmark($client, $caseID);
+		$query = new SolrQuery();
+		$resultset = $query->getBookmark($url);
 
-		//foreach ($resultset as $document) {
-		//	$bookmark = $document->tag;
-		//}
+		foreach ($resultset as $document) {
+			$bookmark = $document->savedSearches;
+		}
 
-		//$data = array(
-		//	'caseID'   => $caseID,
-		//	'bookmark' => $bookmark
-		//);
-		//return $data;
+		$data = array(
+			'url'   => $url,
+			'bookmark' => $bookmark
+		);
+		return $data;
 	
 		//return 'saved search page';
-		return View::make('saved', compact('hashtag', 'tables','resultCount','startPos','keywords','operators'));
+		//return View::make('saved', compact('hashtag', 'tables','resultCount','startPos','keywords','operators'));
 	}
 
 	private function findSimilarCases($caseID, $keywords)
