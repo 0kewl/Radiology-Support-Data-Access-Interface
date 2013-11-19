@@ -25,9 +25,6 @@
 						  @include('components/search-form')
 						</div>
 					</div>
-					<div id="image-option">
-
-					</div>
     			</div>
                 <!--END case search form -->                
                 @include('components/results-viewer')
@@ -35,7 +32,9 @@
     	</div>
     </div>
     <div class="row-fluid">
-        <div class="span4 shadow" style="background-color:#707070; padding:12px; margin-top: -550px; height: 550px; overflow-y: hidden;"></div>
+        <div class="span4 shadow" style="background-color:#707070; padding:12px; margin-top: -550px; height: 550px; overflow-y: hidden; text-align: center;">
+            <h3 style="padding-top: 200px; color: #444; text-shadow: 0px 1px 1px #4d4d4d;">Agfa Image Component</h3>
+        </div>
     </div>
 </div>
 

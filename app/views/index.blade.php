@@ -14,7 +14,7 @@
     <div id="content-window">
         <div class="row-fluid">
             <!-- Cases search form -->
-            <div class="span8 shadow" style="height:622px;">
+            <div class="span8 shadow" style="padding: 14px; height:622px; background-color:#707070;">
                 <h3 class="text-center">Case Search</h3>
                 <br>
 				<h4 style="color: #fff;">Search Query</h4>
@@ -25,7 +25,7 @@
             <!-- END search form -->
 
             <!-- Case lookup form -->
-            <div class="span4 shadow" style="height:622px;">
+            <div class="span4 shadow" style="padding: 14px; height:622px; background-color:#707070;">
                 <h3 class="text-center">Case Lookup</h3>   
                 <br>
 				<h4 style="color: #fff;">Enter Case ID</h4>
