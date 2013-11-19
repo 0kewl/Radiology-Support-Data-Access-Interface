@@ -234,20 +234,20 @@ class SolrQuery {
 	
 	public function addBookmark($url, $newBookmark)
 	{
-		// We need to get the current case's tags
+		// We need to get the current bookmark url
 		$result = $this->getUrl($url);
 		$currentBookmark = new stdClass();
 
-		// The list of all hashtags, both new and existing
+		// The list of all bookmarks, both new and existing
 		$updatedHashtags = array();
 
-		// Tags already existing in Solr
+		// Already existing in Solr
 		if (!empty($currentBookmark)) {
 			foreach ($currentBookmark as $b) {
 				array_push($updatedBookmark, $b);
 			}
 		}
-		// Turn the list of new hashtags into an array
+		// Turn the list of new bookmarks into an array
 		//$updatedHashtags = array_merge(explode(',', $newHashtags), $updatedHashtags);
 
 		$update = $client->createUpdate();
@@ -264,5 +264,19 @@ class SolrQuery {
 
 		// Runs the query and returns the result
 		$result = $client->update($update);
+	}
+	
+	// Given a case ID, return a list of bookmark
+	public function getBookmark($url)
+	{
+		// Select query instance
+		$query = $client->createSelect();
+		
+		// Just search the URL
+		$query->setQuery("url:" . $url);
+		$query->setFields(array('savedSearches'));
+		
+		$resultset = $client->select($query);
+		return $resultset;
 	}
 }
