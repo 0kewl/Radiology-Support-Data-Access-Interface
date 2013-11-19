@@ -69,11 +69,11 @@ $(document).ready(function() {
 	$("#bookmark-search").popover({
         placement: 'bottom',
         html: 'true',
-        title : 'Search Bookmark'
+        title : 'Add Bookmark'
     });
 	
-    var bookmarkPopover = '<strong>Add Bookmark</strong><br><br>' +
-                          '<input type="text" id="bookmark-input"><br><button id="add-bookmark"class="btn btn-inverse btn-small" onClick="addBookmark($(this).parents(&quot;.result-snippet&quot;).attr(&quot;id&quot;),$(&quot;#bookmark-input&quot;).val());">Add</button>' +
+    var bookmarkPopover = '<strong>Name your saved search:</strong><br><br>' +
+                          '<input type="text" id="bookmark-input"><br><button id="add-bookmark"class="btn btn-inverse btn-small" onClick="addBookmark($(&quot;#bookmark-input&quot;).val());">Add</button>' +
                           '<button type="button" id="close" class="btn btn-small btn-inverse" onclick="$(&quot;#bookmark-search&quot;).popover(&quot;hide&quot;);">Cancel</button>';
 
     $('#bookmark-search').attr('data-content', bookmarkPopover);
@@ -151,5 +151,6 @@ $("#add-field").click(function() {
 });
 </script>
 @include('components/hashtag')
+@include('components/bookmark')
 </body>
 </html>

@@ -170,38 +170,43 @@ class SolrController extends BaseController {
 	// Add a bookmark
 	public function postAddBookmark()
 	{
-		$bookmark = strtolower(Input::get('bookmark'));
+		// User-supplied name for the saved search
+		$bookmarkName = Input::get('bookmarkName');
+
+		// The search URL the user wishes to save
+		$URL = Input::get('url');
+
+		// We need to build an array to map the bookmarkName and URL
+		// Pass this array into the SolrQuery method to persist it
+		$bookmark = array(
+			'name' => $bookmarkName,
+			 'url' => $URL
+			);
 
 		// Get a Solr client
 		$client = $this->getSolrClient();
 
 		$query = new SolrQuery();
-		$query->addBookmark($url, $bookmark);
-		// Let's be friendly and return the case id we modified
-		return $url;
+		$query->addBookmark($client, $bookmark);
+
+		return 'success';
 	}
 	
-	//Get a bookmark
+	// Get all bookmarks
 	public function getSavedSearches()
 	{
 		// Get a Solr client
 		$client = $this->getSolrClient();
 
 		$query = new SolrQuery();
-		$resultset = $query->getBookmark($url);
+		$resultset = $query->getBookmarks($client);
 
-		foreach ($resultset as $document) {
-			$bookmark = $document->savedSearches;
+		$bookmarks = array();
+		foreach ($resultset as $bookmark) {
+			 array_push($bookmarks, $bookmark->savedSearches);
 		}
 
-		$data = array(
-			'url'   => $url,
-			'bookmark' => $bookmark
-		);
-		return $data;
-	
-		//return 'saved search page';
-		//return View::make('saved', compact('hashtag', 'tables','resultCount','startPos','keywords','operators'));
+		return View::make('saved', compact('bookmarks'));
 	}
 
 	private function findSimilarCases($caseID, $keywords)

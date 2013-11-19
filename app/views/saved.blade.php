@@ -14,7 +14,12 @@
     @include('components/menu')
     <div class="row-fluid">
     	<div class="span12 shadow" style="height: 800px; overflow-y: hidden;">
-			<p>test</p>         
+            <ul>
+            @foreach($bookmarks AS $bookmark)
+                <li><a href="{{ $bookmark[1] }}" style="color:#fff;">{{ $bookmark[0] }}</a></li>
+                <br>
+            @endforeach
+            </ul>
     	</div>
     </div>
 </div>
@@ -26,6 +31,5 @@ $(document).ready(function() {
 
 });
 </script>
-@include('components/hashtag')
 </body>
-</html>                                       
+</html>

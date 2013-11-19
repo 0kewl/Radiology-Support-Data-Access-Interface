@@ -242,31 +242,30 @@ class SolrQuery {
 		return $suggestions;
 	}
 	
-	public function addBookmark($url, $newBookmark)
+	public function addBookmark($client, $bookmark)
 	{
-		// We need to get the current bookmark url
-		$result = $this->getUrl($url);
-		$currentBookmark = new stdClass();
+		$result = $this->getCaseData($client, 'RAD-bookmarks');
+		$currentTags = new stdClass();
+		// Get the savedSearches property
+		foreach ($result as $document) {
+			$currentTags = $document->savedSearches;
+		}
+		$updatedBookmarks = array();
 
-		// The list of all bookmarks, both new and existing
-		$updatedHashtags = array();
-
-		// Already existing in Solr
-		if (!empty($currentBookmark)) {
-			foreach ($currentBookmark as $b) {
-				array_push($updatedBookmark, $b);
+		if (!empty($currentBookmarks)) {
+			foreach ($currentBookmarks as $t) {
+				array_push($updatedBookmarks, $t);
 			}
 		}
-		// Turn the list of new bookmarks into an array
-		//$updatedHashtags = array_merge(explode(',', $newHashtags), $updatedHashtags);
+		$updatedBookmarks = array_merge($bookmark, $updatedBookmarks);
+
 
 		$update = $client->createUpdate();
 		$doc= $update->createDocument();
 
-		$doc->setKey('URL', $url);              
-
-	    $doc->setField('savedSearches', $updatedBookmark);
-	    $doc->setFieldModifier('savedSearches', 'set');     
+	    $doc->setKey('id', 'RAD-bookmarks');
+	    $doc->setField('savedSearches', $updatedBookmarks);
+	    $doc->setFieldModifier('tag', 'set'); 
 
 		// Add document and commit
 		$update->addDocument($doc);
@@ -276,14 +275,12 @@ class SolrQuery {
 		$result = $client->update($update);
 	}
 	
-	// Given a case ID, return a list of bookmark
-	public function getBookmark($url)
+	// Returns all saved searches as bookmarks
+	public function getBookmarks($client)
 	{
 		// Select query instance
 		$query = $client->createSelect();
-		
-		// Just search the URL
-		$query->setQuery("url:" . $url);
+		$query->setQuery("id: RAD-bookmarks");
 		$query->setFields(array('savedSearches'));
 		
 		$resultset = $client->select($query);
