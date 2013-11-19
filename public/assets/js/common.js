@@ -1,6 +1,7 @@
 /*
  *   Common jQuery functions
  */
+
 $("#did-you-mean").click(function(event) {
     event.preventDefault();
     $("#main-query").val($("#did-you-mean").text());

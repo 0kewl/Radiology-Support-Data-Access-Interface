@@ -2,12 +2,19 @@
 <html>
 @include('components/header')
 <body>
+<!-- CSS -->
+    <style>
+		.container {
+			width: auto;
+			height: auto;
+		}
+    </style>
 <!-- Page wrapper -->
-<div class="container" style="margin-top: 22px;">
+<div class="container">
     @include('components/menu')
     <div class="row-fluid">
-    	<div class="span12 shadow" style="background-color:#707070; padding:12px; height: 800px; overflow-y: hidden;">
-			
+    	<div class="span12 shadow" style="height: 800px; overflow-y: hidden;">
+			<p>test</p>         
     	</div>
     </div>
 </div>
@@ -21,4 +28,4 @@ $(document).ready(function() {
 </script>
 @include('components/hashtag')
 </body>
-</html>
+</html>                                       

@@ -241,4 +241,52 @@ class SolrQuery {
 		}
 		return $suggestions;
 	}
+	
+	public function addBookmark($url, $newBookmark)
+	{
+		// We need to get the current bookmark url
+		$result = $this->getUrl($url);
+		$currentBookmark = new stdClass();
+
+		// The list of all bookmarks, both new and existing
+		$updatedHashtags = array();
+
+		// Already existing in Solr
+		if (!empty($currentBookmark)) {
+			foreach ($currentBookmark as $b) {
+				array_push($updatedBookmark, $b);
+			}
+		}
+		// Turn the list of new bookmarks into an array
+		//$updatedHashtags = array_merge(explode(',', $newHashtags), $updatedHashtags);
+
+		$update = $client->createUpdate();
+		$doc= $update->createDocument();
+
+		$doc->setKey('URL', $url);              
+
+	    $doc->setField('savedSearches', $updatedBookmark);
+	    $doc->setFieldModifier('savedSearches', 'set');     
+
+		// Add document and commit
+		$update->addDocument($doc);
+		$update->addCommit();
+
+		// Runs the query and returns the result
+		$result = $client->update($update);
+	}
+	
+	// Given a case ID, return a list of bookmark
+	public function getBookmark($url)
+	{
+		// Select query instance
+		$query = $client->createSelect();
+		
+		// Just search the URL
+		$query->setQuery("url:" . $url);
+		$query->setFields(array('savedSearches'));
+		
+		$resultset = $client->select($query);
+		return $resultset;
+	}
 }

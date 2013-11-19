@@ -167,10 +167,41 @@ class SolrController extends BaseController {
 		return $resultset;
 	}
 	
+	// Add a bookmark
+	public function postAddBookmark()
+	{
+		$bookmark = strtolower(Input::get('bookmark'));
+
+		// Get a Solr client
+		$client = $this->getSolrClient();
+
+		$query = new SolrQuery();
+		$query->addBookmark($url, $bookmark);
+		// Let's be friendly and return the case id we modified
+		return $url;
+	}
+	
+	//Get a bookmark
 	public function getSavedSearches()
 	{
+		// Get a Solr client
+		$client = $this->getSolrClient();
+
+		$query = new SolrQuery();
+		$resultset = $query->getBookmark($url);
+
+		foreach ($resultset as $document) {
+			$bookmark = $document->savedSearches;
+		}
+
+		$data = array(
+			'url'   => $url,
+			'bookmark' => $bookmark
+		);
+		return $data;
+	
 		//return 'saved search page';
-		return View::make('saved', compact('hashtag', 'tables','resultCount','startPos','keywords','operators'));
+		//return View::make('saved', compact('hashtag', 'tables','resultCount','startPos','keywords','operators'));
 	}
 
 	private function findSimilarCases($caseID, $keywords)

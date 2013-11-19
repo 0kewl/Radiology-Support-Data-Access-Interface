@@ -1,7 +1,14 @@
 <script type="text/javascript">
 
-function getBookmark(callback) {
+// Read a page's GET URL variables and return them as an associative array.
+function getUrl()
+{
+    return window.location.href;
+}
 
+function getBookmark(url) {
+	
+	var url = getUrl();
     var opts = {
         lines:9, // The number of lines to draw
         length: 18, // The length of each line
@@ -27,7 +34,7 @@ function getBookmark(callback) {
       type: "GET",
       url: "{{ route('get-bookmark') }}",
       data: {
-          caseID: caseID
+          URL : url
       }
   })
   .done(function(msg) {
@@ -36,7 +43,7 @@ function getBookmark(callback) {
     var element = '<span style="font-size: 18px;">Tags: </span>';
     if (msg['bookmark'] != null) {
       $.each(msg['bookmark'], function(index, value) {
-        element = element + '<a href="{{ route('bookmark-results') }}?bookmark=' + value + '&start=0" class="bookmark" style="cursor: pointer; cursor: hand; font-size: 15px; margin-right:10px; color:#fff;">#' + value + '</a>';
+        element = element + '<a href="{{ route('get-bookmark') }}?bookmark=' + value + '&start=0" class="bookmark" style="cursor: pointer; cursor: hand; font-size: 15px; margin-right:10px; color:#fff;">#' + value + '</a>';
       });
     }
     else {
@@ -56,7 +63,7 @@ function addBookmark(queryString, bookmark) {
         type: "POST",
         url: "{{ route('add-bookmark') }}",
         data: {
-            caseID: caseID,
+            URL : url
             bookmark: bookmark
         }
     })
