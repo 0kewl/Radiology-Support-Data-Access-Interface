@@ -35,8 +35,16 @@ Route::get('spellcheck', array('as' => 'spellcheck', 'uses' => 'SolrController@g
 // Add hashtags
 Route::post('add-hashtags', array('as' => 'add-hashtags', 'uses' => 'SolrController@postAddHashtags'));
 
+<<<<<<< HEAD
 // Get all bookmarks and render the saved searches page
 Route::get('get-bookmarks', array('as' => 'get-bookmarks', 'uses' => 'SolrController@getSavedSearches'));
+=======
+// The saved searches page
+Route::get('saved', array('as' => 'saved-search', 'uses' => 'SolrController@getSavedSearches'));
+
+// Get bookmarks
+Route::get('get-bookmarks', array('as' => 'get-bookmarks', 'uses' => 'SolrController@getBookmarks'));
+>>>>>>> 5ba26dae6c7f2b1bb66597500d9e0a920fb36add
 
 // Add bookmarks
 Route::post('add-bookmark', array('as' => 'add-bookmark', 'uses' => 'SolrController@postAddBookmark'));

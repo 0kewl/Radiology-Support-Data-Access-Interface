@@ -9,7 +9,7 @@
 		}
     </style>
 <!-- Search results viewer -->
-<div id="search-results" class="span8 shadow" style="height: 800px; background-color: #707070;">
+<div id="search-results" class="span8 shadow" style="height: 800px;">
     <h3 class="text-center">Search Results</h3>
         @if (!$tables)
             <br>
@@ -59,7 +59,7 @@
             </div>
             <div id="document-loader" style="margin: 0 auto;"></div>
             <div id="hashtag-container" style="padding-left: 17px; height: 40px; overflow:auto;"></div>
-			<div id="document-viewer" class="span7" style="font-size: 18px; background-color:#707070; float:left; height: 590px; overflow-y: auto; overflow-x: hidden;"></div>
+			<div id="document-viewer" class="span7" style="font-size: 18px; float:left; height: 590px; overflow-y: auto; overflow-x: hidden;"></div>
         @endif
 </div>
 <!-- END search results viewer -->

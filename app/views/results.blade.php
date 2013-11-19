@@ -16,7 +16,7 @@
     	<div class="span12">
     		<div class="row-fluid">
                 <!-- Case search form -->
-    			<div class="span4 shadow" style="background-color:#707070; padding:12px; height: 215px; overflow-y: hidden;">
+    			<div class="span4 shadow" style="height: 215px; overflow-y: hidden;">
 					<div id="search-option">
 						<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
 						<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
@@ -32,7 +32,7 @@
     	</div>
     </div>
     <div class="row-fluid">
-        <div class="span4 shadow" style="background-color:#707070; padding:12px; margin-top: -550px; height: 550px; overflow-y: hidden; text-align: center;">
+        <div class="span4 shadow" style="margin-top: -550px; height: 550px; overflow-y: hidden; text-align: center;">
             <h3 style="padding-top: 200px; color: #444; text-shadow: 0px 1px 1px #4d4d4d;">Agfa Image Component</h3>
         </div>
     </div>
