@@ -39,7 +39,7 @@ Route::post('add-hashtags', array('as' => 'add-hashtags', 'uses' => 'SolrControl
 Route::get('saved', array('as' => 'saved-search', 'uses' => 'SolrController@getSavedSearches'));
 
 // Get bookmarks
-Route::get('get-bookmark', array('as' => 'get-bookmark', 'uses' => 'SolrController@getBookmark'));
+Route::get('get-bookmarks', array('as' => 'get-bookmarks', 'uses' => 'SolrController@getBookmarks'));
 
 // Add bookmarks
 Route::post('add-bookmark', array('as' => 'add-bookmark', 'uses' => 'SolrController@postAddBookmark'));

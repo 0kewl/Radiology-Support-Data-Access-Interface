@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-// Read a page's GET URL variables and return them as an associative array.
+// Read a page's URL
 function getUrl()
 {
     return window.location.href;
@@ -9,6 +9,7 @@ function getUrl()
 function getBookmark(url) {
 	
 	var url = getUrl();
+	var queryURL = url.slice(window.location.href.indexOf('q=')+2);
     var opts = {
         lines:9, // The number of lines to draw
         length: 18, // The length of each line
@@ -32,7 +33,7 @@ function getBookmark(url) {
 
   $.ajax({
       type: "GET",
-      url: "{{ route('get-bookmark') }}",
+      url: "{{ route('get-bookmarks') }}",
       data: {
           URL : url
       }
@@ -63,7 +64,7 @@ function addBookmark(queryString, bookmark) {
         type: "POST",
         url: "{{ route('add-bookmark') }}",
         data: {
-            URL : url
+            URL : queryURL
             bookmark: bookmark
         }
     })
