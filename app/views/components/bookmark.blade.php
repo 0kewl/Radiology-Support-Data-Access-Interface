@@ -48,7 +48,7 @@ function getBookmark(callback) {
 
 function addBookmark(queryString, bookmark) {
   if (bookmark == '') {
-    alert("You must enter a boonkmark name.");
+    alert("You must enter a bookmark name.");
     return false;
   }
   else {

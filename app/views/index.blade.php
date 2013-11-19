@@ -54,8 +54,8 @@ $(document).ready(function() {
     $(".selectpicker").selectpicker();
 
     $("#main-query").autocomplete({
-        source: "{{ route('spellcheck') }}",
-        minLength: 3,
+        source: "{{ route('autocomplete') }}",
+        minLength: 2,
         select: function(event, ui) {
             var terms = split(this.value);
             // remove the current input

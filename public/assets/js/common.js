@@ -1,11 +1,10 @@
 /*
  *   Common jQuery functions
  */
-
-$(".hashtag").click(function(event) {
-  //event.preventDefault();
-  //alert($(this).attr("id"));
-  alert("moooo");
+$("#did-you-mean").click(function(event) {
+    event.preventDefault();
+    $("#main-query").val($("#did-you-mean").text());
+    $("#search").click();
 });
 
 // display the selected case document

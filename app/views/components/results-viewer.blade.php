@@ -3,6 +3,9 @@
     <h3 class="text-center">Search Results</h3>
         @if (!$tables)
             <br>
+            @if (!empty($suggestion))
+                <p><i>Did you mean: <a href="#" style="color:#fff;"><strong><span id="did-you-mean">{{ $suggestion }}</span></strong></a></i></p>
+            @endif 
             <div class="well">
                 @if (isset($hashtag))
                     <h5 class="text-center" style="font-size: 18px;">No documents tagged with #{{{ $hashtag }}} found. </h5>

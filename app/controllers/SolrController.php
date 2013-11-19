@@ -29,14 +29,21 @@ class SolrController extends BaseController {
 
 		$tables = $this->renderDocumentTables($resultset, $highlighting);
 
-		// How many results did we retrieve
+		// How many results did we retrieve?
 		$resultCount = $resultset->getNumFound();
+
+		if ($resultCount == 0) {
+			$suggestion = $this->getSpellCheck($query);
+			if ($suggestion) {
+				$suggestion = $suggestion['word'];
+			}
+		}
 
 		// Keywords and operators for the select elements
 		$keywords = SearchFieldEntity::getFields();
 		$operators = SolrOperators::getOperators();
 
-		return View::make('results', compact('tables','resultCount','startPos','keywords','operators'));
+		return View::make('results', compact('tables','resultCount','startPos','keywords','operators','suggestion'));
 	}
 	
 	// Find a case by its ID
@@ -45,7 +52,6 @@ class SolrController extends BaseController {
 		$caseID = Input::get('id');
 		$similarKeywords = Input::get('keywords');
 
-		// Get a Solr client
 		$client = $this->getSolrClient();
 		
 		// Parse form data from HTTP POST action
@@ -78,7 +84,6 @@ class SolrController extends BaseController {
 
 		$startPos = Input::get('start');
 		
-		// Get a Solr client
 		$client = $this->getSolrClient();
 
 		$data = new SolrQuery();
@@ -103,7 +108,6 @@ class SolrController extends BaseController {
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
 		$hashtags = strtolower(Input::get('hashtags'));
 
-		// Get a Solr client
 		$client = $this->getSolrClient();
 
 		$query = new SolrQuery();
@@ -113,12 +117,11 @@ class SolrController extends BaseController {
 	}
 
 
-	// Get hashtags from a case
+	// Get hashtags of a case
 	public function getHashtags()
 	{
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
 
-		// Get a Solr client
 		$client = $this->getSolrClient();
 
 		$query = new SolrQuery();
@@ -135,16 +138,32 @@ class SolrController extends BaseController {
 		return $data;
 	}
 
-	public function getSpellCheck()
+	public function getSpellCheck($term = null)
 	{
-		$query = Input::get('term');
-		$query = urldecode($query);
+		if (!empty($term)) {
+			$query = $term;
+		}
+		else {
+			$query = Input::get('term');
+			$query = urldecode($query);
+		}
 		
-		// Get a Solr client
 		$client = $this->getSolrClient();
 
 		$data = new SolrQuery();
 		$resultset = $data->spellCheck($client, $query);
+		return $resultset;
+	}
+
+	public function getAutocomplete()
+	{
+		$query = Input::get('term');
+		$query = urldecode($query);
+		
+		$client = $this->getSolrClient();
+
+		$data = new SolrQuery();
+		$resultset = $data->suggest($client, $query);
 		return $resultset;
 	}
 	
@@ -156,7 +175,6 @@ class SolrController extends BaseController {
 
 	private function findSimilarCases($caseID, $keywords)
 	{
-		// Get a Solr client
 		$client = $this->getSolrClient();
 	
 		$data = new SolrQuery();

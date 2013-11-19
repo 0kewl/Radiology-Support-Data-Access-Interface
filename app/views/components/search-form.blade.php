@@ -19,7 +19,7 @@
 </form>
 <!-- END Query form -->
 
-<div style="margin:0 auto; text-align:center;">
+<div style="margin:0 auto; text-align:center; margin-top: -20px;">
     <button id="search" class="btn btn-large btn-inverse">Search</button>
 </div>
 <!-- END Search Form -->

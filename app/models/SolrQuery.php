@@ -21,25 +21,18 @@ class SolrQuery {
 		// Select query instance
 		$query = $client->createSelect();
 
-		// Get the dismax component
-		// From Solr Documentation: "Disjunction refers to the fact that your search is executed
-		// across multiple fields, e.g. title, body and keywords, with different relevance weights."
-		// Read more at http://wiki.apache.org/solr/DisMax
+		// Disjunction refers to the fact that your search is executed across multiple fields
+		// with different relevance weights.
 		$dismax = $query->getDisMax();
 		$dismax->setQueryFields(array_keys(SearchFieldEntity::getFields()));
 
 		$query->setRows(10);
 
 		// Set a boost query
-		// We might enable this feature in the future...disabled for now
+		// We might enable this feature in the future
 		// $dismax->setBoostQuery('');
 
-		// Override the default setting of 'dismax' to enable 'edismax'
-		// From Solr Documentation: "Edismax searches for the query words across multiple fields with
-		// different boosts, based on the significance of each field. Additional options let you influence
-		// the score based on rules specific to each use case (independent of user input)."
 		$dismax->setQueryParser('edismax');
-
 		$query->setQuery($q);
 
 		// Get highlighting component and apply settings
@@ -190,7 +183,7 @@ class SolrQuery {
 		// add spellcheck settings
 		$spellcheck = $query->getSpellcheck();
 		$spellcheck->setQuery($q);
-		$spellcheck->setCount(10);
+		$spellcheck->setCount(1);
 		$spellcheck->setBuild(true);
 		$spellcheck->setCollate(true);
 		$spellcheck->setExtendedResults(true);
@@ -200,35 +193,52 @@ class SolrQuery {
 		$resultset = $client->select($query);
 		$spellcheckResult = $resultset->getSpellcheck();
 
-		if ($spellcheckResult->getCorrectlySpelled()) {
-		    //echo 'yes';
-		}
-		else {
-		    //echo 'no';
-		}
-
-		foreach($spellcheckResult as $suggestion) {
-		    foreach ($suggestion->getWords() as $word) {
-		    	// Could use this later on
-		    }
-		}
-
-		$collations = $spellcheckResult->getCollations();
-
-		foreach($collations as $collation) {
-		  // Could use this later on
-		}
-		$corrections = array();
-
-		if (!empty($collations)) {
-			foreach($collation->getCorrections() as $input => $correction) {
-				$element = array(
-					"key" => $correction,
-					"value" => $correction,
-				);
-				array_push($corrections, $element);
+		if (isset($spellcheckResult)) {
+			if ($spellcheckResult->getCorrectlySpelled()) {
+			    //echo 'yes';
+			}
+			else {
+			    //echo 'no';
 			}
 		}
-		return $corrections;
+
+		$correction = '';
+
+		if (!empty($spellcheckResult)) {
+			foreach($spellcheckResult as $suggestion) {
+			    foreach ($suggestion->getWords() as $word) {
+			    	$correction = $word;
+			    }
+			}
+		}
+		return $correction;
+	}
+
+	public function suggest($client, $q)
+	{
+		// get a suggester query instance
+		$query = $client->createSuggester();
+		$query->setQuery($q);
+		$query->setDictionary('suggest');
+		$query->setOnlyMorePopular(true);
+		$query->setCount(10);
+		$query->setCollate(true);
+
+		// this executes the query and returns the result
+		$resultset = $client->suggester($query);
+
+		// display results for each suggested term
+		$suggestions = array();
+
+		foreach ($resultset as $term => $termResult) {
+		    foreach($termResult as $result) {
+		       $element = array(
+					"key" => $result,
+					"value" => $result
+				);
+				array_push($suggestions, $element);
+		    }
+		}
+		return $suggestions;
 	}
 }

@@ -15,7 +15,7 @@
     	<div class="span12">
     		<div class="row-fluid">
                 <!-- Case search form -->
-    			<div class="span4 shadow" style="background-color:#707070; padding:12px; height: 800px; overflow-y: hidden;">
+    			<div class="span4 shadow" style="background-color:#707070; padding:12px; height: 215px; overflow-y: hidden;">
 					<div id="search-option">
 						<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
 						<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
@@ -25,7 +25,7 @@
 						</div>
 					</div>
 					<div id="image-option">
-						<!-- <img id="image-holder" src="{{ asset('assets/img/medical_images/')}}/" alt="case image"> -->
+
 					</div>
     			</div>
                 <!--END case search form -->
@@ -34,6 +34,9 @@
 
     		</div>
     	</div>
+    </div>
+    <div class="row-fluid">
+        <div class="span4 shadow" style="background-color:#707070; padding:12px; margin-top: -550px; height: 550px; overflow-y: hidden;"></div>
     </div>
 </div>
 
@@ -84,8 +87,8 @@ $(document).ready(function() {
     $("#search-results").toggleClass("span8" , "span5");
 
     $("#main-query").autocomplete({
-        source: "{{ route('spellcheck') }}",
-        minLength: 3,
+        source: "{{ route('autocomplete') }}",
+        minLength: 2,
         select: function(event, ui) {
             var terms = split(this.value);
             // remove the current input
