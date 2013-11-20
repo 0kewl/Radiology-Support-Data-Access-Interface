@@ -116,7 +116,6 @@ class SolrController extends BaseController {
 		return $caseID;
 	}
 
-
 	// Get hashtags of a case
 	public function getHashtags()
 	{
