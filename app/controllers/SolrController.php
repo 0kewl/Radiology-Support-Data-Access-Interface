@@ -111,7 +111,7 @@ class SolrController extends BaseController {
 		$client = $this->getSolrClient();
 
 		$query = new SolrQuery();
-		$query->addHashtag($client, $caseID, $hashtags);
+		$query->addHashtags($client, $caseID, $hashtags);
 		// Let's be friendly and return the case id we modified
 		return $caseID;
 	}

@@ -4,46 +4,49 @@ use Solarium\Client;
 
 class SolrQuery {
 
-	// Get all documents from Solr
-	public function getAllData($client) {
-
+	/**
+	 * Returns all cases in the Solr database
+	 * @param Client $client configured Solr client
+	 * @return ResultSet $resultset collection of documents
+	 */
+	public function getAllData($client)
+	{
 		// Select query instance
 		$query = $client->createSelect();
 
-		// No query parameters supplied, so we get everything back
+		// No query parameters supplied, so we get all results
 		$resultset = $client->select($query);
 		return $resultset;
 	}
 
-	// Get a filtered result set of documents from Solr
-	public function getFilteredData($client, $q, $startPos) {
-
-		// Select query instance
+	/**
+	 * Returns a filtered list of documents from Solr
+	 * @param Client $client configured Solr client
+	 * @param string $q search query
+	 * @param int $startPos the cursor starting position
+	 * @return ResultSet $resultset collection of documents
+	 */
+	public function getFilteredData($client, $q, $startPos)
+	{
 		$query = $client->createSelect();
 
-		// Disjunction refers to the fact that your search is executed across multiple fields
-		// with different relevance weights.
+		 // Disjunction refers to the fact that your search is executed across
+		 // multiple fields with different relevance weights.
 		$dismax = $query->getDisMax();
 		$dismax->setQueryFields(array_keys(SearchFieldEntity::getFields()));
 
 		$query->setRows(10);
 
-		// Set a boost query
-		// We might enable this feature in the future
-		// $dismax->setBoostQuery('');
-
 		$dismax->setQueryParser('edismax');
 		$query->setQuery($q);
 
-		// Get highlighting component and apply settings
+		// Get highlighting component which marks matched keywords
 		$hl = $query->getHighlighting();
 		$hl->setFields(array_keys(SearchFieldEntity::getFields()));
-
-		// We want to bold matching results
 		$hl->setSimplePrefix('<u>');
 		$hl->setSimplePostfix('</u>');
 
-		// Handle paginating
+		// Handle pagination
 		$start = 0;
 		if (!empty($startPos)) {
 			$start = $startPos;
@@ -53,8 +56,13 @@ class SolrQuery {
 		$resultset = $client->select($query);
 		return $resultset;
 	}
-	
-	// Given a case ID, return the matching document
+
+	/**
+	 * Returns a specific case document
+	 * @param Client $client configured Solr client
+	 * @param string $id the case identifier
+	 * @return ResultSet $resultset collection of documents
+	 */
 	public function getCaseData($client, $id)
 	{
 		// Select query instance
@@ -67,6 +75,13 @@ class SolrQuery {
 		return $resultset;
 	}
 
+	/**
+	 * Returns a list of hashtags based on a specified query
+	 * @param Client $client configured Solr client
+	 * @param string $q hashtag search query
+	 * @param int $startPos the cursor starting position
+	 * @return ResultSet $resultset collection of documents
+	 */
 	public function getHashtagCases($client, $q, $startPos)
 	{
 		// Select query instance
@@ -99,6 +114,14 @@ class SolrQuery {
 		return $resultset;
 	}
 
+	/**
+	 * Returns a list of cases similar to the source case
+	 * and relevant keywords
+	 * @param Client $client configured Solr client
+	 * @param string $id the case identifier
+	 * @param string $keywords list of relevant keywords
+	 * @return ResultSet $resultset collection of documents
+	 */
 	public function getSimilarCases($client, $id, $keywords)
 	{
 		// Get a morelikethis query instance
@@ -113,54 +136,61 @@ class SolrQuery {
 		$query->setMinimumTermFrequency(1);
 
 		$query->setRows(50);
-
-		//$query->createFilterQuery('query')->setQuery('inStock:true');
-		//$query->setInterestingTerms('details');
 		$query->setMatchInclude(true);
 
 		$resultset = $client->select($query);
 		return $resultset;
 	}
 
-	public function addHashtag($client, $id, $newHashtags)
+	/**
+	 * Adds user-supplied hashtags to a case document
+	 * @param Client $client configured Solr client
+	 * @param string $id the case identifier
+	 * @param array $newHashtags added hashtags
+	 * @return void
+	 */
+	public function addHashtags($client, $id, $newHashtags)
 	{
-		// We need to get the current case's tags
+		// We need to get the current hashtags of the case
 		$result = $this->getCaseData($client, $id);
 		$currentTags = new stdClass();
+
 		// Get the tag property
 		foreach ($result as $document) {
 			$currentTags = $document->tag;
 		}
 
-		// The list of all hashtags, both new and existing
+		// The list of both new and existing hashtags
 		$updatedHashtags = array();
 
-		// Tags already existing in Solr
+		// Existing hashtags for this case
 		if (!empty($currentTags)) {
 			foreach ($currentTags as $t) {
 				array_push($updatedHashtags, $t);
 			}
 		}
-		// Turn the list of new hashtags into an array
+		// Convert the list of new hashtags to an array
 		$updatedHashtags = array_merge(explode(',', $newHashtags), $updatedHashtags);
 
 		$update = $client->createUpdate();
 		$doc= $update->createDocument();
 
 		$doc->setKey('id', $id);              
-
 	    $doc->setField('tag', $updatedHashtags);
-	    $doc->setFieldModifier('tag', 'set');     
+	    $doc->setFieldModifier('tag', 'set');
 
-		// Add document and commit
 		$update->addDocument($doc);
 		$update->addCommit();
 
-		// Runs the query and returns the result
 		$result = $client->update($update);
 	}
 
-	// Given a case ID, return a list of hashtags
+	/**
+	 * Returns a list of hashtags associated with a case
+	 * @param Client $client configured Solr client
+	 * @param string $id the case identifier
+	 * @return ResultSet $resultset collection of documents
+	 */
 	public function getHashtag($client, $id)
 	{
 		// Select query instance
@@ -174,13 +204,20 @@ class SolrQuery {
 		return $resultset;
 	}
 
+	/**
+	 * Performs a spell check on a search query and
+	 * suggests spelling corrections
+	 * @param Client $client configured Solr client
+	 * @param string $q search query
+	 * @return array $correction spelling corrections
+	 */
 	public function spellCheck($client, $q)
 	{
-		// get a select query instance
+		// Get a select query instance
 		$query = $client->createSelect();
 		$query->setRows(0);
 
-		// add spellcheck settings
+		// Add spellcheck settings
 		$spellcheck = $query->getSpellcheck();
 		$spellcheck->setQuery($q);
 		$spellcheck->setCount(1);
@@ -189,7 +226,7 @@ class SolrQuery {
 		$spellcheck->setExtendedResults(true);
 		$spellcheck->setCollateExtendedResults(true);
 
-		// this executes the query and returns the result
+		// Execute the query and return the results
 		$resultset = $client->select($query);
 		$spellcheckResult = $resultset->getSpellcheck();
 
@@ -203,7 +240,6 @@ class SolrQuery {
 		}
 
 		$correction = '';
-
 		if (!empty($spellcheckResult)) {
 			foreach($spellcheckResult as $suggestion) {
 			    foreach ($suggestion->getWords() as $word) {
@@ -214,9 +250,16 @@ class SolrQuery {
 		return $correction;
 	}
 
+	/**
+	 * Returns a list of autocomplete suggestions based
+	 * on a fragment of a search query
+	 * @param Client $client configured Solr client
+	 * @param string $q search query
+	 * @return array $suggestions autocomplete suggestions
+	 */
 	public function suggest($client, $q)
 	{
-		// get a suggester query instance
+		// Get a suggester query instance
 		$query = $client->createSuggester();
 		$query->setQuery($q);
 		$query->setDictionary('suggest');
@@ -224,10 +267,9 @@ class SolrQuery {
 		$query->setCount(10);
 		$query->setCollate(true);
 
-		// this executes the query and returns the result
 		$resultset = $client->suggester($query);
 
-		// display results for each suggested term
+		// Display results for each suggested term
 		$suggestions = array();
 
 		foreach ($resultset as $term => $termResult) {
@@ -241,12 +283,19 @@ class SolrQuery {
 		}
 		return $suggestions;
 	}
-	
+
+	/**
+	 * Adds a new bookmarked search to Solr
+	 * @param Client $client configured Solr client
+	 * @param string $bookmark bookmark query
+	 * @return void
+	 */
 	public function addBookmark($client, $bookmark)
 	{
 		$result = $this->getCaseData($client, 'RAD-bookmarks');
 		$currentTags = new stdClass();
-		// Get the savedSearches property
+
+		// Get the savedSearches field values
 		foreach ($result as $document) {
 			$currentTags = $document->savedSearches;
 		}
@@ -257,25 +306,29 @@ class SolrQuery {
 				array_push($updatedBookmarks, $t);
 			}
 		}
-		$updatedBookmarks = array_merge($bookmark, $updatedBookmarks);
 
+		$updatedBookmarks = array_merge($bookmark, $updatedBookmarks);
 
 		$update = $client->createUpdate();
 		$doc= $update->createDocument();
 
+		// The key for all bookmarks is 'RAD-bookmarks'
+		// Short for 'radiology bookmarks'
 	    $doc->setKey('id', 'RAD-bookmarks');
 	    $doc->setField('savedSearches', $updatedBookmarks);
 	    $doc->setFieldModifier('tag', 'set'); 
 
-		// Add document and commit
 		$update->addDocument($doc);
 		$update->addCommit();
 
-		// Runs the query and returns the result
 		$result = $client->update($update);
 	}
 	
-	// Returns all saved searches as bookmarks
+	/**
+	 * Returns all saved bookmarks in Solr
+	 * @param Client $client configured Solr client
+	 * @return ResultSet $resultset collection of documents
+	 */
 	public function getBookmarks($client)
 	{
 		// Select query instance
