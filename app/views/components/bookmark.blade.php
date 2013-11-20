@@ -23,6 +23,7 @@ function addBookmark(bookmarkName) {
     })
     .done(function(msg) {
         $("#bookmark-search").popover("hide");
+		alert("Bookmark added.");
     });
   }
 }
