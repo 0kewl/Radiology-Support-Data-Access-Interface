@@ -316,7 +316,7 @@ class SolrController extends BaseController {
 				}
 		    }
 		    $results .= '</table></div>';
-		    $results .= '<div><br><button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button></a>';
+		    $results .= '<div><br><button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button>';
 			$results .= '<a href="#" id="add-tag-' . $document->id . '"class=" add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-30px;" data-toggle="popover"><i class="icon-tag icon-white"></i> Tags</a></div>';
 		    $results .= '</div><br>';
 		}
