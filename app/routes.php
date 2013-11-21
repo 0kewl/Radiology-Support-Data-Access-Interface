@@ -40,3 +40,6 @@ Route::get('get-bookmarks', array('as' => 'get-bookmarks', 'uses' => 'SolrContro
 
 // Add bookmarks
 Route::post('add-bookmark', array('as' => 'add-bookmark', 'uses' => 'SolrController@postAddBookmark'));
+
+// Get all searches
+Route::get('results?q=*&start=0', array('as' => 'all-cases', 'uses' => 'SolrController@getAllCases'));

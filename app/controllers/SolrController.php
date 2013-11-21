@@ -15,16 +15,32 @@ class SolrController extends BaseController {
 
 		return View::make('index', compact('keywords'));
 	}
+	
+	/**
+	 * Returns All existing Cases
+	 * @return View results
+	 */
+	public function getAllCases()
+	{
+		$results = getResults('*');
+		return $results;
+	}	
 
 	/**
 	 * Returns the Results page of a search query
 	 * @return View results
 	 */
-	public function getResults()
+	public function getResults($input='')
 	{
-		// Get the search query
-		$query = Input::get('q');
-		$query = urldecode($query);
+		if (!$input=='*') {
+			// Get the search query
+			$query = Input::get('q');
+			$query = urldecode($query);
+		}
+		else {
+			// Set the search query to get all cases
+			$query = $input;
+		}		
 
 		// Get the cursor starting position
 		$startPos = Input::get('start');
