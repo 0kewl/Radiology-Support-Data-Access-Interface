@@ -4,20 +4,29 @@ use Solarium\Client;
 
 class SolrController extends BaseController {
 
+	/**
+	 * Returns the Search page
+	 * @return View index
+	 */
 	public function getIndex()
 	{
+		// Keywords used to populate the case comparison drop-down menu
 		$keywords = SearchFieldEntity::getFields();
-		$operators = SolrOperators::getOperators();
 
-		return View::make('index', compact('keywords', 'operators'));
+		return View::make('index', compact('keywords'));
 	}
 
-	// Handle a search
+	/**
+	 * Returns the Results page of a search query
+	 * @return View results
+	 */
 	public function getResults()
 	{
+		// Get the search query
 		$query = Input::get('q');
 		$query = urldecode($query);
 
+		// Get the cursor starting position
 		$startPos = Input::get('start');
 		
 		// Get a Solr client
@@ -29,7 +38,7 @@ class SolrController extends BaseController {
 
 		$tables = $this->renderDocumentTables($resultset, $highlighting);
 
-		// How many results did we retrieve?
+		// Get total number of results found
 		$resultCount = $resultset->getNumFound();
 
 		if ($resultCount == 0) {
@@ -39,17 +48,21 @@ class SolrController extends BaseController {
 			}
 		}
 
-		// Keywords and operators for the select elements
 		$keywords = SearchFieldEntity::getFields();
 		$operators = SolrOperators::getOperators();
 
 		return View::make('results', compact('tables','resultCount','startPos','keywords','operators','suggestion'));
 	}
 	
-	// Find a case by its ID
+	/**
+	 * Returns the Case page with similar cases
+	 * @return View case
+	 */
 	public function getCase()
 	{
+		// Get the case ID
 		$caseID = Input::get('id');
+		// Get the keywords used to compare other cases with this case
 		$similarKeywords = Input::get('keywords');
 
 		$client = $this->getSolrClient();
@@ -67,7 +80,6 @@ class SolrController extends BaseController {
 
 			$tables .= $this->renderDocumentTables($similarCases, NULL);
 
-			// How many results did we find?
 			$resultCount = $similarCases->getNumFound();
 		}
 
@@ -76,7 +88,10 @@ class SolrController extends BaseController {
 		return View::make('case', compact('doc', 'tables', 'resultCount', 'startPos'));
 	}
 
-	// Return cases based on a given hashtag
+	/**
+	 * Returns the Results page of cases with a given hashtag
+	 * @return View results
+	 */
 	public function getCasesByHashtag()
 	{
 		$hashtag = Input::get('hashtag');
@@ -92,17 +107,18 @@ class SolrController extends BaseController {
 
 		$tables = $this->renderDocumentTables($resultset, $highlighting);
 
-		// How many results did we retrieve
 		$resultCount = $resultset->getNumFound();
 
-		// Keywords and operators for the select elements
 		$keywords = SearchFieldEntity::getFields();
 		$operators = SolrOperators::getOperators();
 
 		return View::make('results', compact('hashtag', 'tables','resultCount','startPos','keywords','operators'));
 	}
 
-	// Add hashtags to a case
+	/**
+	 * Adds hashtags to a specified case
+	 * @return string $caseID the case ID affected
+	 */
 	public function postAddHashtags()
 	{
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
@@ -112,11 +128,14 @@ class SolrController extends BaseController {
 
 		$query = new SolrQuery();
 		$query->addHashtags($client, $caseID, $hashtags);
-		// Let's be friendly and return the case id we modified
+
 		return $caseID;
 	}
 
-	// Get hashtags of a case
+	/**
+	 * Returns the hashtags of a specified case
+	 * @return array $data the list of hashtags
+	 */
 	public function getHashtags()
 	{
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
@@ -137,6 +156,11 @@ class SolrController extends BaseController {
 		return $data;
 	}
 
+	/**
+	 * Get spelling suggestions for a given term
+	 * @param string $term the term to spell check
+	 * @return ResultSet $resultSet a collection of spelling suggestions
+	 */
 	public function getSpellCheck($term = null)
 	{
 		if (!empty($term)) {
@@ -154,6 +178,10 @@ class SolrController extends BaseController {
 		return $resultset;
 	}
 
+	/**
+	 * Get autocomplete suggestions for a given term
+	 * @return ResultSet $resultSet a collection of autocomplete suggestions
+	 */
 	public function getAutocomplete()
 	{
 		$query = Input::get('term');
@@ -165,8 +193,11 @@ class SolrController extends BaseController {
 		$resultset = $data->suggest($client, $query);
 		return $resultset;
 	}
-	
-	// Add a bookmark
+
+	/**
+	 * Adds a new bookmark to Solr
+	 * @return string $status response
+	 */
 	public function postAddBookmark()
 	{
 		// User-supplied name for the saved search
@@ -188,13 +219,16 @@ class SolrController extends BaseController {
 		$query = new SolrQuery();
 		$query->addBookmark($client, $bookmark);
 
-		return 'success';
+		$status = 'success';
+		return $status;
 	}
 	
-	// Get all bookmarks
+	/**
+	 * Returns the Saved Bookmarks page
+	 * @return View saved
+	 */
 	public function getSavedSearches()
 	{
-		// Get a Solr client
 		$client = $this->getSolrClient();
 
 		$query = new SolrQuery();
@@ -204,10 +238,15 @@ class SolrController extends BaseController {
 		foreach ($resultset as $bookmark) {
 			 array_push($bookmarks, $bookmark->savedSearches);
 		}
-
 		return View::make('saved', compact('bookmarks'));
 	}
 
+	/**
+	 * Returns similar cases compared to a source case
+	 * @param string $caseID the case identifier
+	 * @param array $keywords list of keywords to compare on
+	 * @return ResultSet $results collection of case documents
+	 */
 	private function findSimilarCases($caseID, $keywords)
 	{
 		$client = $this->getSolrClient();
@@ -218,12 +257,14 @@ class SolrController extends BaseController {
 		return $results;
 	}
 
-	// Renders a single Solr document to an HTML table
+	/**
+	 * Renders a case document to an HTML table output
+	 * @param ResultSet $resultset collection of documents
+	 * @return string $results the HTML table
+	 */
 	private function renderSingleDocument($resultset)
 	{
 		$results = '';
-
-		// show documents using the resultset iterator
 		foreach ($resultset as $document) {
 		
 		    $results .= '<div id="'. $document->id .'" class="full-doc"><table class="table">';
@@ -238,17 +279,19 @@ class SolrController extends BaseController {
 		return $results;
 	}
 
-	// Renders a Solr dataset to an HTML table
+	/**
+	 * Renders multiple case documents to an HTML table output
+	 * @param ResultSet $resultset collection of documents
+	 * @param ResultSet $highlighting collection of matched keywords
+	 * @return string $results the HTML table
+	 */
 	private function renderDocumentTables($resultset, $highlighting)
 	{
 		$results = '';
-
-		// Show documents using the resultset iterator
 		foreach ($resultset as $document) {
 
 			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width: 246px; padding: 10px; margin-right: 20px;"><div style="text-align:right"><span style="color:#fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
-			
-			// Highlighting results can be fetched by document id (the field defined as the unique key in this schema)
+
 		    if (isset($highlighting)) {
 		    	$highlightedDoc = $highlighting->getResult($document->id);
 		    
@@ -272,7 +315,6 @@ class SolrController extends BaseController {
 					$results = $results .'<tr><th>' . $field . '</th><td>' . $value . '</td></tr>';
 				}
 		    }
-		    
 		    $results .= '</table></div>';
 		    $results .= '<div><br><button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button>';
 			$results .= '<a href="#" id="add-tag-' . $document->id . '"class=" add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-30px;" data-toggle="popover"><i class="icon-tag icon-white"></i> Tags</a></div>';
@@ -281,7 +323,10 @@ class SolrController extends BaseController {
 		return $results;
 	}
 
-	// Returns a configured Solr client
+	/**
+	 * Returns a configured Solr client instance
+	 * @return Client $client Solr client
+	 */
 	private function getSolrClient()
 	{
 		$config = array(
@@ -293,14 +338,15 @@ class SolrController extends BaseController {
        			)
     		)
 		);
-
-		// Create a Solr client instance
-			$client = new Client($config);
-
-			return $client;
+		$client = new Client($config);
+		return $client;
 	}
 
-	// Helper method to convert a result set to a JSON object
+	/**
+	 * Converts a ResultSet to a JSON object
+	 * @param ResultSet $resultset collection of documents
+	 * @return string $results JSON object
+	 */
 	private function docArrayToJSON($resultset)
 	{
 		$results = array();

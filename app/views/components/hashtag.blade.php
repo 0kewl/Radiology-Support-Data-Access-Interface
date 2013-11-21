@@ -63,7 +63,6 @@ function addHashtag(caseID, hashtags) {
     .done(function(msg) {
         reloadDocument(msg);
         $(".add-hashtag").popover("hide");
-		alert("Tag(s) added.");
     });
   }
 }
