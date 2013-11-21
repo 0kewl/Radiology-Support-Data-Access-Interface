@@ -20,6 +20,7 @@ $(".show").click(function() {
 
     $("#document-viewer").html("");
     $("#hashtag-container").html("");
+    $("#image-component").html("");
 
     getHashtags($(this).attr('id'), function(hashtags) {
         // show the selected case

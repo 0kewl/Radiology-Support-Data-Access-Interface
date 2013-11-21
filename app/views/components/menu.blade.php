@@ -1,7 +1,7 @@
 <!-- Top menu bar with links -->
 <div class="navbar">
 	<div class="navbar-inner">
-	    <a class="brand" href="{{route('home') }}">Radiology Support Data Access Interface</a>
+	    <p class="brand">Radiology Support Data Access Interface</p>
 	    <ul class="nav">
 	        <li><a href="{{ route('home') }}">Search</a></li>
 	        <li><a href="{{route('get-bookmarks') }}">Bookmarks</a></li>
