@@ -16,7 +16,7 @@
     	<div class="span12 shadow" style="height: 800px; overflow-y: hidden;">
             <ul>
             @foreach($bookmarks AS $bookmark)
-                <li><a href=" {{ URL::to('results') }}/{{ $bookmark[1] }}" style="color:#fff;">{{ $bookmark[0] }}</a></li>
+                <li><a href=" {{ URL::to('results') }}/{{ $bookmark[1] }}" style="color:#fff;">{{ $bookmark[0] }}</a> -- {{ $bookmark[2] }} (EST) </li>
                 <br>
             @endforeach
             </ul>

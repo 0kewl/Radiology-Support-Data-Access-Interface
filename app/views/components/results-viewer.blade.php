@@ -57,6 +57,7 @@
                     </div>
                 @endif
             </div>
+            <div id="query-container" style="padding-left: 17px; height: 40px; overflow:auto;"><span style="font-size:18px;">Query:</span></div>
             <div id="document-loader" style="margin: 0 auto;"></div>
             <div id="hashtag-container" style="padding-left: 17px; height: 40px; overflow:auto;"></div>
 			<div id="document-viewer" class="span7" style="font-size: 18px; float:left; height: 590px; overflow-y: auto; overflow-x: hidden;"></div>

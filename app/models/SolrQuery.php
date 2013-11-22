@@ -320,6 +320,7 @@ class SolrQuery {
 		$query = $client->createSelect();
 		$query->setQuery("id: RAD-bookmarks");
 		$query->setFields(array('savedSearches'));
+		$query->setRows(100);
 		
 		$resultset = $client->select($query);
 		return $resultset;

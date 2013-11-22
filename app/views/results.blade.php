@@ -149,13 +149,6 @@ $(".directional").click(function(event) {
         $("#search-form").submit();
     @endif
  });
-
-// add a new keyword search field
-$("#add-field").click(function() {
-    if (!isKeywordsFull()) {
-        addKeywordFields(1);
-    }   
-});
 </script>
 @include('components/hashtag')
 @include('components/bookmark')

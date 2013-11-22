@@ -210,11 +210,14 @@ class SolrController extends BaseController {
 		// The search URL the user wishes to save
 		$URL = Input::get('url');
 
+		date_default_timezone_set('America/New_York');
+
 		// We need to build an array to map the bookmarkName and URL
 		// Pass this array into the SolrQuery method to persist it
 		$bookmark = array(
 			'name' => $bookmarkName,
-			 'url' => $URL
+			'url' => $URL,
+			'timestamp' => date('m/d/Y h:i:s A')
 			);
 
 		// Get a Solr client
