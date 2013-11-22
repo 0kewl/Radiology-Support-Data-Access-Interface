@@ -1,4 +1,4 @@
-/*
+/**
  *   Common jQuery functions
  */
 

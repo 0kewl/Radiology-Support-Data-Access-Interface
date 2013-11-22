@@ -42,6 +42,14 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+    /* Submit the search using the enter key */
+    $('input').keydown(function(event) {
+        if (event.keyCode == 13) {
+            $("#search").click();
+            return false;
+         }
+    }); 
+
     var currentQuery = getParameterByName("q");
     var query = decodeURIComponent(currentQuery);
 

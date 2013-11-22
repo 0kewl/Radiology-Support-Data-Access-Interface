@@ -16,10 +16,10 @@
 <form id="search-form" name="search-form" class="form-inline" action="{{ route('results') }}" method="get">
     <input name="q" id="q" type="hidden" value="" />
     <input name="start" id="start" type="hidden" value="" />
-</form>
 <!-- END Query form -->
 
-<div style="margin:0 auto; text-align:center; margin-top: -20px;">
-    <button id="search" class="btn btn-large btn-inverse">Search</button>
-</div>
+    <div style="margin:0 auto; text-align:center;">
+        <input id="search" type="submit" class="btn btn-large btn-inverse" value="Search" />
+    </div>  
+</form>
 <!-- END Search Form -->
