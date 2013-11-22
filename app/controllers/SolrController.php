@@ -217,7 +217,8 @@ class SolrController extends BaseController {
 		$bookmark = array(
 			'name' => $bookmarkName,
 			'url' => $URL,
-			'timestamp' => date('m/d/Y h:i:s A')
+			'timestamp' => date('m/d/Y h:i:s A'),
+			'GUID' => uniqid(time())
 			);
 
 		// Get a Solr client
