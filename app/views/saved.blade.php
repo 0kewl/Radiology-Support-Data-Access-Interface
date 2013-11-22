@@ -5,7 +5,7 @@
 <!-- CSS -->
     <style>
 		.container {
-			width: auto;
+			width: 1322;
 			height: auto;
 		}
     </style>
