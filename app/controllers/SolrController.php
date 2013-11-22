@@ -28,6 +28,10 @@ class SolrController extends BaseController {
 
 		// Get the cursor starting position
 		$startPos = Input::get('start');
+
+		if ($query == "*") {
+			$query = "-id%3ARAD-bookmarks";
+		}
 		
 		// Get a Solr client
 		$client = $this->getSolrClient();
@@ -299,7 +303,7 @@ class SolrController extends BaseController {
 					$results .= '<div style="padding: 12px;"><table class="table table-condensed">';
 
 			    	foreach($highlightedDoc as $key => $val) {
-			    		$results .= '<tr><td style="border-top: 0;"><span style="color: #fff;">' . $key . '</span></td><td style="border-top: 0;"><strong><span style="color: #fff;">' . $val[0] . '</span></strong></td></tr>';
+			    		$results .= '<tr><td style="border-top: 0;"><span style="color: #fff; font-size:12px;">' . $key . '</span></td><td style="border-top: 0;"><strong><span style="color: #fff; font-size:12px;">' . $val[0] . '</span></strong></td></tr>';
 			        }
 			        $results .= '</table></div>';
 			    }

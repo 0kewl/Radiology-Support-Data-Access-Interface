@@ -5,21 +5,6 @@ use Solarium\Client;
 class SolrQuery {
 
 	/**
-	 * Returns all cases in the Solr database
-	 * @param Client $client configured Solr client
-	 * @return ResultSet $resultset collection of documents
-	 */
-	public function getAllData($client)
-	{
-		// Select query instance
-		$query = $client->createSelect();
-
-		// No query parameters supplied, so we get all results
-		$resultset = $client->select($query);
-		return $resultset;
-	}
-
-	/**
 	 * Returns a filtered list of documents from Solr
 	 * @param Client $client configured Solr client
 	 * @param string $q search query
@@ -43,8 +28,8 @@ class SolrQuery {
 		// Get highlighting component which marks matched keywords
 		$hl = $query->getHighlighting();
 		$hl->setFields(array_keys(SearchFieldEntity::getFields()));
-		$hl->setSimplePrefix('<u>');
-		$hl->setSimplePostfix('</u>');
+		$hl->setSimplePrefix('<b><u><span style="font-size:16px;">');
+		$hl->setSimplePostfix('</span></u></b>');
 
 		// Handle pagination
 		$start = 0;
