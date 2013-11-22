@@ -5,7 +5,7 @@
 		}
 		.alert{
 			font-size: 17px;
-			width: 255px
+			width: 255px;
 		}
     </style>
 <!-- Search results viewer -->
@@ -31,15 +31,18 @@
                     <div class="alert alert-info"><span><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} cases.</span></div>
                 @endif
             @else
+				<div style="width: 255px;">
                 @if ($resultCount == "1")
-                    <div class="alert alert-info"><span><b>Your search matched {{ $resultCount }} case.</b></span></div>
+                    <div class="alert alert-info"><span><b>Your search matched {{ $resultCount }} case.</b></span></div>					
                 @else
                     <div class="alert alert-info"><span><b>Your search matched {{ $resultCount }} cases.</b></span></div>
-                @endif
+                @endif				
+				</div>							
             @endif
-
+			
             <div class="span4">
-                <div id="results-container" style="float:left; height: 625px; overflow-y: auto; overflow-x: hidden; margin-bottom: 10px;">
+				<div id="query-container" style="float:right; position: relative; margin-top: -55px; height: 40px; overflow:auto;"><span style="font-size:18px; font-weight:bold;">Query:</span></div>
+                <div id="results-container" style="float:left; height: 625px; overflow-y: auto; overflow-x: hidden; margin-bottom: 10px;">				
                     {{ $tables }}
                 </div>
                 @if (isset($startPos))
@@ -56,8 +59,7 @@
                         </div>
                     </div>
                 @endif
-            </div>
-            <div id="query-container" style="padding-left: 17px; height: 40px; overflow:auto;"><span style="font-size:18px;">Query:</span></div>
+            </div>            
             <div id="document-loader" style="margin: 0 auto;"></div>
             <div id="hashtag-container" style="padding-left: 17px; height: 40px; overflow:auto;"></div>
 			<div id="document-viewer" class="span7" style="font-size: 18px; float:left; height: 590px; overflow-y: auto; overflow-x: hidden;"></div>
