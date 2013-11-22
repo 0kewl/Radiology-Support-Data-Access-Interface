@@ -3,9 +3,9 @@
 	<div class="navbar-inner">
 	    <p class="brand">Radiology Support Data Access Interface</p>
 		<ul class="nav">
-			<a href="{{ route('home') }}"><button id="search-btn" class="btn btn-small btn-inverse" type="button" style="margin-left: 30px; margin-top:15px;">Search</button></a>
-			<a id="all-search" href="#"><button id="all-cases-btn" class="btn btn-small btn-inverse" type="button" style="margin-left: 30px; margin-top:15px;">All Cases</button></a>
-			<a href="{{route('get-bookmarks') }}"><button id="bookmarks-btn" class="btn btn-small btn-inverse" type="button" style="margin-left: 60px; margin-top:15px;">Bookmarks</button></a>
+			<li><a href="{{ route('home') }}" style="margin-left: 30px;">Search</a></li>
+			<li><a id="all-search" href="#" style="margin-left: 30px;">All Cases</a></li>
+			<li><a href="{{route('get-bookmarks') }}" style="margin-left: 60px;">Bookmarks</a></li>
 		</ul>
 		<div class="hashtag-search" style="margin-top:5px; float:right;">
 			<form id="search-hashtags" name="search-hashtags" action="{{ route('hashtag-results') }}" method="get">
