@@ -1,13 +1,8 @@
 <script type="text/javascript">
 
-function getCurrentURL()
-{
-    return window.location.href;
-}
-
 function addBookmark(bookmarkName) {
-
-  var queryString = getCurrentURL();
+  var url = window.location.href;
+  var queryString = url.slice(window.location.href.indexOf('?q='));
   if (bookmarkName == '') {
     alert("You must enter a bookmark name.");
     return false;
