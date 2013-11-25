@@ -57,17 +57,29 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
-     /* Submit the search using the enter key */
+	/**
+	 * Submit the search using the enter key
+	 * @return View results
+	 */
     $('input').keydown(function(event) {
         if (event.keyCode == 13) {
             $("#search").click();
             return false;
          }
     });
-
+	
+	/**
+	 * 
+	 * @param 
+	 * @return 
+	 */
     $(".selectpicker").selectpicker();
 
+	/**
+	 * Accesses main query to find keywords that match current value in search box
+	 * @param #main-query to access possible keywords
+	 * @return String keywords
+	 */
     $("#main-query").autocomplete({
         source: "{{ route('autocomplete') }}",
         minLength: 2,
@@ -85,6 +97,11 @@ $(document).ready(function() {
     });
 });
 
+/**
+ * Takes the parameters to perform a case search
+ * @param int #case-id to access a particular case, #keywords to search by related cases
+ * @return View case
+ */
 $("#case-search").click(function(event) {
     event.preventDefault();
 

@@ -41,8 +41,10 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
-    /* Submit the search using the enter key */
+	/**
+	 * Submit the search using the enter key
+	 * @return View results
+	 */
     $('input').keydown(function(event) {
         if (event.keyCode == 13) {
             $("#search").click();
@@ -59,38 +61,53 @@ $(document).ready(function() {
     $("#start").val(getParameterByName("start"));
     $("#hashtag-start").val(getParameterByName("start"));
 	
-	// hash-tag pop-up
+	/**
+	 * Hash-tag pop-up
+	 * @param case ID
+	 * @return hash-tag pop-up to add an hash-tag
+	 */	
     $(".add-hashtag").popover({
         placement: 'top',
         html: 'true',
         title : 'Case Hashtags'
     });
-
     var hashtagPopover = '<strong>Add Hashtags</strong><br><small>Comma separate multiple tags</small><br><br>' +
                          '<input type="text" id="hashtag-input"><br><button id="add-hash"class="btn btn-inverse btn-small" onClick="addHashtag($(this).parents(&quot;.result-snippet&quot;).attr(&quot;id&quot;),$(&quot;#hashtag-input&quot;).val());">Add</button>' +
                          '<button type="button" id="close" class="btn btn-small btn-inverse" onclick="$(&quot;.add-hashtag&quot;).popover(&quot;hide&quot;);">Cancel</button>';
 
     $('.add-hashtag').attr('data-content', hashtagPopover);
 
-	// bookmark pop-up
+	/**
+	 * Bookmark pop-up
+	 * @param page URL
+	 * @return Bookmark pop-up to add bookmark
+	 */
 	$("#bookmark-search").popover({
         placement: 'bottom',
         html: 'true',
         title : 'Add Bookmark'
     });
-	
     var bookmarkPopover = '<strong>Name your saved search:</strong><br><br>' +
                           '<input type="text" id="bookmark-input"><br><button id="add-bookmark"class="btn btn-inverse btn-small" onClick="addBookmark($(&quot;#bookmark-input&quot;).val());">Add</button>' +
                           '<button type="button" id="close" class="btn btn-small btn-inverse" onclick="$(&quot;#bookmark-search&quot;).popover(&quot;hide&quot;);">Cancel</button>';
 
     $('#bookmark-search').attr('data-content', bookmarkPopover);
 	
-	// spell check
+	/**
+	 * Spell check
+	 * @param 
+	 * @return 
+	 */
     @if (!isset($caseid))
         $("#search-results").toggleClass('span8', 'span5');
     @endif
     $("#search-results").toggleClass("span8" , "span5");
 
+	/**
+	 * Accesses main query to find keywords that match current value in search box
+	 * @param #main-query to access possible keywords
+	 * @return String keywords
+	 */
     $("#main-query").autocomplete({
         source: "{{ route('autocomplete') }}",
         minLength: 2,
@@ -108,15 +125,18 @@ $(document).ready(function() {
     });
 });
 
-// prevents bad things from happening :)
+/**
+ * Prevents bad things from happening :)
+ * @param 
+ * @return 
+ */
 $('.add-hashtag').on('click', function(e) {e.preventDefault(); e.stopPropagation(); return true;});
 
-// toggle between images and search fields
-$("#image-option").click(function() {
-	$("#image-option").hide();
-	$("#search-option").show();
-});
-
+/**
+ * 
+ * @param 
+ * @return 
+ */
 $(".directional").click(function(event) {
 
     @if (isset($hashtag))
