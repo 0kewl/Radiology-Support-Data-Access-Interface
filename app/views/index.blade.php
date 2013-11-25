@@ -59,7 +59,7 @@
 $(document).ready(function() {
 	/**
 	 * Submit the search using the enter key
-	 * @return View results
+	 * @return boolean
 	 */
     $('input').keydown(function(event) {
         if (event.keyCode == 13) {
@@ -69,16 +69,16 @@ $(document).ready(function() {
     });
 	
 	/**
-	 * 
-	 * @param 
-	 * @return 
+	 * Creates the select picker drop-down form element
+     * for case lookup similarity
+	 * @return SelectPickerFormInstance
 	 */
     $(".selectpicker").selectpicker();
 
 	/**
 	 * Accesses main query to find keywords that match current value in search box
-	 * @param #main-query to access possible keywords
-	 * @return String keywords
+	 * @param main-query id to access possible keywords
+	 * @return boolean
 	 */
     $("#main-query").autocomplete({
         source: "{{ route('autocomplete') }}",
@@ -99,8 +99,9 @@ $(document).ready(function() {
 
 /**
  * Takes the parameters to perform a case search
- * @param int #case-id to access a particular case, #keywords to search by related cases
- * @return View case
+ * @param int #case-id to access a particular case
+ * @param keywords is to search by related cases
+ * @return boolean
  */
 $("#case-search").click(function(event) {
     event.preventDefault();

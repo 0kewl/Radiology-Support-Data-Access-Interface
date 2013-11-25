@@ -41,9 +41,10 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+
 	/**
 	 * Submit the search using the enter key
-	 * @return View results
+	 * @return boolean
 	 */
     $('input').keydown(function(event) {
         if (event.keyCode == 13) {
@@ -52,19 +53,17 @@ $(document).ready(function() {
          }
     }); 
 
+    // populate the search form with updated values
     var currentQuery = getParameterByName("q");
     var query = decodeURIComponent(currentQuery);
-
-    // re-build the search form with updated values
     $("#main-query").val(query);
-
     $("#start").val(getParameterByName("start"));
     $("#hashtag-start").val(getParameterByName("start"));
 	
 	/**
 	 * Hash-tag pop-up
 	 * @param case ID
-	 * @return hash-tag pop-up to add an hash-tag
+	 * @return void
 	 */	
     $(".add-hashtag").popover({
         placement: 'top',
@@ -80,7 +79,7 @@ $(document).ready(function() {
 	/**
 	 * Bookmark pop-up
 	 * @param page URL
-	 * @return Bookmark pop-up to add bookmark
+	 * @return void
 	 */
 	$("#bookmark-search").popover({
         placement: 'bottom',
@@ -95,8 +94,7 @@ $(document).ready(function() {
 	
 	/**
 	 * Spell check
-	 * @param 
-	 * @return 
+	 * @return void
 	 */
     @if (!isset($caseid))
         $("#search-results").toggleClass('span8', 'span5');
@@ -106,7 +104,7 @@ $(document).ready(function() {
 	/**
 	 * Accesses main query to find keywords that match current value in search box
 	 * @param #main-query to access possible keywords
-	 * @return String keywords
+	 * @return boolean
 	 */
     $("#main-query").autocomplete({
         source: "{{ route('autocomplete') }}",
@@ -126,16 +124,15 @@ $(document).ready(function() {
 });
 
 /**
- * Prevents bad things from happening :)
- * @param 
- * @return 
+ * Prevents the default href action from firing
+ * @return boolean
  */
 $('.add-hashtag').on('click', function(e) {e.preventDefault(); e.stopPropagation(); return true;});
 
 /**
  * 
  * @param 
- * @return 
+ * @return void
  */
 $(".directional").click(function(event) {
 

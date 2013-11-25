@@ -59,12 +59,6 @@ $("#search").click(function(event) {
     }
  });
 
-// remove the corresponding field
-$("#remove-field").click(function() {
-    $(this).parent().css('class', 'additional-keywords').remove();
-    isKeywordsFull();
-});
-
 // display all cases in database
 $("#all-search").click(function() {
     $("#main-query").val("*");
@@ -115,54 +109,6 @@ function reloadDocument(caseID) {
         $("#document-viewer").scrollTop(0);
         $("#hashtag-container").html(hashtags);
     });
-}
-
-// clones and creates a new keyword field
-function addKeywordFields(qty) {
-    for (var i=0; i<qty; i++) {
-        var keywordClone = $("#additional-keywords").clone(true);
-        keywordClone.find("input[type^=text]").each(function() {
-            $(this).val("");
-        });
-        keywordClone.find("button[id^=remove-field]").each(function() {
-            // remove the default display:none property
-            $(this).css("display", "");
-        });
-        keywordClone.appendTo("#keywords-container");
-    }
-}
-
-// populate a field from previous form data
-function addPopulatedField(operator, field, keyword) {
-    if (!$("#keyword").val()) {
-        $("#operator").val(operator);
-        $("#field").val(field);
-        $("#keyword").val(keyword);
-    }
-    else {
-        var keywordClone = $("#additional-keywords").clone(true);
-        keywordClone.find("input[type^=text]").each(function() {
-            $(this).val(keyword);
-        });
-        keywordClone.find("select[class^=operator]").each(function() {
-            $(this).val(operator);
-        });
-        keywordClone.find("select[class^=field]").each(function() {
-            $(this).val(field);
-        });
-        keywordClone.appendTo("#keywords-container");
-    }
-}
-
-// determine if maximum search keywords is reached
-function isKeywordsFull() {
-    if ($('.additional-keyword').length < 10) {
-        $("#add-field").show();
-		return false;
-    }
-	//disable button
-	$("#add-field").hide();
-	return true;
 }
 
 function getParameterByName(name) {
