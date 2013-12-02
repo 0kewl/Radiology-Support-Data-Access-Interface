@@ -46,7 +46,12 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
+    /**
+     * Creates an add hashtag popover
+     * @param placement the location of the popover
+     * @param html allow html
+     * @return title the title of the popover
+     */
     $(".add-hashtag").popover({
         placement: 'top',
         html: 'true',
@@ -61,7 +66,6 @@ $(document).ready(function() {
 
 });
 
-// prevents bad things from happening :)
 $('.add-hashtag').on('click', function(e) {e.preventDefault(); e.stopPropagation(); return true;});
 
 </script>

@@ -1,5 +1,10 @@
 <script type="text/javascript">
 
+/**
+* Posts a new bookmark to a case
+* @param bookmarkName the name of the bookmark
+* @return void
+*/
 function addBookmark(bookmarkName) {
   var url = window.location.href;
   var queryString = url.slice(window.location.href.indexOf('?q='));
