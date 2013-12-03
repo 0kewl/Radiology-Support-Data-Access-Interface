@@ -1,4 +1,9 @@
 AuthUserFile /wamp/www/Radiology-Support-Data-Access-Interface/.htpasswd
 AuthType Basic
-AuthName "Test Login"
+AuthName "Test Login Again"
 Require valid-user
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /wamp/www/Radiology-Support-Data-Access-Interface/
+</IfModule>
