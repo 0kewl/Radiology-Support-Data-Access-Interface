@@ -1,7 +1,4 @@
-AuthUserFile C:\wamp\www\Radiology-Support-Data-Access-Interface\.htpasswd
+AuthUserFile /wamp/www/Radiology-Support-Data-Access-Interface/.htpasswd
 AuthType Basic
-AuthName "My Secret Folder"
-
-<Files "mypage.html">
-  Require valid-user
-</Files>
+AuthName "Test Login"
+Require valid-user
