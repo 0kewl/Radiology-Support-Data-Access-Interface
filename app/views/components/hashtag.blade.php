@@ -33,11 +33,10 @@ function getHashtags(caseID, callback) {
   })
   .done(function(msg) {
     spinner.stop();
-
-    var element = '<span style="font-size: 18px;">Tags: </span>';
+	var element = '<span class="text-18"><b><u>Tags:</u></b> </span>';
     if (msg != '') {
       $.each(msg, function(index, value) {
-        element = element + '<a href="{{ route('hashtag-results') }}?hashtag=' + value.tag + '&start=0" class="hashtag" title="This is my tooltip message!" style="cursor: pointer; cursor: hand; font-size: 15px; margin-right:10px; color:#fff;">#' + value.tag + '</a>';
+        element += '<a href="{{ route('hashtag-results') }}?hashtag=' + value.tag + '&start=0" class="hashtag" title="This is my tooltip message!" style="cursor:pointer; cursor:hand; font-size:15px; margin-right:10px; color:#fff;">#' + value.tag + '</a>';
       });
     }
       callback(element);

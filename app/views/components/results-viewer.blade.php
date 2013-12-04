@@ -9,7 +9,7 @@
 			padding-left: 10px;
 			border-width: thin;
 			border-color: #d3d3d3;
-			border-style:solid;
+			border-style: solid;
 		}
 		.move-right{
 			margin-left: 320px;
@@ -43,29 +43,27 @@
                 @else
                     <div class="alert alert-info"><b>Your search matched {{ $resultCount }} cases.</b></div>
                 @endif						
-            @endif			
-            <div class="span4">
-                @if (!isset($hashtag))
-				    <div id="query-container" style="float:left; position: relative; left:300px; margin-top: -55px; height: 40px; overflow:auto;"><span style="font-size:18px; font-weight:bold;">Query: <span style="font-size:14px; font-weight:normal; color:#fff;">{{{ $query }}}</span></span></div>
-                @endif
-                <div id="results-container" style="float:left; height: 625px; overflow-y: auto; overflow-x: hidden; margin-bottom: 10px;">				
-                    {{ $tables }}
-                </div>
-                @if (isset($startPos))
-                    <div id="pagination" style="margin-left: 14px; height: 25px; width: 240px;">
-                        <div style="float:left;">
-                            @if ($startPos != 0)
-                                <a href="#"><strong id="previous-set" class="directional" style="color:#fff; text-decoration:underline;">< Previous</strong></a>
-                            @endif
-                        </div>
-                        <div style="float:right;">
-                            @if ($startPos + 10 < $resultCount)
-                                <a href="#"><strong id="next-set" class="directional" style="color:#fff; text-decoration:underline;">Next ></strong></a>
-                            @endif
-                        </div>
-                    </div>
-                @endif
-            </div>
+            @endif
+			<div id="query-container" class="move-right boxes" style="margin-top:-60px; margin-bottom:10px; overflow:hidden;"><div id="query-string" class="text-18" style="overflow:auto"><b><u>Query:</u></b>  <span style="font-size:14px; font-weight:normal; color:#fff;">{{ $query }}</span></div></div>
+			<div style="margin-left:20px; width:350px;">
+				<div class="span2">
+					<div id="results-container" style="float:left; width:300px; height:625px; overflow-y:auto; overflow-x:hidden; margin-bottom:10px; margin-left:-15px;">{{ $tables }}</div>
+					@if (isset($startPos))
+						<div id="pagination" style="margin-left:-15px; height:25px; width:300px;">
+							<div style="float:left;">
+								@if ($startPos != 0)
+									<a href="#"><strong id="previous-set" class="directional" style="color:#fff; text-decoration:underline;">< Previous</strong></a>
+								@endif
+							</div>
+							<div style="float:right;">
+								@if ($startPos + 10 < $resultCount)
+									<a href="#"><strong id="next-set" class="directional" style="color:#fff; text-decoration:underline;">Next ></strong></a>
+								@endif
+							</div>
+						</div>
+					@endif
+				</div>
+			</div>
             <div id="document-loader" style="margin: 0 auto;"></div>
             <div id="hashtag-container" class="move-right boxes" style="overflow:hidden;"><div id="tags-string" class="text-18" style="overflow:auto;"><b><u>Tags:</u></b></div></div>
 			<div class="move-right"><div id="document-viewer" class="span12 text-18 boxes" style="height:590px; overflow-y:auto; overflow-x:hidden;"></div></div>
