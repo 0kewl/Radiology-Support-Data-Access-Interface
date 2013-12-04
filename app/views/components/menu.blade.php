@@ -20,8 +20,8 @@
 		        	</a>
 		        </li>
 		        <li>
-		        	<a href="{{route('get-bookmarks') }}">
-		        		<button id="bookmarks-btn" class="btn btn-small btn-inverse" type="button" style="margin-left: 25px; margin-top: 25px;">Hashtags</button>
+		        	<a href="{{route('get-saved-hashtags') }}">
+		        		<button id="hashtags-btn" class="btn btn-small btn-inverse" type="button" style="margin-left: 25px; margin-top: 25px;">Hashtags</button>
 		        	</a>
 		        </li>
 		    </ul>

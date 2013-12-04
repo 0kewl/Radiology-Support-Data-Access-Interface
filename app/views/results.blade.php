@@ -42,8 +42,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-    $('.hashtag').tooltipster();
-
 	/**
 	 * Submit the search using the enter key
 	 * @return boolean
@@ -70,11 +68,11 @@ $(document).ready(function() {
     $(".add-hashtag").popover({
         placement: 'top',
         html: 'true',
-        title : 'Case Hashtags'
+        title : '<u>Case Hashtags</u>'
     });
-    var hashtagPopover = '<strong>Add Hashtags</strong><br><small>Comma separate multiple tags</small><br><br>' +
+    var hashtagPopover = '<strong>Add Hashtags:</strong><br><small>Comma separate multiple tags</small><br><br>' +
                          '<input type="text" id="hashtag-input"><br><button id="add-hash"class="btn btn-inverse btn-small" onClick="addHashtag($(this).parents(&quot;.result-snippet&quot;).attr(&quot;id&quot;),$(&quot;#hashtag-input&quot;).val());">Add</button>' +
-                         '<button type="button" id="close" class="btn btn-small btn-inverse" onclick="$(&quot;.add-hashtag&quot;).popover(&quot;hide&quot;);">Cancel</button>';
+                         '<button type="button" id="close" style="margin-left:10px;" class="btn btn-small btn-inverse" onclick="$(&quot;.add-hashtag&quot;).popover(&quot;hide&quot;);">Cancel</button>';
 
     $('.add-hashtag').attr('data-content', hashtagPopover);
 
@@ -86,11 +84,11 @@ $(document).ready(function() {
 	$("#bookmark-search").popover({
         placement: 'bottom',
         html: 'true',
-        title : 'Add Bookmark'
+        title : '<u>Add Bookmark</u>'
     });
     var bookmarkPopover = '<strong>Name your saved search:</strong><br><br>' +
                           '<input type="text" id="bookmark-input"><br><button id="add-bookmark"class="btn btn-inverse btn-small" onClick="addBookmark($(&quot;#bookmark-input&quot;).val());">Add</button>' +
-                          '<button type="button" id="close" class="btn btn-small btn-inverse" onclick="$(&quot;#bookmark-search&quot;).popover(&quot;hide&quot;);">Cancel</button>';
+                          '<button type="button" id="close" style="margin-left:10px;" class="btn btn-small btn-inverse" onclick="$(&quot;#bookmark-search&quot;).popover(&quot;hide&quot;);">Cancel</button>';
 
     $('#bookmark-search').attr('data-content', bookmarkPopover);
 	

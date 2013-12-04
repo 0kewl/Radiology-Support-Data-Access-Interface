@@ -54,12 +54,12 @@
 						<div id="pagination" style="margin-left:-15px; height:25px; width:300px;">
 							<div style="float:left;">
 								@if ($startPos != 0)
-									<a href="#"><strong id="previous-set" class="directional" style="color:#fff; text-decoration:underline;">< Previous</strong></a>
+									<a href="#"><strong id="previous-set" class="directional label label-inverse" style="color:#fff; text-decoration:underline;">< Previous</strong></a>
 								@endif
 							</div>
 							<div style="float:right;">
 								@if ($startPos + 10 < $resultCount)
-									<a href="#"><strong id="next-set" class="directional" style="color:#fff; text-decoration:underline;">Next ></strong></a>
+									<a href="#"><strong id="next-set" class="directional label label-inverse" style="color:#fff; text-decoration:underline;">Next ></strong></a>
 								@endif
 							</div>
 						</div>

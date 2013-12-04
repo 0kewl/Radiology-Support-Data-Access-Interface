@@ -109,7 +109,10 @@ class SolrController extends BaseController {
 
 		$startPos = Input::get('start');
 
-		$cases = HashtagsQuery::select('case_id')->where('tag', '=', $hashtag)->get();
+		//$cases = CaseHashtagsQuery::select('case_id')->where('tag', '=', $hashtag)->get();
+		$cases = new CaseHashtagsQuery();
+		$cases = $cases->getCasesByTag($hashtag);
+
 		$client = $this->getSolrClient();
 
 		$data = new SolrQuery();
@@ -136,12 +139,33 @@ class SolrController extends BaseController {
 		$hashtags = explode(",", trim(strtolower(Input::get('hashtags'))));
 
 		foreach ($hashtags as $h) {
-			$hashtagCollection = new HashtagsQuery();
 
-			$hashtagCollection->tag = $h;
-			$hashtagCollection->case_id = $caseID;
+			try {
+				$found = HashtagsQuery::where('tag', '=', $h)->first();
 
-			$hashtagCollection->save();
+				if (!$found) {
+					$hashtagCollection = new HashtagsQuery();
+
+					$hashtagCollection->tag = $h;
+					$hashtagCollection->save();
+					$found = $hashtagCollection;
+				}
+
+				$caseHashtag = new CaseHashtagsQuery();
+
+				$caseHashtag->case_id = $caseID;
+				$caseHashtag->hashtag_id = $found->id;
+				$caseHashtag->save();
+			}
+			// Console only threw a generic Exception
+
+			catch(Exception $e) {
+				$error = new StdClass();
+
+				$error->error = true;
+				$error->message = "Hashtag already exists for this case.";
+				return json_encode($error);
+			}
 		}
 		return $caseID;
 	}
@@ -154,7 +178,9 @@ class SolrController extends BaseController {
 	{
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
 
-		$hashtags = HashtagsQuery::select('tag')->distinct()->where('case_id', '=', $caseID)->get();
+		$hashtags = new HashtagsQuery();
+
+		$hashtags = $hashtags->getCaseTags($caseID);
 		return $hashtags;
 	}
 
@@ -204,6 +230,16 @@ class SolrController extends BaseController {
 	{
 		$bookmarks = BookmarksQuery::paginate(10);
 		return View::make('saved', compact('bookmarks'));
+	}
+
+	/**
+	 * Returns the Saved Hashtags page
+	 * @return View saved
+	 */
+	public function getSavedHashtags()
+	{
+		$hashtags = HashtagsQuery::select('tag')->paginate(20);
+		return View::make('savedhashtags', compact('hashtags'));
 	}
 
 	/**
@@ -315,8 +351,8 @@ class SolrController extends BaseController {
 				}
 		    }
 		    $results .= '</table></div>';
-		    $results .= '<div><br><button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Document</button>';
-			$results .= '<a href="#" id="add-tag-' . $document->id . '"class=" add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-30px;" data-toggle="popover"><i class="icon-tag icon-white"></i> Tags</a></div>';
+		    $results .= '<div><br><button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Case</button>';
+			$results .= '<a href="#" id="add-tag-' . $document->id . '"class=" add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-28px;" data-toggle="popover"><i class="icon-tag icon-white"></i> Tags</a></div>';
 		    $results .= '</div><br>';
 		}
 		return $results;

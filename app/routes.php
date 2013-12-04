@@ -43,3 +43,6 @@ Route::post('add-bookmark', array('as' => 'add-bookmark', 'uses' => 'SolrControl
 
 // Delete bookmark
 Route::post('delete-bookmark', array('as' => 'delete-bookmark', 'uses' => 'SolrController@postDeleteBookmark'));
+
+// Get saved hashtags page
+Route::get('saved-hashtags', array('as' => 'get-saved-hashtags', 'uses' => 'SolrController@getSavedHashtags'));
