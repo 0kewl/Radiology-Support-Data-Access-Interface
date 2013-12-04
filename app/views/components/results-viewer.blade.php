@@ -44,7 +44,9 @@
                     <div class="alert alert-info"><b>Your search matched {{ $resultCount }} cases.</b></div>
                 @endif						
             @endif
-			<div id="query-container" class="move-right boxes" style="margin-top:-60px; margin-bottom:10px; overflow:hidden;"><div id="query-string" class="text-18" style="overflow:auto"><b><u>Query:</u></b>  <span style="font-size:14px; font-weight:normal; color:#fff;">{{ $query }}</span></div></div>
+            @if (isset($query))
+				<div id="query-container" class="move-right boxes" style="margin-top:-60px; margin-bottom:10px; overflow:hidden;"><div id="query-string" class="text-18" style="overflow:auto"><b><u>Query:</u></b>  <span style="font-size:14px; font-weight:normal; color:#fff;">{{ $query }}</span></div></div>
+			@endif
 			<div style="margin-left:20px; width:350px;">
 				<div class="span2">
 					<div id="results-container" style="float:left; width:300px; height:625px; overflow-y:auto; overflow-x:hidden; margin-bottom:10px; margin-left:-15px;">{{ $tables }}</div>
