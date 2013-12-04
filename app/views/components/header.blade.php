@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap-select.min.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('assets/css/vader/jquery-ui-1.10.3.custom.min.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('assets/css/common.css')}}" type="text/css" />
-    
+    <link rel="stylesheet" href="{{asset('assets/css/tooltipster.css')}}" type="text/css" />
+
 </head>
 <!-- END Header -->

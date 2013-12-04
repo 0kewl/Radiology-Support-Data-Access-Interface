@@ -73,7 +73,7 @@ class SolrQuery {
 		$query = $client->createSelect();
 
 		$dismax = $query->getDisMax();
-		$dismax->setQueryFields("tag");
+		$dismax->setQueryFields("id");
 
 		$query->setRows(10);
 
@@ -82,7 +82,7 @@ class SolrQuery {
 
 		// Get highlighting component and apply settings
 		$hl = $query->getHighlighting();
-		$hl->setFields(array_keys(SearchFieldEntity::getFields()));
+		$hl->setFields('id');
 
 		// We want to bold matching results
 		$hl->setSimplePrefix('<u>');
@@ -123,68 +123,6 @@ class SolrQuery {
 		$query->setRows(50);
 		$query->setMatchInclude(true);
 
-		$resultset = $client->select($query);
-		return $resultset;
-	}
-
-	/**
-	 * Adds user-supplied hashtags to a case document
-	 * @param Client $client configured Solr client
-	 * @param string $id the case identifier
-	 * @param array $newHashtags added hashtags
-	 * @return void
-	 */
-	public function addHashtags($client, $id, $newHashtags)
-	{
-		// We need to get the current hashtags of the case
-		$result = $this->getCaseData($client, $id);
-		$currentTags = new stdClass();
-
-		// Get the tag property
-		foreach ($result as $document) {
-			$currentTags = $document->tag;
-		}
-
-		// The list of both new and existing hashtags
-		$updatedHashtags = array();
-
-		// Existing hashtags for this case
-		if (!empty($currentTags)) {
-			foreach ($currentTags as $t) {
-				array_push($updatedHashtags, $t);
-			}
-		}
-		// Convert the list of new hashtags to an array
-		$updatedHashtags = array_merge(explode(',', $newHashtags), $updatedHashtags);
-
-		$update = $client->createUpdate();
-		$doc= $update->createDocument();
-
-		$doc->setKey('id', $id);              
-	    $doc->setField('tag', $updatedHashtags);
-	    $doc->setFieldModifier('tag', 'set');
-
-		$update->addDocument($doc);
-		$update->addCommit();
-
-		$result = $client->update($update);
-	}
-
-	/**
-	 * Returns a list of hashtags associated with a case
-	 * @param Client $client configured Solr client
-	 * @param string $id the case identifier
-	 * @return ResultSet $resultset collection of documents
-	 */
-	public function getHashtag($client, $id)
-	{
-		// Select query instance
-		$query = $client->createSelect();
-		
-		// Just search on the ID field
-		$query->setQuery("id:" . $id);
-		$query->setFields(array('id','tag'));
-		
 		$resultset = $client->select($query);
 		return $resultset;
 	}
@@ -267,62 +205,5 @@ class SolrQuery {
 		    }
 		}
 		return $suggestions;
-	}
-
-	/**
-	 * Adds a new bookmarked search to Solr
-	 * @param Client $client configured Solr client
-	 * @param string $bookmark bookmark query
-	 * @return void
-	 */
-	public function addBookmark($client, $bookmark)
-	{
-		$result = $this->getCaseData($client, 'RAD-bookmarks');
-		$currentTags = new stdClass();
-
-		// Get the savedSearches field values
-		foreach ($result as $document) {
-			$currentTags = $document->savedSearches;
-		}
-		$updatedBookmarks = array();
-
-		if (!empty($currentBookmarks)) {
-			foreach ($currentBookmarks as $t) {
-				array_push($updatedBookmarks, $t);
-			}
-		}
-
-		$updatedBookmarks = array_merge($bookmark, $updatedBookmarks);
-
-		$update = $client->createUpdate();
-		$doc= $update->createDocument();
-
-		// The key for all bookmarks is 'RAD-bookmarks'
-		// Short for 'radiology bookmarks'
-	    $doc->setKey('id', 'RAD-bookmarks');
-	    $doc->setField('savedSearches', $updatedBookmarks);
-	    $doc->setFieldModifier('tag', 'set'); 
-
-		$update->addDocument($doc);
-		$update->addCommit();
-
-		$result = $client->update($update);
-	}
-	
-	/**
-	 * Returns all saved bookmarks in Solr
-	 * @param Client $client configured Solr client
-	 * @return ResultSet $resultset collection of documents
-	 */
-	public function getBookmarks($client)
-	{
-		// Select query instance
-		$query = $client->createSelect();
-		$query->setQuery("id: RAD-bookmarks");
-		$query->setFields(array('savedSearches'));
-		$query->setRows(100);
-		
-		$resultset = $client->select($query);
-		return $resultset;
 	}
 }

@@ -124,9 +124,8 @@
    <field name="body" type="text_general" indexed="true" stored="true" required="false" multiValued="true" termVectors="true" /> 
    <field name="impression" type="text_general" indexed="true" stored="true" required="false" multiValued="true" termVectors="true" /> 
    <field name="positive" type="text_general" indexed="true" stored="true" required="false" multiValued="false" termVectors="true" />
-   <field name="tag" type="text_general" indexed="true" stored="true" required="false" multiValued="true" termVectors="true" />
+   
    <field name="spellingSuggestions" type="text_general" indexed="true" stored="false" multiValued="true" />
-   <field name="savedSearches" type="text_general" indexed="true" stored="true" multiValued="true" />
    <field name="_version_" type="long" indexed="true" stored="true" required="false" />
 
    <!-- Common metadata fields, named specifically to match up with

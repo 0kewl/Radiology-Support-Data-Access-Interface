@@ -40,3 +40,6 @@ Route::get('get-bookmarks', array('as' => 'get-bookmarks', 'uses' => 'SolrContro
 
 // Add bookmarks
 Route::post('add-bookmark', array('as' => 'add-bookmark', 'uses' => 'SolrController@postAddBookmark'));
+
+// Delete bookmark
+Route::post('delete-bookmark', array('as' => 'delete-bookmark', 'uses' => 'SolrController@postDeleteBookmark'));

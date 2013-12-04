@@ -18,7 +18,7 @@
                 <!-- Case search form -->
     			<div class="span4 shadow" style="height: 215px; overflow-y: hidden;">
 					<div id="search-option">
-						<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
+						<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark Query</button>
 						<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
 						<h4 style="color: #FFFFFF;">Search Query</h4>
 						<div id="search-container" style="overflow-y: auto;">
@@ -41,6 +41,8 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+
+    $('.hashtag').tooltipster();
 
 	/**
 	 * Submit the search using the enter key

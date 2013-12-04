@@ -25,12 +25,14 @@ class SolrController extends BaseController {
 		// Get the search query
 		$query = Input::get('q');
 		$query = urldecode($query);
+		$modified = false;
 
 		// Get the cursor starting position
 		$startPos = Input::get('start');
 
 		if ($query == "*") {
-			$query = "-id%3ARAD-bookmarks";
+			$query = "-bookmarkName:*";
+			$modified = true;
 		}
 		
 		// Get a Solr client
@@ -52,10 +54,14 @@ class SolrController extends BaseController {
 			}
 		}
 
+		if ($modified) {
+			$query = "All cases";
+		}
+
 		$keywords = SearchFieldEntity::getFields();
 		$operators = SolrOperators::getOperators();
 
-		return View::make('results', compact('tables','resultCount','startPos','keywords','operators','suggestion'));
+		return View::make('results', compact('query','tables','resultCount','startPos','keywords','operators','suggestion'));
 	}
 	
 	/**
@@ -102,11 +108,12 @@ class SolrController extends BaseController {
 		$hashtag = urldecode($hashtag);
 
 		$startPos = Input::get('start');
-		
+
+		$cases = HashtagsQuery::select('case_id')->where('tag', '=', $hashtag)->get();
 		$client = $this->getSolrClient();
 
 		$data = new SolrQuery();
-		$resultset = $data->getHashtagCases($client, $hashtag, $startPos);
+		$resultset = $data->getHashtagCases($client, $cases, $startPos);
 		$highlighting = $resultset->getHighlighting();
 
 		$tables = $this->renderDocumentTables($resultset, $highlighting);
@@ -121,18 +128,21 @@ class SolrController extends BaseController {
 
 	/**
 	 * Adds hashtags to a specified case
-	 * @return string $caseID the case ID affected
+	 * @return string caseID modified
 	 */
 	public function postAddHashtags()
 	{
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
-		$hashtags = trim(strtolower(Input::get('hashtags')));
+		$hashtags = explode(",", trim(strtolower(Input::get('hashtags'))));
 
-		$client = $this->getSolrClient();
+		foreach ($hashtags as $h) {
+			$hashtagCollection = new HashtagsQuery();
 
-		$query = new SolrQuery();
-		$query->addHashtags($client, $caseID, $hashtags);
+			$hashtagCollection->tag = $h;
+			$hashtagCollection->case_id = $caseID;
 
+			$hashtagCollection->save();
+		}
 		return $caseID;
 	}
 
@@ -144,20 +154,8 @@ class SolrController extends BaseController {
 	{
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
 
-		$client = $this->getSolrClient();
-
-		$query = new SolrQuery();
-		$resultset = $query->getHashtag($client, $caseID);
-
-		foreach ($resultset as $document) {
-			$hashtags = $document->tag;
-		}
-
-		$data = array(
-			'caseID'   => $caseID,
-			'hashtags' => $hashtags
-		);
-		return $data;
+		$hashtags = HashtagsQuery::select('tag')->distinct()->where('case_id', '=', $caseID)->get();
+		return $hashtags;
 	}
 
 	/**
@@ -199,54 +197,47 @@ class SolrController extends BaseController {
 	}
 
 	/**
-	 * Adds a new bookmark to Solr
-	 * @return string $status response
-	 */
-	public function postAddBookmark()
-	{
-		// User-supplied name for the saved search
-		$bookmarkName = Input::get('bookmarkName');
-
-		// The search URL the user wishes to save
-		$URL = Input::get('url');
-
-		date_default_timezone_set('America/New_York');
-
-		// We need to build an array to map the bookmarkName and URL
-		// Pass this array into the SolrQuery method to persist it
-		$bookmark = array(
-			'name' => $bookmarkName,
-			'url' => $URL,
-			'timestamp' => date('m/d/Y h:i:s A'),
-			'GUID' => uniqid(time())
-			);
-
-		// Get a Solr client
-		$client = $this->getSolrClient();
-
-		$query = new SolrQuery();
-		$query->addBookmark($client, $bookmark);
-
-		$status = 'success';
-		return $status;
-	}
-	
-	/**
 	 * Returns the Saved Bookmarks page
 	 * @return View saved
 	 */
 	public function getSavedSearches()
 	{
-		$client = $this->getSolrClient();
-
-		$query = new SolrQuery();
-		$resultset = $query->getBookmarks($client);
-
-		$bookmarks = array();
-		foreach ($resultset as $bookmark) {
-			 array_push($bookmarks, $bookmark->savedSearches);
-		}
+		$bookmarks = BookmarksQuery::paginate(10);
 		return View::make('saved', compact('bookmarks'));
+	}
+
+	/**
+	 * Adds a new bookmark to the database
+	 * @return void
+	 */
+	public function postAddBookmark()
+	{
+		// User-supplied name for the saved search
+		$bookmarkName = trim(Input::get('bookmarkName'));
+
+		// The search URL the user wishes to save
+		$URL = Input::get('url');
+		date_default_timezone_set('America/New_York');
+
+		$bookmark = new BookmarksQuery();
+
+		$bookmark->name = $bookmarkName;
+		$bookmark->url = $URL;
+		$bookmark->timestamp = date('m/d/Y h:i:s A');
+
+		$bookmark->save();
+	}
+
+	/**
+	 * Deletes a bookmark from the database
+	 * @return void
+	 */
+	public function postDeleteBookmark()
+	{
+		$bookmarkID = Input::get('bookmarkID');
+
+		$bookmark = BookmarksQuery::find($bookmarkID);
+		$bookmark->delete();
 	}
 
 	/**
