@@ -13,7 +13,6 @@
             color: #eee;
             font-size: 20px;
             text-shadow: 2px 3px 3px #292929;
-            -webkit-text-stroke: 2px white;
         }
     </style>
 <!-- Page wrapper -->
