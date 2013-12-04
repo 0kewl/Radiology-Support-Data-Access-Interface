@@ -21,7 +21,7 @@
 						<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;">Bookmark</button>
 						<h3 style="text-align:center; margin-left: 88px;">Case Search</h3>
 						<h4 style="color: #FFFFFF;">Search Query</h4>
-						<div id="search-container" style="height:650px; overflow-y: auto;">
+						<div id="search-container" style="overflow-y: auto;">
 						  @include('components/search-form')
 						</div>
 					</div>

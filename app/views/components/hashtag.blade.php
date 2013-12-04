@@ -32,15 +32,11 @@ function getHashtags(caseID, callback) {
   })
   .done(function(msg) {
     spinner.stop();
-
-    var element = '<span style="font-size: 18px;">Tags: </span>';
+    var element = '<span class="text-18"><b><u>Tags:</u></b> </span>';
     if (msg['hashtags'] != null) {
       $.each(msg['hashtags'], function(index, value) {
-        element = element + '<a href="{{ route('hashtag-results') }}?hashtag=' + value + '&start=0" class="hashtag" style="cursor: pointer; cursor: hand; font-size: 15px; margin-right:10px; color:#fff;">#' + value + '</a>';
+		element += '<a href="{{ route('hashtag-results') }}?hashtag=' + value + '&start=0" class="hashtag" style="cursor:pointer; cursor:hand; font-size:15px; margin-right:10px; color:#fff;">#' + value + '</a>';
       });
-    }
-    else {
-      element = '';
     }
       callback(element);
   });

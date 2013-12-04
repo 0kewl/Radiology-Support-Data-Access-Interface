@@ -298,7 +298,7 @@ class SolrController extends BaseController {
 		$results = '';
 		foreach ($resultset as $document) {
 
-			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width: 246px; padding: 10px; margin-right: 20px;"><div style="text-align:right"><span style="color:#fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
+			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width:250px; padding:10px;"><div style="text-align:right"><span style="color: #fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
 
 		    if (isset($highlighting)) {
 		    	$highlightedDoc = $highlighting->getResult($document->id);
