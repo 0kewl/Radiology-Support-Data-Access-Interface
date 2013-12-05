@@ -45,7 +45,7 @@
                 @endif						
             @endif
             @if (isset($query))
-				<div id="query-container" class="move-right boxes" style="margin-top:-60px; margin-bottom:10px; overflow:hidden;"><div id="query-string" class="text-18" style="overflow:auto"><b><u>Query:</u></b>  <span style="font-size:14px; font-weight:normal; color:#fff;">{{ $query }}</span></div></div>
+				<div id="query-container" class="move-right boxes" style="margin-top:-60px; margin-bottom:10px; overflow:hidden;"><div id="query-string" class="text-18" style="overflow:auto"><b><u>Query:</u></b>  <span style="font-size:14px; font-weight:normal; color:#fff;">{{{ $query }}}</span></div></div>
 			@endif
 			<div style="margin-left:20px; width:350px;">
 				<div class="span2">

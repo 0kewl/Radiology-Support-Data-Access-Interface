@@ -238,7 +238,7 @@ class SolrController extends BaseController {
 	 */
 	public function getSavedHashtags()
 	{
-		$hashtags = HashtagsQuery::select('tag')->paginate(20);
+		$hashtags = HashtagsQuery::select('tag')->paginate(10);
 		return View::make('savedhashtags', compact('hashtags'));
 	}
 

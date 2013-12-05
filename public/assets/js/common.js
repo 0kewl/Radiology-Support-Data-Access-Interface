@@ -71,16 +71,23 @@ $("#hashtag-search-btn").click(function(event) {
 
     $("#hashtag-start").val("0");
 
-    if ($("#hashtag-keyword").val() == "") {
-        // the case id input is empty
-        alert("Please enter a hashtag to search.");
-        return false;
+    if ($("#hashtag").val() != "") {
+        $("#search-hashtags").submit();
     }
     else {
-        var hashtag = $("#hashtag-keyword").val();
-        $("#hashtag").val(hashtag);
 
-        $("#search-hashtags").submit();
+        if ($.trim($("#hashtag-keyword").val()) == "") {
+            // the case id input is empty
+            alert("Please enter a hashtag to search.");
+            $("#hashtag-keyword").val("");
+            return false;
+        }
+        else {
+            var hashtag = $("#hashtag-keyword").val();
+            $("#hashtag").val(hashtag);
+
+            $("#search-hashtags").submit();
+        }
     }
 });
 

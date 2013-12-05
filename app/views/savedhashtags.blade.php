@@ -25,10 +25,12 @@
                     <p class="fancy">No Hashtags Found</p>
                 </div>
             @else
+            <div id="hashtag-pages">
                 {{ $hashtags->links() }}
+            </div>
                 <ul>
                 @foreach($hashtags AS $hashtag)
-                    <li> #{{{ $hashtag->tag }}}</li>
+                    <li><a href="#" id="{{{ $hashtag->tag }}}" class="hashtag" style="color:#fff;">#{{{ $hashtag->tag }}}</a></li>
                     <br>
                 @endforeach
                 </ul>
@@ -59,6 +61,12 @@ $(document).ready(function() {
                 location.reload();
             });
         }
+    });
+
+    $(".hashtag").click(function(event) {
+        event.preventDefault();
+        $("#hashtag").val($(this).attr('id'));
+        $("#hashtag-search-btn").click();
     });
 });
 </script>

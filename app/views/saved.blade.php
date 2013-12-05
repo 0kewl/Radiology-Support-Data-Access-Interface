@@ -25,7 +25,9 @@
                     <p class="fancy">No Bookmarks Found</p>
                 </div>
             @else
-                {{ $bookmarks->links() }}
+                <div id="bookmark-pages">
+                    {{ $bookmarks->links() }}
+                </div>
                 <ul>
                 @foreach($bookmarks AS $bookmark)
                     <li><a href=" {{ URL::to('results') }}/{{ $bookmark->url }}" style="color:#fff; font-size:16px;">{{{ $bookmark->name }}}</a> -- {{{ $bookmark->timestamp }}} (EST) -- 
