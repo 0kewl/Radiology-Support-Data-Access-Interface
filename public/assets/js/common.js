@@ -2,6 +2,11 @@
  *   Common jQuery functions
  */
 
+ $(".edit-hashtag").click(function(event) {
+    event.preventDefault();
+    reloadDocument($(this).attr("doc"), true);
+ });
+
 $("#did-you-mean").click(function(event) {
     event.preventDefault();
     $("#main-query").val($("#did-you-mean").text());
@@ -22,7 +27,7 @@ $(".show").click(function() {
     $("#hashtag-container").html("");
     $("#image-component").html("");
 
-    getHashtags($(this).attr('id'), function(hashtags) {
+    getHashtags($(this).attr('id'), false, function(hashtags) {
         // show the selected case
         $("#" + id + ".full-doc").clone().appendTo("#document-viewer").fadeIn("fast"), function() {
             $('#document-viewer').show();
@@ -96,7 +101,7 @@ $("#hashtag-search-btn").click(function(event) {
  */
 
 // display the selected case document in document viewer
-function reloadDocument(caseID) {
+function reloadDocument(caseID, editMode) {
     $(".result-snippet").each(function() {
         // clear any cases being viewed
         $(this).removeClass("viewing").css("background-color", 'gray');
@@ -108,7 +113,7 @@ function reloadDocument(caseID) {
     $("#document-viewer").html("");
     $("#hashtag-container").html("");
 
-    getHashtags(id, function(hashtags) {
+    getHashtags(id, editMode, function(hashtags) {
         // show the selected case
         $("#" + id + ".full-doc").clone().appendTo("#document-viewer").fadeIn("fast"), function() {
             $('#document-viewer').show();

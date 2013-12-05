@@ -170,6 +170,29 @@ class SolrController extends BaseController {
 		return $caseID;
 	}
 
+	public function postDeleteHashtag()
+	{
+		$caseID = Input::get('caseID');
+		$hashtag = trim(Input::get('hashtag'));
+
+		$tagModel = HashtagsQuery::where('tag', '=', $hashtag)->first();
+
+		$toDeleteHashtag = new CaseHashtagsQuery();
+		$toDeleteHashtag = $toDeleteHashtag->findCaseTag($caseID, $tagModel->id);
+
+		$toDeleteHashtag->delete();
+
+		$numHashtagReferences = CaseHashtagsQuery::where('hashtag_id','=', $tagModel->id)->count();
+
+		// Are there any more references to the saved hashtag, if not, delete it from the database
+		if ($numHashtagReferences <= 0) {
+			$oldTag = HashtagsQuery::where('id','=', $tagModel->id)->first();
+			$oldTag->delete();
+		}
+
+		return $caseID;
+	}
+
 	/**
 	 * Returns the hashtags of a specified case
 	 * @return array $data the list of hashtags
@@ -179,8 +202,8 @@ class SolrController extends BaseController {
 		$caseID = preg_replace("/[^0-9]/", "", Input::get('caseID'));
 
 		$hashtags = new HashtagsQuery();
-
 		$hashtags = $hashtags->getCaseTags($caseID);
+
 		return $hashtags;
 	}
 
@@ -327,7 +350,9 @@ class SolrController extends BaseController {
 		$results = '';
 		foreach ($resultset as $document) {
 
-			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width:250px; padding:10px;"><div style="text-align:right"><span style="color: #fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
+			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width:250px; padding:10px;">';
+			$results .= '<span class="pull-right" style="top:0px; position:relative;"><a href="#" style="color:#fff";" class="edit-hashtag" doc="' . $document->id . '"><i class="icon-minus-sign icon-white"></i></a></span>';
+			$results .= '<div style="text-align:right"><span style="color: #fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
 
 		    if (isset($highlighting)) {
 		    	$highlightedDoc = $highlighting->getResult($document->id);
@@ -354,7 +379,7 @@ class SolrController extends BaseController {
 		    }
 		    $results .= '</table></div>';
 		    $results .= '<div><br><button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Case</button>';
-			$results .= '<a href="#" id="add-tag-' . $document->id . '"class=" add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-28px;" data-toggle="popover"><i class="icon-tag icon-white"></i> Tags</a></div>';
+			$results .= '<a href="#" id="add-tag-' . $document->id . '"class="add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-28px;" data-toggle="popover"><i class="icon-tag icon-white"></i> Tags</a></div>';
 		    $results .= '</div><br>';
 		}
 		return $results;

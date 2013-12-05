@@ -1,6 +1,6 @@
 <script type="text/javascript">
 
-function getHashtags(caseID, callback) {
+function getHashtags(caseID, editMode, callback) {
 
     var opts = {
         lines:9, // The number of lines to draw
@@ -36,7 +36,12 @@ function getHashtags(caseID, callback) {
 	var element = '<span class="text-18"><b><u>Tags:</u></b> </span>';
     if (msg != '') {
       $.each(msg, function(index, value) {
-        element += '<a href="{{ route('hashtag-results') }}?hashtag=' + value.tag + '&start=0" class="hashtag" style="cursor:pointer; cursor:hand; font-size:15px; margin-right:10px; color:#fff;">#' + value.tag + '</a>';
+        if (editMode) {
+          element += '<p onClick="deleteHashtag($(this));" id="' + value.tag + '" case="' + caseID + '" class="delete-hashtag label label-inverse" style="cursor:pointer;">X</p><a href="{{ route('hashtag-results') }}?hashtag=' + value.tag + '&start=0" class="hashtag" style="cursor:pointer; cursor:hand; font-size:15px; margin-right:10px; color:#fff;">#' + value.tag + '</a>';
+        }
+        else {
+          element += '<a href="{{ route('hashtag-results') }}?hashtag=' + value.tag + '&start=0" class="hashtag" style="cursor:pointer; cursor:hand; font-size:15px; margin-right:10px; color:#fff;">#' + value.tag + '</a>';
+        }
       });
     }
       callback(element);
@@ -64,11 +69,27 @@ function addHashtag(caseID, hashtags) {
         alert(data.message);
       }
       else {
-        reloadDocument(msg);
+        reloadDocument(msg, false);
         $(".add-hashtag").popover("hide");
       }
-      
     });
   }
+}
+
+function deleteHashtag(h) {
+  var hashtag = $(h).attr("id");
+  var caseID = $(h).attr("case");
+
+  $.ajax({
+        type: "POST",
+        url: "{{ route('delete-hashtag') }}",
+        data: {
+            caseID: caseID,
+            hashtag: hashtag
+        }
+    })
+    .done(function(msg) {
+      reloadDocument(msg, true);
+    });
 }
 </script>

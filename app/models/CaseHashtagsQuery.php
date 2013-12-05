@@ -11,4 +11,12 @@ class CaseHashtagsQuery extends Eloquent {
         ->where('hashtags.tag', '=', $tag)
         ->get();
     }
+
+	public function findCaseTag($caseID, $hashtagID)
+    {
+        return $this
+        ->where('case_hashtags.hashtag_id', '=', $hashtagID)
+        ->where('case_hashtags.case_id', '=', $caseID)
+        ->first();
+    }
 }
