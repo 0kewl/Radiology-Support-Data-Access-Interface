@@ -26,7 +26,10 @@
                 </div>
             @else
                 <div id="bookmark-pages">
-                    {{ $bookmarks->links() }}
+                    <div class="well">
+                        <p class="fancy" style="text-align:left;">Total bookmarks: {{{ $count }}}</p>
+                        {{ $bookmarks->links() }}
+                    </div>
                 </div>
                 <ul>
                 @foreach($bookmarks AS $bookmark)

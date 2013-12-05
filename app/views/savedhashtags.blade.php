@@ -25,9 +25,12 @@
                     <p class="fancy">No Hashtags Found</p>
                 </div>
             @else
-            <div id="hashtag-pages">
-                {{ $hashtags->links() }}
-            </div>
+                <div id="hashtag-pages">
+                    <div class="well">
+                        <p class="fancy" style="text-align:left;">Total hashtags: {{{ $count }}}</p>
+                        {{ $hashtags->links() }}
+                    </div>
+                </div>
                 <ul>
                 @foreach($hashtags AS $hashtag)
                     <li><a href="#" id="{{{ $hashtag->tag }}}" class="hashtag" style="color:#fff;">#{{{ $hashtag->tag }}}</a></li>

@@ -229,7 +229,8 @@ class SolrController extends BaseController {
 	public function getSavedSearches()
 	{
 		$bookmarks = BookmarksQuery::paginate(10);
-		return View::make('saved', compact('bookmarks'));
+		$count = BookmarksQuery::count();
+		return View::make('saved', compact('bookmarks', 'count'));
 	}
 
 	/**
@@ -239,7 +240,8 @@ class SolrController extends BaseController {
 	public function getSavedHashtags()
 	{
 		$hashtags = HashtagsQuery::select('tag')->paginate(10);
-		return View::make('savedhashtags', compact('hashtags'));
+		$count = HashtagsQuery::count();
+		return View::make('savedhashtags', compact('hashtags', 'count'));
 	}
 
 	/**
