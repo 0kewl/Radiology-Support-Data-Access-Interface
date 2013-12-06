@@ -365,7 +365,7 @@ class SolrController extends BaseController {
 		foreach ($resultset as $document) {
 
 			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width:250px; padding:10px;">';
-			$results .= '<span class="pull-right" style="top:0px; position:relative;"><a href="#" style="color:#fff";" class="edit-hashtag" doc="' . $document->id . '"><i class="icon-minus-sign icon-white"></i></a></span>';
+			$results .= '<span class="pull-right" style="top:0px; position:relative;"><a href="#" style="color:#fff";" class="edit-hashtag" doc="' . $document->id . '"><i class="icon-tag" style="color:#F88017"></i><i class="icon-tag icon-minus-sign" style="color:white"></i></a></span>';
 			$results .= '<div style="text-align:right"><span style="color: #fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
 
 		    if (isset($highlighting)) {
@@ -393,7 +393,7 @@ class SolrController extends BaseController {
 		    }
 		    $results .= '</table></div>';
 		    $results .= '<div><br><button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Case</button>';
-			$results .= '<a href="#" id="add-tag-' . $document->id . '"class="add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-28px;" data-toggle="popover"><i class="icon-tag icon-white"></i> Tags</a></div>';
+			$results .= '<a href="#" id="add-tag-' . $document->id . '"class="add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-28px;" data-toggle="popover"><i class="icon-tag" style="color:#F88017"></i> Tags</a></div>';
 		    $results .= '</div><br>';
 		}
 		return $results;

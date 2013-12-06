@@ -33,7 +33,7 @@ function getHashtags(caseID, editMode, callback) {
   })
   .done(function(msg) {
     spinner.stop();
-	var element = '<span class="text-18"><b><u>Tags:</u></b> </span>';
+	var element = '<span class="text-18" style="color:#F88017;"><b><u>Tags:</u></b> </span>';
     if (msg != '') {
       $.each(msg, function(index, value) {
         if (editMode) {
