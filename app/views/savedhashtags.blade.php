@@ -14,12 +14,15 @@
             font-size: 20px;
             text-shadow: 2px 3px 3px #292929;
         }
+		.pagination {
+			margin:0px;
+		}
     </style>
 <!-- Page wrapper -->
 <div class="container">
     @include('components/menu')
     <div class="row-fluid">
-        <div class="span12 shadow" style="height: 800px; overflow-y: hidden;">
+        <div class="span12 shadow" style="height: 800px; overflow-y:hidden;">
             @if ($hashtags->isEmpty())
                 <div class="well">
                     <p class="fancy">No Hashtags Found</p>
