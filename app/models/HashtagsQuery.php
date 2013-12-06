@@ -11,4 +11,11 @@ class HashtagsQuery extends Eloquent {
         ->where('case_hashtags.case_id', '=', $case_id)
         ->get();
     }
+
+	public function findHashtags($query)
+    {
+        return $this
+        ->where('hashtags.tag', 'LIKE', '%' . $query . '%')
+        ->lists('tag','id');
+    }
 }

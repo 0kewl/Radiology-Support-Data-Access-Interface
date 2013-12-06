@@ -246,6 +246,20 @@ class SolrController extends BaseController {
 	}
 
 	/**
+	 * Get suggestions for a given hashtag
+	 * @return ResultSet $resultSet a collection of autocomplete suggestions
+	 */
+	public function getHashtagSuggestions()
+	{
+		$query = Input::get('term');
+
+		$collection = new HashtagsQuery();
+		$collection = $collection->findHashtags($query);
+
+		return $collection;
+	}
+
+	/**
 	 * Returns the Saved Bookmarks page
 	 * @return View saved
 	 */

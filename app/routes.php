@@ -29,6 +29,9 @@ Route::get('get-hashtags', array('as' => 'get-hashtags', 'uses' => 'SolrControll
 // Get autocomplete
 Route::get('autocomplete', array('as' => 'autocomplete', 'uses' => 'SolrController@getAutocomplete'));
 
+// Get hashtag suggestions
+Route::get('hashtagSuggest', array('as' => 'hashtagSuggest', 'uses' => 'SolrController@getHashtagSuggestions'));
+
 // Get spell check
 Route::get('spellcheck', array('as' => 'spellcheck', 'uses' => 'SolrController@getSpellCheck'));
 
