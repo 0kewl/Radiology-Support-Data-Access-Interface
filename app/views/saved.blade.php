@@ -56,7 +56,7 @@ $(document).ready(function() {
     $(".bookmark-del").click(function(event) {
         event.preventDefault();
 
-        var deleteBookmark = confirm("Delete '" + $(this).attr("title") + "' bookmark?");
+        var deleteBookmark = confirm("Are you sure you want to delete '" + $(this).attr("title") + "' ?");
         if (deleteBookmark) {
             $.ajax({
                 type: "POST",
@@ -66,7 +66,20 @@ $(document).ready(function() {
                 }
             })
             .done(function(msg) {
-                location.reload();
+                var currentPage = getParameterByName("page");
+                var currentBookmarksPageCount = $('.bookmark-del').length;
+
+                var baseURL = "{{ route('get-bookmarks') }}";
+                var prevPage = currentPage - 1;
+                
+                if (currentBookmarksPageCount == 1) {
+                    if (currentPage > 1) {
+                        window.location = baseURL + "?page=" + prevPage;
+                    }
+                    else {
+                        location.reload();
+                    }
+                }
             });
         }
     });

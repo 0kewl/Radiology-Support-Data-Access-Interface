@@ -51,24 +51,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-    $(".bookmark-del").click(function(event) {
-        event.preventDefault();
-
-        var deleteBookmark = confirm("Delete '" + $(this).attr("title") + "' bookmark?");
-        if (deleteBookmark) {
-            $.ajax({
-                type: "POST",
-                url: "{{ route('delete-bookmark') }}",
-                data: {
-                    bookmarkID: $(this).attr("id")
-                }
-            })
-            .done(function(msg) {
-                location.reload();
-            });
-        }
-    });
-
     $(".hashtag").click(function(event) {
         event.preventDefault();
         $("#hashtag").val($(this).attr('id'));
