@@ -2,18 +2,29 @@
  *   Common jQuery functions
  */
 
- $(".edit-hashtag").click(function(event) {
-    event.preventDefault();
-    reloadDocument($(this).attr("doc"), true);
- });
+/**
+ * Displays
+ * @return void
+ */
+$(".edit-hashtag").click(function(event) {
+   event.preventDefault();
+   reloadDocument($(this).attr("doc"), true);
+});
 
+/**
+ * Displays 
+ * @return void
+ */
 $("#did-you-mean").click(function(event) {
     event.preventDefault();
     $("#main-query").val($("#did-you-mean").text());
     $("#search").click();
 });
 
-// display the selected case document
+/**
+ * Displays the selected case document
+ * @return void
+ */
 $(".show").click(function() {
     $(".result-snippet").each(function() {
         // clear any cases being viewed
@@ -37,7 +48,10 @@ $(".show").click(function() {
     });
 });
 
-// perform a search query
+/**
+ * Performs a search query when the search button is clicked
+ * @return void
+ */
 $("#search").click(function(event) {
     event.preventDefault();
 
@@ -64,13 +78,19 @@ $("#search").click(function(event) {
     }
  });
 
-// display all cases in database
+/**
+ * Displays all cases in database
+ * @return void
+ */
 $("#all-search").click(function() {
     $("#main-query").val("*");
     $("#search").click();
 });
 
-// search on a hashtag
+/**
+ * Searches on a hashtag when hashtag search button is clicked
+ * @return void
+ */
 $("#hashtag-search-btn").click(function(event) {
     event.preventDefault();
 
@@ -96,11 +116,16 @@ $("#hashtag-search-btn").click(function(event) {
     }
 });
 
-/*
+/**
  *   Helper functions
  */
 
-// display the selected case document in document viewer
+/**
+ * Displays the selected case document in document viewer
+ * @param String caseID
+ * @param Boolean editMode
+ * @return void
+ */
 function reloadDocument(caseID, editMode) {
     $(".result-snippet").each(function() {
         // clear any cases being viewed
@@ -123,6 +148,11 @@ function reloadDocument(caseID, editMode) {
     });
 }
 
+/**
+ * Returns the 
+ * @param String name
+ * @return results
+ */
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -130,10 +160,20 @@ function getParameterByName(name) {
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
+/**
+ * Returns the
+ * @param val
+ * @return
+ */
 function split(val) {
     return val.split( / \s*/ );
 }
 
+/**
+ * Returns the
+ * @param term
+ * @return
+ */
 function extractLast(term) {
     return split(term).pop();
 }
