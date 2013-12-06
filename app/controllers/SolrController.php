@@ -146,7 +146,7 @@ class SolrController extends BaseController {
 				if (!$found) {
 					$hashtagCollection = new HashtagsQuery();
 
-					$hashtagCollection->tag = $h;
+					$hashtagCollection->tag = trim(strtolower($h));
 					$hashtagCollection->save();
 					$found = $hashtagCollection;
 				}
@@ -282,7 +282,7 @@ class SolrController extends BaseController {
 
 		$bookmark = new BookmarksQuery();
 
-		$bookmark->name = $bookmarkName;
+		$bookmark->name = trim($bookmarkName);
 		$bookmark->url = $URL;
 		$bookmark->timestamp = date('m/d/Y h:i:s A');
 
