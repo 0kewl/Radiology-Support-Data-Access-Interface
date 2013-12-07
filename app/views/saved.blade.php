@@ -80,6 +80,9 @@ $(document).ready(function() {
                         location.reload();
                     }
                 }
+                else {
+                    location.reload();
+                }
             });
         }
     });
