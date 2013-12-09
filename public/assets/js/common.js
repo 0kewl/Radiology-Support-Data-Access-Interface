@@ -1,7 +1,7 @@
 /**
- *   Common jQuery functions
+ * Gets auto-complete for search query terms
+ * @return boolean
  */
-
 $("#hashtag-keyword").autocomplete({
     source: "hashtagSuggest",
     minLength: 2,
@@ -19,7 +19,7 @@ $("#hashtag-keyword").autocomplete({
 });
 
 /**
- * Displays
+ * Displays the edit hashtag control
  * @return void
  */
 $(".edit-hashtag").click(function(event) {
@@ -28,7 +28,7 @@ $(".edit-hashtag").click(function(event) {
 });
 
 /**
- * Displays 
+ * Gets spell check results 
  * @return void
  */
 $("#did-you-mean").click(function(event) {
@@ -133,10 +133,6 @@ $("#hashtag-search-btn").click(function(event) {
 });
 
 /**
- *   Helper functions
- */
-
-/**
  * Displays the selected case document in document viewer
  * @param String caseID
  * @param Boolean editMode
@@ -165,7 +161,7 @@ function reloadDocument(caseID, editMode) {
 }
 
 /**
- * Returns the 
+ * Returns the value of the given parameter from the query string
  * @param String name
  * @return results
  */
@@ -177,7 +173,7 @@ function getParameterByName(name) {
 }
 
 /**
- * Returns the
+ * Splits a string with a whitespace delimiter
  * @param val
  * @return
  */
@@ -186,7 +182,7 @@ function split(val) {
 }
 
 /**
- * Returns the
+ * Returns the last term in an array
  * @param term
  * @return
  */
