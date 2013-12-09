@@ -404,25 +404,6 @@ class SolrController extends BaseController {
 	}
 
 	/**
-	 * Returns a configured Solr client instance
-	 * @return Client $client Solr client
-	 */
-	private function getSolrClient()
-	{
-		$config = array(
-    		'endpoint' => array(
-        		'localhost' => array(
-            		'host' => 'eclipse67.campus.jcu.edu',
-            		'port' => 8983,
-            		'path' => '/solr/',
-       			)
-    		)
-		);
-		$client = new Client($config);
-		return $client;
-	}
-
-	/**
 	 * Converts a ResultSet to a JSON object
 	 * @param ResultSet $resultset collection of documents
 	 * @return string $results JSON object
@@ -438,5 +419,16 @@ class SolrController extends BaseController {
 			$results[] = $item;
 		}
 		return json_encode($results);
+	}
+
+	/**
+	 * Returns a configured Solr client instance
+	 * @return Client $client Solr client
+	 */
+	private function getSolrClient()
+	{
+		$client = new SolrServer();
+		$client = $client->getSolrClient();
+		return $client;
 	}
 }
