@@ -5,8 +5,8 @@
 <!-- CSS -->
     <style>
 		.container{
-			min-width:1322px;
-			min-height:522px;
+			min-width: 1280px;
+			min-height: auto;
 		}
     </style>
 <!-- Page wrapper -->
@@ -15,7 +15,7 @@
     <div id="content-window">
         <div class="row-fluid">
             <!-- Cases search form -->
-            <div class="span8 shadow" style="padding: 14px; height:522px;">
+            <div class="span8 shadow" style="padding:14px; height:542px;">
                 <h3 class="text-center">Case Search</h3>
                 <br>
 				<h4 style="color: #fff;">Search Query</h4>
@@ -26,7 +26,7 @@
             <!-- END search form -->
 
             <!-- Case lookup form -->
-            <div class="span4 shadow" style="padding: 14px; height:522px;">
+            <div class="span4 shadow" style="padding:14px; height:540px;">
                 <h3 class="text-center">Case Lookup</h3>   
                 <br>
 				<h4 style="color: #fff;">Enter Case ID</h4>
@@ -43,7 +43,7 @@
                     </div>
                     <br>
                     <div style="margin:0 auto; text-align:center;">
-                        <button id="case-search" class="btn btn-large btn-inverse" type="button" style="margin-top: 75px;">Search &amp; Compare Cases</button>
+                        <button id="case-search" class="btn btn-large btn-inverse" type="button" style="margin-top:75px;">Search &amp; Compare Cases</button>
                     </div>
                 </fieldset>
                 @include('components/case-lookup-form')

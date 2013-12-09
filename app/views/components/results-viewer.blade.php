@@ -19,7 +19,7 @@
 		}
     </style>
 <!-- Search results viewer -->
-<div id="search-results" class="span8 shadow" style="height: 800px;">
+<div id="search-results" class="span8 shadow" style="height:800px;">
     <h3 class="text-center">Search Results</h3>
         @if (!$tables)
             <br>

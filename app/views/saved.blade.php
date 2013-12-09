@@ -5,8 +5,8 @@
 <!-- CSS -->
     <style>
 		.container {
-			width: 1322;
-			height: auto; 
+			width: 1280px;
+			height: auto;
 		}
         .fancy {
             text-align: center;
@@ -22,7 +22,7 @@
 <div class="container">
     @include('components/menu')
     <div class="row-fluid">
-    	<div class="span12 shadow" style="height: 800px; overflow-y: hidden;">
+    	<div class="span12 shadow" style="height:600px; overflow-y:auto;">
             @if ($bookmarks->isEmpty())
                 <div class="well">
                     <p class="fancy">No Bookmarks Found</p>
