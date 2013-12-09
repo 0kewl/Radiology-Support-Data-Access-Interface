@@ -170,6 +170,10 @@ class SolrController extends BaseController {
 		return $caseID;
 	}
 
+	/**
+	 * Deletes a given hashtag from a case ID
+	 * @return string $caseID
+	 */
 	public function postDeleteHashtag()
 	{
 		$caseID = Input::get('caseID');
@@ -408,7 +412,7 @@ class SolrController extends BaseController {
 		$config = array(
     		'endpoint' => array(
         		'localhost' => array(
-            		'host' => 'eclipse67.campus.jcu.edu', // Make sure host is set to eclipse67.campus.jcu.edu
+            		'host' => 'eclipse67.campus.jcu.edu',
             		'port' => 8983,
             		'path' => '/solr/',
        			)
