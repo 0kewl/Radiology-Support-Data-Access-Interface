@@ -19,7 +19,7 @@
     			<div class="span4 shadow" style="height:215px; overflow-y:hidden;">
 					<div id="search-option">
 						<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;"><i class="icon-bookmark"></i> Bookmark</button>
-						<h3 style="text-align:center; margin-left:88px;">Case Search</h3>
+						<h3 id="case-search-header" style="text-align:center; margin-left:101px;">Case Search</h3>
 						<h4 style="color: #FFFFFF;">Search Query</h4>
 						<div id="search-container" style="overflow-y: auto;">
 						  @include('components/search-form')
@@ -42,6 +42,11 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
+    var isHashtag = getParameterByName("hashtag");
+    if (isHashtag.length > 0) {
+        $("#bookmark-search").hide();
+        $("#case-search-header").css("margin-left", "0");
+    }
 	/**
 	 * Submit the search using the enter key
 	 * @return boolean

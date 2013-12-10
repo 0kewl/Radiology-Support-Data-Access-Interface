@@ -396,8 +396,9 @@ class SolrController extends BaseController {
 				}
 		    }
 		    $results .= '</table></div>';
-		    $results .= '<div><br><button id="' . $document->id . '"class="show btn btn-inverse" type="button">View Case</button>';
-			$results .= '<a href="#" id="add-tag-' . $document->id . '"class="add-hashtag btn btn-inverse btn-small" style="float:right; margin-top:-28px;" data-toggle="popover"><i class="icon-tag" style="color:#F88017"></i> Tags</a></div>';
+		    $results .= '<div id="case-buttons"><br><div style="float:left; margin-top: -28px;"><button id="' . $document->id . '"class="show btn btn-inverse" type="button"><i class="icon-file"></i> <span style="font-size:12px";>View Case</span></button></div>';
+			$results .= '<div style="margin-top: -28px;"><a href="your-target-image-url:=' . $document->id . '" target="_blank"><button class="btn btn-inverse" style="margin-left: 8px;"><i class="icon-picture"></i></button></a>';
+			$results .= '<a href="#" id="add-tag-' . $document->id . '"class="add-hashtag btn btn-inverse btn-small" style="margin-left: 40px;" data-toggle="popover"><i class="icon-tag" style="color:#F88017"></i> Tags</a></div></div>';
 		    $results .= '</div><br>';
 		}
 		return $results;
