@@ -1,4 +1,28 @@
 /**
+ * Submit the search using the enter key
+ * @return boolean
+ */
+$('input').keydown(function(event) {
+    if (event.keyCode == 13) {
+        focused = $(":focus");
+        targetForm = $(focused).attr('id');
+
+        if (targetForm == "main-query") {
+            $("#search").click();
+            return false;
+        }
+        else if (targetForm == "hashtag-keyword") {
+            $("#hashtag-search-btn").click();
+            return false;     
+        }
+        else if (targetForm == "case-id") {
+            $("#case-search").click();
+            return false;     
+        }
+     }
+});
+
+/**
  * Gets auto-complete for search query terms
  * @return boolean
  */

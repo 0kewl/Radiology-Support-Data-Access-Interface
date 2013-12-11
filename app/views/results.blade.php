@@ -47,16 +47,6 @@ $(document).ready(function() {
         $("#bookmark-search").hide();
         $("#case-search-header").css("margin-left", "0");
     }
-	/**
-	 * Submit the search using the enter key
-	 * @return boolean
-	 */
-    $('input').keydown(function(event) {
-        if (event.keyCode == 13) {
-            $("#search").click();
-            return false;
-         }
-    }); 
 
     // populate the search form with updated values
     var currentQuery = getParameterByName("q");

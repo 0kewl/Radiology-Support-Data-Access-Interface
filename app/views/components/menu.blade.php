@@ -37,7 +37,7 @@
 		</div>
 		<div style="margin-top:-25px;">
 			<div class="hashtag-search" style="margin-top:5px; float:right;">
-				<form id="search-hashtags" name="search-hashtags" action="{{ route('hashtag-results') }}" method="get">
+				<form id="search-hashtags" name="search-hashtags" action="{{ route('hashtag-results') }}" method="get" autocomplete="off">
 					<input id="hashtag" name="hashtag" type="hidden" value="">
 					<input id="hashtag-start" name="start" type="hidden" value="">
 				</form>

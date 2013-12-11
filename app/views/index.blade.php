@@ -57,17 +57,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	/**
-	 * Submit the search using the enter key
-	 * @return boolean
-	 */
-    $('input').keydown(function(event) {
-        if (event.keyCode == 13) {
-            $("#search").click();
-            return false;
-         }
-    });
-	
+    
 	/**
 	 * Creates the select picker drop-down form element
      * for case lookup similarity
