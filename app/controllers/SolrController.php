@@ -95,7 +95,7 @@ class SolrController extends BaseController {
 
 		$fields = SearchFieldEntity::getFields();
 
-		return View::make('case', compact('doc', 'tables', 'resultCount', 'startPos'));
+		return View::make('case', compact('doc', 'tables', 'resultCount', 'startPos','caseID'));
 	}
 
 	/**
@@ -368,22 +368,31 @@ class SolrController extends BaseController {
 		$results = '';
 		foreach ($resultset as $document) {
 
-			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width:250px; padding:10px;">';
-			$results .= '<span class="pull-right" style="top:0px; position:relative;"><a href="#" style="color:#fff";" class="edit-hashtag" doc="' . $document->id . '"><i class="icon-tag" style="color:#F88017"></i><i class="icon-tag icon-minus-sign" style="color:white"></i></a></span>';
-			$results .= '<div style="text-align:right"><span style="color: #fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
+			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width:250px; height:auto; padding:10px;">';
+
+			$results .= '<div id="title-container" style="overflow-x:auto;">';
+
+				$results .= '<div style="height: 40px;"><span style="float:right;"><a href="#" style="color:#fff";" class="edit-hashtag" doc="' . $document->id . '">';
+				$results .= '<i class="icon-tag" style="color:#F88017"></i><i class="icon-tag icon-minus-sign" style="color:white"></i></a></span>';
+
+				$results .= '<span style="color: #fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
+
+			$results .= '</div>';
+			
+			$results .= '<div id="table-container"><table class="table table-condensed">';
 
 		    if (isset($highlighting)) {
 		    	$highlightedDoc = $highlighting->getResult($document->id);
 		    
 				if ($highlightedDoc) {
-					$results .= '<div style="padding: 12px;"><table class="table table-condensed">';
 
 			    	foreach($highlightedDoc as $key => $val) {
-			    		$results .= '<tr><td style="border-top: 0;"><span style="color: #fff; font-size:12px;">' . $key . '</span></td><td style="border-top: 0;"><strong><span style="color: #fff; font-size:12px;">' . $val[0] . '</span></strong></td></tr>';
+			    		$results .= '<tr><td style="border-top: 0;"><span style="color: #fff; font-size:12px;">' . $key . ':</span></td><td style="border-top: 0;"><strong><span style="color: #fff; font-size:12px;">' . $val[0] . '</span></strong></td></tr>';
 			        }
-			        $results .= '</table></div>';
 			    }
 			}
+			$results .= '</table></div>';
+
 			$results .= '<div id="'. $document->id .'" class="full-doc" style="color: #fff; display: none;"><table class="table" style="padding: 4px; margin: 4px;">';
 
 		    foreach($document AS $field => $value)
@@ -397,8 +406,8 @@ class SolrController extends BaseController {
 		    }
 		    $results .= '</table></div>';
 		    $results .= '<div id="case-buttons"><br><div style="float:left; margin-top: -28px;"><button id="' . $document->id . '"class="show btn btn-inverse" type="button"><i class="icon-file"></i> <span style="font-size:12px";>View Case</span></button></div>';
-			$results .= '<div style="margin-top: -28px;"><a href="your-target-image-url:=' . $document->id . '" target="_blank"><button class="btn btn-inverse" style="margin-left: 8px;"><i class="icon-picture"></i></button></a>';
-			$results .= '<a href="#" id="add-tag-' . $document->id . '"class="add-hashtag btn btn-inverse btn-small" style="margin-left: 40px;" data-toggle="popover"><i class="icon-tag" style="color:#F88017"></i> Tags</a></div></div>';
+			$results .= '<div style="margin-top: -28px;"><a href="your-target-image-url:=' . $document->id . '" target="_blank"><button class="btn btn-inverse" style="margin-left: 7px;"><i class="icon-picture"></i></button></a>';
+			$results .= '<a href="#" id="add-tag-' . $document->id . '"class="add-hashtag btn btn-inverse btn-small" style="margin-left: 34px;" data-toggle="popover"><i class="icon-tag" style="color:#F88017"></i> Tags</a></div></div>';
 		    $results .= '</div><br>';
 		}
 		return $results;

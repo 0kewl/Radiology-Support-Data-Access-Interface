@@ -1,7 +1,8 @@
 <!-- CSS -->
     <style>
 		.alert-info{
-			
+			overflow: auto;
+			height: 20px;
 		}
 		.alert{
 			font-size: 17px;
@@ -20,35 +21,37 @@
     </style>
 <!-- Search results viewer -->
 <div id="search-results" class="span8 shadow" style="height:800px;">
+	<div id="document-loader" style="margin: 0 auto;"></div>
     <h3 class="text-center">Search Results</h3>
         @if (!$tables)
             <br>
             @if (!empty($suggestion))
-                <p><i>Did you mean: <a href="#" style="color:#fff;"><strong><span id="did-you-mean">{{ $suggestion }}</span></strong></a></i></p>
+                <p><i>Did you mean: <a href="#" style="color:#fff;"><strong><span id="did-you-mean">{{{ $suggestion }}}</span></strong></a></i></p>
             @endif 
             <div class="well">
                 @if (isset($hashtag))
-                    <h5 class="text-center text-18">No documents tagged with #{{{ $hashtag }}} found. </h5>
+                    <h5 class="text-center text-18">No documents tagged with #{{{ $hashtag }}} found</h5>
                 @else
-                    <h5 class="text-center text-18">Your search did not match any documents.</h5>
+                    <h5 class="text-center text-18">Your search did not match any documents</h5>
                 @endif
             </div>
         @else
             @if (isset($hashtag))
                 @if ($resultCount == "1")
-                    <div class="alert alert-info"><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} case.</div>
+                    <div class="alert alert-info"><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} case</div>
                 @else
-                    <div class="alert alert-info"><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} cases.</div>
+                    <div class="alert alert-info"><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} cases</div>
                 @endif
             @else
                 @if ($resultCount == "1")
-                    <div class="alert alert-info"><b>Your search matched {{ $resultCount }} case.</b></div>					
+                    <div class="alert alert-info"><b>{{ $resultCount }} case found</b></div>					
                 @else
-                    <div class="alert alert-info"><b>Your search matched {{ $resultCount }} cases.</b></div>
+                    <div class="alert alert-info"><b>{{ $resultCount }} cases found</b></div>
                 @endif						
             @endif
             @if (isset($query))
-				<div id="query-container" class="move-right boxes" style="margin-top:-60px; margin-bottom:10px; overflow:hidden;"><div id="query-string" class="text-18" style="color:white; overflow:auto;"><b><u>Query:</u></b>  <span style="font-size:14px; font-weight:normal; color:#fff;">{{{ $query }}}</span></div></div>
+				<div id="query-container" class="move-right boxes" style="margin-top:-60px; margin-bottom:10px; overflow:hidden;">
+				<div id="query-string" class="text-18" style="color:white; overflow:auto;"><b><u>Query:</u></b>  <span style="font-size:14px; font-weight:normal; color:#fff;">{{{ $query }}}</span></div></div>
 			@endif
 			<div style="margin-left:20px; width:350px;">
 				<div class="span2">
@@ -69,9 +72,8 @@
 					@endif
 				</div>
 			</div>
-            <div id="document-loader" style="margin: 0 auto;"></div>
             <div id="hashtag-container" class="move-right boxes" style="overflow:hidden;"><div id="tags-string" class="text-18" style="color:#F88017; overflow:auto;"><b><u>Tags:</u></b></div></div>
-			<div class="move-right"><div id="document-viewer" class="span12 text-18 boxes" style="height:590px; overflow-y:auto; overflow-x:hidden;"></div></div>
+			<div class="move-right"><div id="document-viewer" class="span12 text-18 boxes" style="padding-right: 20px; height:590px; overflow-y:auto; overflow-x:hidden;"></div></div>
         @endif
 </div>
 <!-- END search results viewer -->

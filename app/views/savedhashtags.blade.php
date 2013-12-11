@@ -5,7 +5,7 @@
 <!-- CSS -->
     <style>
 		.container {
-			width: 1280px;
+			width: 1220px;
 			height: auto; 
 		}
         .fancy {

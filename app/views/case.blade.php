@@ -24,8 +24,8 @@
                     <br>
                     <div id="case-information-container" style="font-size: 18px; height:700px; overflow-y: auto;">
                         @if (!$doc)
-                            <div class="alert alert-info">
-                                <h5 class="text-center">Your search did not match any documents.</h5>
+                            <div class="well">
+                                <h5 class="text-center">Case ID {{{ $caseID }}} not found</h5>
                             </div>
                         @else
                             {{ $doc }}

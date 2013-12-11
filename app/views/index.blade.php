@@ -5,8 +5,8 @@
 <!-- CSS -->
     <style>
 		.container{
-			min-width: 1280px;
-			min-height: auto;
+			width: 1220px;
+			height: auto;
 		}
     </style>
 <!-- Page wrapper -->

@@ -4,9 +4,9 @@ function getHashtags(caseID, editMode, callback) {
 
     var opts = {
         lines:9, // The number of lines to draw
-        length: 18, // The length of each line
-        width: 5, // The line thickness
-        radius: 12, // The radius of the inner circle
+        length: 10, // The length of each line
+        width: 4, // The line thickness
+        radius: 10, // The radius of the inner circle
         corners: 1, // Corner roundness (0..1)
         rotate: 0, // The rotation offset
         direction: 1, // 1: clockwise, -1: counterclockwise
@@ -17,8 +17,8 @@ function getHashtags(caseID, editMode, callback) {
         hwaccel: false, // Whether to use hardware acceleration
         className: 'spinner', // The CSS class to assign to the spinner
         zIndex: 2e9, // The z-index (defaults to 2000000000)
-        top: '200', // Top position relative to parent in px
-        left: '615' // Left position relative to parent in px
+        top: '0', // Top position relative to parent in px
+        left: '125' // Left position relative to parent in px
       };
       var target = document.getElementById('document-loader');
       var spinner = new Spinner(opts).spin(target);
