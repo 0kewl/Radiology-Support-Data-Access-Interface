@@ -104,7 +104,7 @@ $("#case-search").click(function(event) {
         return false;
     }
     else {
-        var caseID = $("#case-id").val();
+        var caseID = $.trim($("#case-id").val());
         $("#id").val(caseID);
 
         var selectedKeywords = $("#similar-keywords-list").val();

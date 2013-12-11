@@ -96,6 +96,7 @@ $("#search").click(function(event) {
     event.preventDefault();
 
     var q = $("#main-query").val();
+    q = $.trim(q);
 
     if (q == "") {
         // oops...the query input is empty
@@ -137,6 +138,8 @@ $("#hashtag-search-btn").click(function(event) {
     $("#hashtag-start").val("0");
 
     if ($("#hashtag").val() != "") {
+        $("#hashtag").val($.trim($("#hashtag").val()));
+        $("#hashtag-keyword").val($.trim($("#hashtag-keyword").val()));
         $("#search-hashtags").submit();
     }
     else {
@@ -148,7 +151,7 @@ $("#hashtag-search-btn").click(function(event) {
             return false;
         }
         else {
-            var hashtag = $("#hashtag-keyword").val();
+            var hashtag = $.trim($("#hashtag-keyword").val());
             $("#hashtag").val(hashtag);
 
             $("#search-hashtags").submit();

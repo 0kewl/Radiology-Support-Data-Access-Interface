@@ -24,7 +24,7 @@ class SolrController extends BaseController {
 	{
 		// Get the search query
 		$query = Input::get('q');
-		$query = urldecode($query);
+		$query = trim(urldecode($query));
 		$modified = false;
 
 		// Get the cursor starting position
@@ -104,7 +104,7 @@ class SolrController extends BaseController {
 	 */
 	public function getCasesByHashtag()
 	{
-		$hashtag = Input::get('hashtag');
+		$hashtag = trim(Input::get('hashtag'));
 		$hashtag = urldecode($hashtag);
 
 		$startPos = Input::get('start');
