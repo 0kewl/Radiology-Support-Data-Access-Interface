@@ -10,16 +10,15 @@
 		}
     </style>
 <!-- Page wrapper -->
-<div class="container">
-    @include('components/menu')
+<div class="container" style="padding-bottom:8px">
     <div class="row-fluid">
     	<div class="span12">
     		<div class="row-fluid">
                 <!-- Case search form -->
-    			<div class="span4 shadow" style="height:215px; overflow-y:hidden;">
+    			<div class="span4 shadow" style="height:220px;">
 					<div id="search-option">
 						<button id="bookmark-search" class="btn btn-inverse" style="float:right; position:relative;"><i class="icon-bookmark"></i> Bookmark</button>
-						<h3 id="case-search-header" style="text-align:center; margin-left:101px;">Case Search</h3>
+						<h3 id="case-search-header" style="text-align:center; margin-left:100px;">Case Search</h3>
 						<h4 style="color: #FFFFFF;">Search Query</h4>
 						<div id="search-container" style="overflow-y: auto;">
 						  @include('components/search-form')
@@ -32,8 +31,7 @@
     	</div>
     </div>
     <div class="row-fluid">
-        <div class="span4 shadow" id="image-component" style="margin-top: -550px; height: 550px; overflow-y: hidden; text-align: center;">
-        </div>
+        <div class="span4 shadow" id="image-component" style="margin-top:-550px; height:550px; overflow-y:hidden; text-align:center;"></div>
     </div>
 </div>
 

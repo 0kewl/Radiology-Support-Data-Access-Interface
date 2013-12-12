@@ -14,7 +14,6 @@
     </style>
 <!-- Page wrapper -->
 <div class="container">
-    @include('components/menu')
     <div class="row-fluid">
         <div class="span12">
             <div class="row-fluid">
@@ -25,7 +24,7 @@
                     <div id="case-information-container" style="font-size: 18px; height:700px; overflow-y: auto;">
                         @if (!$doc)
                             <div class="well">
-                                <h5 class="text-center">Case ID {{{ $caseID }}} not found</h5>
+                                <h5 class="text-center">Case ID <u>{{{ $caseID }}}</u> not found</h5>
                             </div>
                         @else
                             {{ $doc }}
@@ -40,6 +39,7 @@
     </div>
 </div>
 
+@include('components/query-form')
 @include('components/case-lookup-form')
 @include('components/footer')
 

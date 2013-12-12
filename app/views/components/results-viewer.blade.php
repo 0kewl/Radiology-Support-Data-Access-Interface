@@ -33,7 +33,7 @@
             		<h5 class="text-center text-18">Your selected case did not match any documents</h5>
             	@else
 	                @if (isset($hashtag))
-	                    <h5 class="text-center text-18">No documents tagged with #{{{ $hashtag }}} found</h5>
+	                    <h5 class="text-center text-18">No documents tagged with <u>#{{{ $hashtag }}}</u> found</h5>
 	                @else
 	                    <h5 class="text-center text-18">Your search did not match any documents</h5>
 	                @endif
@@ -42,22 +42,24 @@
         @else
             @if (isset($hashtag))
                 @if ($resultCount == "1")
-                    <div class="alert alert-info"><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} case</div>
+                    <div class="alert alert-info"><b><u>#{{{ $hashtag }}}</u></b> matched <u>{{ $resultCount }}</u> case</div>
                 @else
-                    <div class="alert alert-info"><b>#{{{ $hashtag }}}</b> matched {{ $resultCount }} cases</div>
+                    <div class="alert alert-info"><b><u>#{{{ $hashtag }}}</u></b> matched <u>{{ $resultCount }}</u> cases</div>
                 @endif
             @else
                 @if ($resultCount == "1")
-                    <div class="alert alert-info"><b>{{ $resultCount }} case found
+                    <div class="alert alert-info"><b><u>{{ $resultCount }}</u> case found
                     	@if (isset($count))
-                    		<small>{{{ $count }}})</small></b>
+                    		<small>(ONLY {{{ $count }}})</small>
                     	@endif
+						</b>
                     </div>
                 @else
-                    <div class="alert alert-info"><b>{{ $resultCount }} cases found
+                    <div class="alert alert-info"><b><u>{{ $resultCount }}</u> cases found
 						@if (isset($count))
-                    		<small>(TOP {{{ $count }}})</small></b>
+                    		<small>(TOP {{{ $count }}})</small>
                     	@endif
+						</b>
                     </div>
                 @endif						
             @endif

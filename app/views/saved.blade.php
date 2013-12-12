@@ -20,7 +20,6 @@
     </style>
 <!-- Page wrapper -->
 <div class="container">
-    @include('components/menu')
     <div class="row-fluid">
     	<div class="span12 shadow" style="height:600px; overflow-y:auto;">
             @if ($bookmarks->isEmpty())

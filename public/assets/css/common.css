@@ -13,7 +13,7 @@ p {
     -moz-box-shadow: 0 4px 2px -2px #808080;
     box-shadow: 0 4px 2px -2px #000000;
 	background-color: #707070;
-	padding: 12px;
+	padding: 11px;
 }
 
 /*The boxes*/
@@ -31,10 +31,15 @@ p {
     background-color: '#404749';
 }
 
+.header-footer{
+	min-width: 1260px;
+}
+
 .container{
 	min-width: 1220px;
-	min-height: 740px;
-	padding: 22px;
+	min-height: 800px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 .text-18{
