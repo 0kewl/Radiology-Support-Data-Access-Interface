@@ -48,9 +48,17 @@
                 @endif
             @else
                 @if ($resultCount == "1")
-                    <div class="alert alert-info"><b>{{ $resultCount }} case found <small>(TOP {{{ $count }}})</small></b></div>					
+                    <div class="alert alert-info"><b>{{ $resultCount }} case found
+                    	@if (isset($count))
+                    		<small>{{{ $count }}})</small></b>
+                    	@endif
+                    </div>
                 @else
-                    <div class="alert alert-info"><b>{{ $resultCount }} cases found <small>(TOP {{{ $count }}})</small></b></div>
+                    <div class="alert alert-info"><b>{{ $resultCount }} cases found
+						@if (isset($count))
+                    		<small>(TOP {{{ $count }}})</small></b>
+                    	@endif
+                    </div>
                 @endif						
             @endif
             @if (isset($query))
