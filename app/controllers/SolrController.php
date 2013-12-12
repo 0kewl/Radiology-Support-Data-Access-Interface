@@ -12,8 +12,9 @@ class SolrController extends BaseController {
 	{
 		// Keywords used to populate the case comparison drop-down menu
 		$keywords = SearchFieldEntity::getFields();
+		$count = MatchedCasesCount::getOptions();
 
-		return View::make('index', compact('keywords'));
+		return View::make('index', compact('keywords','count'));
 	}
 
 	/**
@@ -75,6 +76,9 @@ class SolrController extends BaseController {
 		// Get the keywords used to compare other cases with this case
 		$similarKeywords = Input::get('keywords');
 
+		// Get the matched results count to return
+		$count = Input::get('count');
+
 		$client = $this->getSolrClient();
 		
 		// Parse form data from HTTP POST action
@@ -86,7 +90,7 @@ class SolrController extends BaseController {
 		$resultCount = 0;
 		foreach ($result as $document) {
 			$id = $document->id;
-			$similarCases = $this->findSimilarCases($id, $similarKeywords);
+			$similarCases = $this->findSimilarCases($id, $similarKeywords, $count);
 
 			$tables .= $this->renderDocumentTables($similarCases, NULL);
 
@@ -95,7 +99,7 @@ class SolrController extends BaseController {
 
 		$fields = SearchFieldEntity::getFields();
 
-		return View::make('case', compact('doc', 'tables', 'resultCount', 'startPos','caseID'));
+		return View::make('case', compact('doc', 'tables', 'resultCount', 'startPos','caseID','count'));
 	}
 
 	/**
@@ -325,12 +329,12 @@ class SolrController extends BaseController {
 	 * @param array $keywords list of keywords to compare on
 	 * @return ResultSet $results collection of case documents
 	 */
-	private function findSimilarCases($caseID, $keywords)
+	private function findSimilarCases($caseID, $keywords, $count)
 	{
 		$client = $this->getSolrClient();
 	
 		$data = new SolrQuery();
-		$results = $data->getSimilarCases($client, $caseID, $keywords);
+		$results = $data->getSimilarCases($client, $caseID, $keywords, $count);
 
 		return $results;
 	}

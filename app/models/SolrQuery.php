@@ -107,7 +107,7 @@ class SolrQuery {
 	 * @param string $keywords list of relevant keywords
 	 * @return ResultSet $resultset collection of documents
 	 */
-	public function getSimilarCases($client, $id, $keywords)
+	public function getSimilarCases($client, $id, $keywords, $count)
 	{
 		// Get a morelikethis query instance
 		$query = $client->createMoreLikeThis();
@@ -120,7 +120,7 @@ class SolrQuery {
 		$query->setMinimumDocumentFrequency(1);
 		$query->setMinimumTermFrequency(1);
 
-		$query->setRows(50);
+		$query->setRows((int)$count);
 		$query->setMatchInclude(true);
 
 		$resultset = $client->select($query);

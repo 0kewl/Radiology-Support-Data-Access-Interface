@@ -48,9 +48,9 @@
                 @endif
             @else
                 @if ($resultCount == "1")
-                    <div class="alert alert-info"><b>{{ $resultCount }} case found</b></div>					
+                    <div class="alert alert-info"><b>{{ $resultCount }} case found <small>(TOP {{{ $count }}})</small></b></div>					
                 @else
-                    <div class="alert alert-info"><b>{{ $resultCount }} cases found</b></div>
+                    <div class="alert alert-info"><b>{{ $resultCount }} cases found <small>(TOP {{{ $count }}})</small></b></div>
                 @endif						
             @endif
             @if (isset($query))

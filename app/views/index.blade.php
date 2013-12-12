@@ -39,11 +39,14 @@
                             <br>
                             <h5>Find similar cases based on:</h5>
                             {{ Form::select('similar-keywords[]', $keywords, '', array('id' => 'similar-keywords-list','class' => 'selectpicker', 'multiple' => 'multiple')) }}
+                            <br>
+                            <br>
+                            <h5>Number of top matched cases to display:</h5>
+                            {{ Form::select('matched-cases-returned[]', $count, '', array('id' => 'matched-cases-returned-list','class' => 'selectpicker')) }}
                         </div>
                     </div>
-                    <br>
                     <div style="margin:0 auto; text-align:center;">
-                        <button id="case-search" class="btn btn-large btn-inverse" type="button" style="margin-top:75px;">Search &amp; Compare Cases</button>
+                        <button id="case-search" class="btn btn-large btn-inverse" type="button" style="margin-top:45px;">Search &amp; Compare Cases</button>
                     </div>
                 </fieldset>
                 @include('components/case-lookup-form')
@@ -109,6 +112,9 @@ $("#case-search").click(function(event) {
 
         var selectedKeywords = $("#similar-keywords-list").val();
         $("#keywords").val(selectedKeywords);
+
+        var count = $("#matched-cases-returned-list").val();
+        $("#count").val(count);
 
 	    $("#search-case").submit();
     }

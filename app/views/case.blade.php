@@ -40,7 +40,6 @@
     </div>
 </div>
 
-@include('components/query-form')
 @include('components/case-lookup-form')
 @include('components/footer')
 
