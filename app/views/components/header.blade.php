@@ -1,5 +1,8 @@
 <!-- Common header across all pages -->
 <head>
+	<!-- Title -->
+	<title>Radiology Support Data Access Interface</title>
+
     <!-- CSS Imports -->
     <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{asset('assets/css/darkstrap.min.css')}}" type="text/css" />
