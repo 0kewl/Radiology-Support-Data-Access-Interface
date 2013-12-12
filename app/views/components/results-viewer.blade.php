@@ -29,11 +29,15 @@
                 <p><i>Did you mean: <a href="#" style="color:#fff;"><strong><span id="did-you-mean">{{{ $suggestion }}}</span></strong></a></i></p>
             @endif 
             <div class="well">
-                @if (isset($hashtag))
-                    <h5 class="text-center text-18">No documents tagged with #{{{ $hashtag }}} found</h5>
-                @else
-                    <h5 class="text-center text-18">Your search did not match any documents</h5>
-                @endif
+            	@if (isset($caseID))
+            		<h5 class="text-center text-18">Your selected case did not match any documents</h5>
+            	@else
+	                @if (isset($hashtag))
+	                    <h5 class="text-center text-18">No documents tagged with #{{{ $hashtag }}} found</h5>
+	                @else
+	                    <h5 class="text-center text-18">Your search did not match any documents</h5>
+	                @endif
+	            @endif
             </div>
         @else
             @if (isset($hashtag))
