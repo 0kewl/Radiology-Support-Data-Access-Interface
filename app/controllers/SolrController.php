@@ -373,11 +373,11 @@ class SolrController extends BaseController {
 		$results = '';
 		foreach ($resultset as $document) {
 
-			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width:250px; height:auto; padding:10px;">';
+			$results .= '<div id="res-' . $document->id .'"class="result-snippet shadow" style="background-color:gray; width:250px; height:auto; padding:10px;"><div id="case-doc-container">';
 
 			$results .= '<div id="title-container" style="overflow-x:auto;">';
 
-				$results .= '<div style="height:22px;"><div style="width:100%; height:100%;"><span class="result-title label label-info" style="font-weight:normal">' . $pager . '</span><span style="float:right;"><a href="#" style="color:#fff";" class="edit-hashtag" doc="' . $document->id . '">';
+				$results .= '<div style="height:22px;"><div style="width:100%; height:100%;"><span class="result-title label label-info" style="font-weight:normal">' . $pager . '</span><span style="float:right; margin-right:2px"><a href="#" style="color:#fff";" class="edit-hashtag" doc="' . $document->id . '">';
 				$results .= '<i class="icon-tag" style="color:#F88017"></i><i class="icon-tag icon-minus-sign" style="color:white"></i></a></span></div>';
 				$results .= '<span class="result-title" style="white-space:wrap; float:left;">' . '<span style="text-decoration:underline">' . $document->title[0] .'</span></span></div>';
 
@@ -409,10 +409,10 @@ class SolrController extends BaseController {
 				}
 		    }
 		    $results .= '</table></div>';
-		    $results .= '<div id="case-buttons"><br><div style="float:left; margin-top: -28px;"><button id="' . $document->id . '"class="show btn btn-inverse" type="button"><i class="icon-file"></i> <span style="font-size:12px";>View Case</span></button></div>';
-			$results .= '<div style="margin-top: -28px;"><a href="your-target-image-url:=' . $document->id . '" target="_blank"><button class="btn btn-inverse" style="margin-left: 7px;"><i class="icon-picture"></i></button></a>';
+		    $results .= '<div id="case-buttons" style="margin-top:22px; width:100%;"><button id="' . $document->id . '"class="show btn btn-inverse" type="button"><i class="icon-file"></i> <span style="font-size:12px";>View Case</span></button>';
+			$results .= '<div style="margin-top:-31px; margin-left:110px;"><a href="your-target-image-url:=' . $document->id . '" target="_blank"><button class="btn btn-inverse"><i class="icon-picture"></i></button></a>';
 			$results .= '<a href="#" id="add-tag-' . $document->id . '"class="add-hashtag btn btn-inverse btn-small" style="margin-left: 34px;" data-toggle="popover"><i class="icon-tag" style="color:#F88017"></i> Tags</a></div></div>';
-		    $results .= '</div><br>';
+		    $results .= '</div></div><br>';
 
 		    $pager++;
 		}
