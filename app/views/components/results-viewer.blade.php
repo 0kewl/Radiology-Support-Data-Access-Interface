@@ -64,8 +64,9 @@
                 @endif						
             @endif
             @if (isset($query))
-				<div id="query-container" class="move-right boxes" style="margin-top:-60px; margin-bottom:10px; overflow:hidden;">
-				<div id="query-string" class="text-18" style="color:white; overflow:auto;"><b><u>Query:</u></b>  <span style="font-size:14px; font-weight:normal; color:#fff;">{{{ $query }}}</span></div></div>
+				<div id="query-container" class="move-right boxes" style="margin-top:-60px; margin-bottom:10px; overflow-x:hidden; overflow-y:auto;">
+					<span id="query-string" class="text-18" style="color:white;"><b><u>Query:</u></b>  <span style="font-size:14px; font-weight:normal; color:#fff;">{{{ $query }}}</span></span>
+				</div>
 			@endif
 			<div style="margin-left:20px; width:350px;">
 				<div class="span2">
@@ -86,7 +87,7 @@
 					@endif
 				</div>
 			</div>
-            <div id="hashtag-container" class="move-right boxes" style="overflow:hidden;"><div id="tags-string" class="text-18" style="color:#F88017; overflow:auto;"><b><u>Tags:</u></b></div></div>
+            <div id="hashtag-container" class="move-right boxes" style="overflow-x:auto; overflow-y:hidden;"><span id="tags-string" class="text-18" style="color:#F88017;"><b><u>Tags:</u></b></span></div>
 			<div class="move-right"><div id="document-viewer" class="span12 text-18 boxes" style="padding-right: 20px; height:590px; overflow-y:auto; overflow-x:hidden;"></div></div>
         @endif
 </div>

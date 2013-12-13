@@ -8,11 +8,11 @@
     <script src="{{asset('assets/js/jquery-ui-1.10.3.custom.min.js')}}"></script>
     <script src="{{asset('assets/js/jquery.tooltipster.min.js')}}"></script>
     <script src="{{asset('assets/js/common.js')}}"></script>
-	
+
 <div class="navbar header-footer" style="margin-top:12px; margin-bottom:0px">
 	<div class="navbar-inner">
 		<div>
-			<div style="margin-top:5px; margin-right:200px; float:right">
+			<div style="margin-top:5px; margin-right:70px; float:right">
 				<button id="view-documentation-btn" class="btn btn-small btn-inverse" type="button">View Documentation</button>
 			</div>
 		</div>
@@ -26,8 +26,8 @@
 	        html: 'true',
 	        title : '<u>Documentation</u>'
 	    });
-	    var documentationPopover = '<a href="{{ asset("assets/doc/text.txt") }}" class="btn">View Documentation PDF</a><br>' +
-	    						   '<a href="{{ asset("assets/doc/text.txt") }}" class="btn">View Programmer&#39;s Guide PDF</a><br>';
+	    var documentationPopover = '<div style="width:224px"><span style="width:196px"<a href="{{ asset("assets/doc/text.txt") }}" class="btn" style="width:100%">View Documentation PDF</a></span>' +
+	    						   '<span style="width:196px"<a href="{{ asset("assets/doc/text.txt") }}" class="btn" style="width:100%">View Programmer&#39;s Guide PDF</a></span></div>';
 
 	    $('#view-documentation-btn').attr('data-content', documentationPopover);
 	});

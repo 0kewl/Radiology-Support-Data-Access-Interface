@@ -33,17 +33,18 @@ function getHashtags(caseID, editMode, callback) {
   })
   .done(function(msg) {
     spinner.stop();
-	var element = '<span class="text-18" style="color:#F88017;"><b><u>Tags:</u></b> </span>';
+	var element = '<span class="text-18" style="white-space:nowrap; color:#F88017;"><b><u>Tags:</u></b> ';
     if (msg != '') {
-      $.each(msg, function(index, value) {
-        if (editMode) {
-          element += '<p onClick="deleteHashtag($(this));" id="' + value.tag + '" case="' + caseID + '" class="delete-hashtag label label-inverse" style="cursor:pointer;">X</p><a href="{{ route('hashtag-results') }}?hashtag=' + value.tag + '&start=0" class="hashtag" style="cursor:pointer; cursor:hand; font-size:15px; margin-right:10px; color:#fff;">#' + value.tag + '</a>';
-        }
-        else {
-          element += '<a href="{{ route('hashtag-results') }}?hashtag=' + value.tag + '&start=0" class="hashtag" style="cursor:pointer; cursor:hand; font-size:15px; margin-right:10px; color:#fff;">#' + value.tag + '</a>';
-        }
-      });
+	    $.each(msg, function(index, value) {
+			if (editMode) {
+				element += '<span onClick="deleteHashtag($(this));" id="' + value.tag + '" case="' + caseID + '" class="label label-inverse" style="cursor:pointer;">X</span><a href="{{ route('hashtag-results') }}?hashtag=' + value.tag + '&start=0" class="hashtag" style="cursor:pointer; cursor:hand; font-size:15px; margin-right:10px; color:#fff;">#' + value.tag + '</a>';
+			}
+			else {
+				element += '<a href="{{ route('hashtag-results') }}?hashtag=' + value.tag + '&start=0" class="hashtag" style="cursor:pointer; cursor:hand; font-size:15px; margin-right:10px; color:#fff;">#' + value.tag + '</a>';
+			}
+		});
     }
+	element += '</span>';
       callback(element);
   });
 }
