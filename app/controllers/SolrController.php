@@ -43,7 +43,7 @@ class SolrController extends BaseController {
 		$resultset = $data->getFilteredData($client, $query, $startPos);
 		$highlighting = $resultset->getHighlighting();
 
-		$tables = $this->renderDocumentTables($resultset, $highlighting);
+		$tables = $this->renderDocumentTables($resultset, $highlighting, $startPos);
 
 		// Get total number of results found
 		$resultCount = $resultset->getNumFound();
@@ -92,7 +92,7 @@ class SolrController extends BaseController {
 			$id = $document->id;
 			$similarCases = $this->findSimilarCases($id, $similarKeywords, $count);
 
-			$tables .= $this->renderDocumentTables($similarCases, NULL);
+			$tables .= $this->renderDocumentTables($similarCases, NULL, 0);
 
 			$resultCount = $similarCases->getNumFound();
 		}
@@ -123,7 +123,7 @@ class SolrController extends BaseController {
 		$resultset = $data->getHashtagCases($client, $cases, $startPos);
 		$highlighting = $resultset->getHighlighting();
 
-		$tables = $this->renderDocumentTables($resultset, $highlighting);
+		$tables = $this->renderDocumentTables($resultset, $highlighting, $startPos);
 
 		$resultCount = $resultset->getNumFound();
 
@@ -367,8 +367,9 @@ class SolrController extends BaseController {
 	 * @param ResultSet $highlighting collection of matched keywords
 	 * @return string $results the HTML table
 	 */
-	private function renderDocumentTables($resultset, $highlighting)
+	private function renderDocumentTables($resultset, $highlighting, $startPos)
 	{
+		$pager = $startPos + 1;
 		$results = '';
 		foreach ($resultset as $document) {
 
@@ -379,7 +380,7 @@ class SolrController extends BaseController {
 				$results .= '<div style="height: 40px;"><span style="float:right;"><a href="#" style="color:#fff";" class="edit-hashtag" doc="' . $document->id . '">';
 				$results .= '<i class="icon-tag" style="color:#F88017"></i><i class="icon-tag icon-minus-sign" style="color:white"></i></a></span>';
 
-				$results .= '<span style="color: #fff; float:left; font-size:12px; font-weight:bold; text-decoration:underline;">' . $document->title[0] .'</span></div>';
+				$results .= '<span style="color: #fff; float:left; font-size:12px; font-weight:bold; text-decoration:none;">' . $pager . ') <span style="text-decoration:underline">' . $document->title[0] .'</span></span></div>';
 
 			$results .= '</div>';
 			
@@ -413,6 +414,8 @@ class SolrController extends BaseController {
 			$results .= '<div style="margin-top: -28px;"><a href="your-target-image-url:=' . $document->id . '" target="_blank"><button class="btn btn-inverse" style="margin-left: 7px;"><i class="icon-picture"></i></button></a>';
 			$results .= '<a href="#" id="add-tag-' . $document->id . '"class="add-hashtag btn btn-inverse btn-small" style="margin-left: 34px;" data-toggle="popover"><i class="icon-tag" style="color:#F88017"></i> Tags</a></div></div>';
 		    $results .= '</div><br>';
+
+		    $pager++;
 		}
 		return $results;
 	}
