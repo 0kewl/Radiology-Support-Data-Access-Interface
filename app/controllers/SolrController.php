@@ -377,10 +377,9 @@ class SolrController extends BaseController {
 
 			$results .= '<div id="title-container" style="overflow-x:auto;">';
 
-				$results .= '<div style="height: 40px;"><span style="float:right;"><a href="#" style="color:#fff";" class="edit-hashtag" doc="' . $document->id . '">';
-				$results .= '<i class="icon-tag" style="color:#F88017"></i><i class="icon-tag icon-minus-sign" style="color:white"></i></a></span>';
-
-				$results .= '<span style="color: #fff; float:left; font-size:12px; font-weight:bold; text-decoration:none;">' . $pager . ') <span style="text-decoration:underline">' . $document->title[0] .'</span></span></div>';
+				$results .= '<div style="height:22px;"><div style="width:100%; height:100%;"><span class="result-title label label-info" style="font-weight:normal">' . $pager . '</span><span style="float:right;"><a href="#" style="color:#fff";" class="edit-hashtag" doc="' . $document->id . '">';
+				$results .= '<i class="icon-tag" style="color:#F88017"></i><i class="icon-tag icon-minus-sign" style="color:white"></i></a></span></div>';
+				$results .= '<span class="result-title" style="white-space:wrap; float:left;">' . '<span style="text-decoration:underline">' . $document->title[0] .'</span></span></div>';
 
 			$results .= '</div>';
 			
