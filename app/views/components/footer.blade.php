@@ -26,8 +26,8 @@
 	        html: 'true',
 	        title : '<u>Documentation</u>'
 	    });
-	    var documentationPopover = '<div style="width:224px"><div style="width:196px"><a href="{{ asset("assets/doc/text.txt") }}" class="btn" style="width:100%">View Documentation PDF</a></div>' +
-	    						   '<div style="width:196px"><a href="{{ asset("assets/doc/text.txt") }}" class="btn" style="width:100%">View Programmer&#39;s Guide PDF</a></div></div>';
+	    var documentationPopover = '<div style="width:224px"><div style="width:196px"><a href="{{ asset("assets/doc/Radiology_Support_Data_Access_Interface_Documentation.pdf") }}" target="_blank" class="btn" style="width:100%">View Documentation PDF</a></div>' +
+	    						   '<div style="width:196px"><a href="{{ asset("assets/doc/Radiology_Support_Data_Access_Interface_Programmers_Guide.pdf") }}" target="_blank" class="btn" style="width:100%">View Programmer&#39;s Guide PDF</a></div></div>';
 
 	    $('#view-documentation-btn').attr('data-content', documentationPopover);
 	});
